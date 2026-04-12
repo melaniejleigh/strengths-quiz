@@ -1237,97 +1237,273 @@ function ShareCard(props) {
 /* ---- PRINT-TO-PDF ---- */
 function printReport(type, ranked, name, insights) {
   var top5 = ranked.slice(0, 5);
-  var css = "body{font-family:Helvetica,Arial,sans-serif;color:#1a1a2e;margin:0;padding:40px 50px;font-size:11pt;line-height:1.6} h1{font-size:28pt;margin:0 0 4px} h2{font-size:18pt;margin:24px 0 8px} h3{font-size:13pt;margin:16px 0 4px;color:#6D28D9} .domain{font-size:9pt;font-weight:bold;letter-spacing:1px} .desc{color:#555;margin:4px 0 12px} .section-label{font-size:9pt;font-weight:bold;color:#6D28D9;letter-spacing:1.5px;text-transform:uppercase;margin:14px 0 4px} .section-body{color:#555;margin:0 0 8px} .hr{border:none;border-top:2px solid #6D28D9;margin:16px 0} .hr-light{border:none;border-top:1px solid #e8e6f0;margin:12px 0} .rank-row{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid #eee} .rank-num{width:30px;font-weight:bold;color:#9999aa} .rank-num.top5{color:#6D28D9} .rank-name{flex:1;font-weight:600} .rank-name.top5{font-weight:bold} .rank-domain{font-size:9pt;color:#999} .page-break{page-break-before:always} .header{font-size:8pt;color:#999;border-bottom:2px solid #6D28D9;padding-bottom:6px;margin-bottom:24px;display:flex;justify-content:space-between} .company{font-size:10pt;color:#555;margin:8px 0} @media print{body{padding:30px 40px}}";
-
   var domainColors = {executing:"#7C3AED",influencing:"#DC2626",relationship_building:"#2563EB",strategic_thinking:"#059669"};
+  var domainBgs = {executing:"#f5f0ff",influencing:"#fef2f2",relationship_building:"#eff6ff",strategic_thinking:"#ecfdf5"};
+  var domainDarkBgs = {executing:"#1a0a2e",influencing:"#2a0a0a",relationship_building:"#0a1628",strategic_thinking:"#022c22"};
   function dc(id){var t=TH[id];return t?domainColors[t.d]||"#6D28D9":"#6D28D9";}
+  function dbg(id){var t=TH[id];return t?domainBgs[t.d]||"#f5f0ff":"#f5f0ff";}
+  function ddbg(id){var t=TH[id];return t?domainDarkBgs[t.d]||"#1a0a2e":"#1a0a2e";}
   function dn(id){var t=TH[id];return t?DOMAINS[t.d].name:"";}
 
-  var html = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Report":"Full 34 Report")+"</title><style>"+css+"</style></head><body>";
+  var css = [
+    "*{box-sizing:border-box}",
+    "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;margin:0;padding:0;font-size:10pt;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}",
+    ".page{padding:44px 50px;min-height:100vh;position:relative}",
+    ".page-break{page-break-before:always}",
+    ".header-bar{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:2px solid #6D28D9;margin-bottom:28px;font-size:8pt}",
+    ".header-brand{font-weight:800;color:#6D28D9;letter-spacing:2px;text-transform:uppercase;font-size:8pt}",
+    ".header-name{color:#999;font-weight:500}",
+    ".cover-dark{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;padding:0;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end}",
+    ".cover-content{padding:0 60px 80px}",
+    ".cover-label{font-size:10pt;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;font-weight:600}",
+    ".cover-title{font-size:44pt;font-weight:800;line-height:1.05;margin:0 0 20px;color:#fff}",
+    ".cover-subtitle{font-size:14pt;color:rgba(255,255,255,0.45);line-height:1.5;max-width:380px}",
+    ".cover-themes{margin-top:40px}",
+    ".cover-theme{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)}",
+    ".cover-num{font-size:28pt;font-weight:800;width:50px;text-align:right}",
+    ".cover-tname{font-size:15pt;font-weight:700;color:#fff}",
+    ".cover-tdomain{font-size:9pt;color:rgba(255,255,255,0.4);font-weight:600;letter-spacing:1px;text-transform:uppercase}",
+    ".profile-box{padding:28px 32px;border-radius:14px;margin:20px 0;line-height:1.7;font-size:11pt}",
+    ".theme-page{padding:44px 50px}",
+    ".theme-rank{font-size:60pt;font-weight:900;line-height:1;margin:0}",
+    ".theme-name{font-size:28pt;font-weight:800;margin:0;line-height:1.15}",
+    ".theme-domain{font-size:9pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:6px 0 0}",
+    ".theme-divider{height:3px;border:none;margin:16px 0;border-radius:2px}",
+    ".theme-desc{font-size:10.5pt;color:#555;line-height:1.65;margin:0 0 6px}",
+    ".theme-stat{display:inline-block;padding:6px 14px;border-radius:20px;font-size:9pt;font-weight:700;margin:0 8px 8px 0}",
+    ".theme-company{font-size:9.5pt;color:#777;margin:8px 0 0}",
+    ".section{margin:18px 0 0}",
+    ".section-hd{font-size:8pt;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin:0 0 5px;padding:4px 0}",
+    ".section-bd{font-size:10pt;color:#444;line-height:1.6;margin:0 0 4px}",
+    ".action-list{list-style:none;padding:0;margin:6px 0 0}",
+    ".action-item{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:9.5pt;color:#444;line-height:1.5}",
+    ".action-bullet{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9pt;font-weight:800;color:#fff;flex-shrink:0;margin-top:1px}",
+    ".team-box{padding:14px 18px;border-radius:10px;background:#f8f7fc;border:1px solid #e8e6f0;margin:10px 0;font-size:9.5pt;color:#555;line-height:1.55}",
+    ".team-box-label{font-size:8pt;font-weight:700;color:#6D28D9;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 4px}",
+    ".blend-card{margin-bottom:14px;border-radius:10px;overflow:hidden}",
+    ".blend-header{padding:10px 16px;display:flex;align-items:center;gap:8px}",
+    ".blend-title{font-weight:700;font-size:10pt;color:#fff}",
+    ".blend-plus{font-size:12pt;font-weight:300;color:rgba(255,255,255,0.5)}",
+    ".blend-body{padding:10px 16px 14px;background:#f8f7fc;font-size:9.5pt;line-height:1.55;color:#444}",
+    ".blend-tagline{font-weight:700;color:#1a1a2e;margin-bottom:4px;font-size:10pt}",
+    ".summary-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100vh;padding:60px}",
+    ".summary-label{font-size:10pt;color:#999;letter-spacing:3px;text-transform:uppercase;margin-bottom:30px;font-weight:600}",
+    ".summary-quote{font-size:20pt;font-weight:700;color:#1a1a2e;line-height:1.45;max-width:480px;margin:0 auto 30px}",
+    ".summary-profile{font-size:11pt;color:#555;line-height:1.7;max-width:500px;margin:0 auto;text-align:left}",
+    ".rank-row{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid #f0f0f0}",
+    ".rank-num{width:28px;font-weight:700;font-size:10pt;text-align:right;color:#bbb}",
+    ".rank-bar{height:6px;border-radius:3px;min-width:4px}",
+    ".rank-name{font-weight:600;font-size:10pt;flex:1}",
+    ".rank-domain{font-size:8pt;font-weight:600;letter-spacing:1px;text-transform:uppercase}",
+    ".section-divider{width:100%;height:1px;background:#e8e6f0;margin:14px 0}",
+    "@media print{.page{padding:30px 40px} .cover-dark{-webkit-print-color-adjust:exact;print-color-adjust:exact} .theme-rank,.cover-num,.action-bullet,.blend-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}}"
+  ].join("\n");
+
+  var html = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Report")+"</title><style>"+css+"</style></head><body>";
 
   if (type === "top5") {
-    // Cover
-    html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>Top 5 Report</span></div>";
-    html += "<div style='margin-top:60px'><div style='color:#999;font-size:12pt;margin-bottom:4px'>"+(name||"")+"</div>";
-    html += "<h1>Your Top 5<br/>Strengths Report</h1><hr class='hr'/>";
-    // List on cover
+    // COVER PAGE - dark gradient
+    html += "<div class='cover-dark'>";
+    html += "<div class='cover-content'>";
+    html += "<div class='cover-label'>Strengths Discovery</div>";
+    html += "<div class='cover-title'>"+(name||"Your")+"'s<br/>Top 5 Strengths</div>";
+    html += "<div class='cover-subtitle'>A personalized analysis of your signature strengths and how to use them.</div>";
+    html += "<div class='cover-themes'>";
     top5.forEach(function(t,i){
-      html += "<div style='font-size:14pt;margin:8px 0 8px 10px'><span style='color:"+dc(t.id)+";font-weight:bold'>"+(i+1)+".</span> <b>"+TH[t.id].n+"</b> <span style='font-size:9pt;color:#999'>"+dn(t.id)+"</span></div>";
-    });
-    html += "</div>";
-
-    // Individual pages
-    top5.forEach(function(t,i){
-      var th=TH[t.id]; var rd=REVEAL_DATA[t.id]||{}; var col=dc(t.id);
-      var rarity = (rd.pct||0)<=8?"Rare":(rd.pct||0)<=15?"Uncommon":"Common";
-      html += "<div class='page-break'>";
-      html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>"+(name||"")+"</span></div>";
-      html += "<div style='font-size:32pt;font-weight:bold;color:"+col+";margin:0'>#"+(i+1)+"</div>";
-      html += "<h2 style='margin:0 0 4px'>"+th.n+"</h2>";
-      html += "<div class='domain' style='color:"+col+"'>"+dn(t.id)+"</div>";
-      html += "<hr class='hr' style='border-color:"+col+"'/>";
-      html += "<div class='desc'>"+th.desc+"</div>";
-      html += "<div style='font-size:10pt;color:#555;margin-bottom:4px'><b>"+(rd.pct||"?")+"% </b>of people have this in their top 5 <span style='color:"+col+"'>("+rarity+")</span></div>";
-      html += "<div class='company'>In Good Company: <b>"+(rd.fic||"")+"</b> (Fictional) &nbsp;|&nbsp; <b>"+(rd.real||"")+"</b> (Real World)</div>";
-      html += "<hr class='hr-light'/>";
-      var ins = insights && insights.themes ? insights.themes[t.id] : null;
-      if (ins && ins.unique) {
-        html += "<div class='section-label' style='color:#6D28D9'>WHY YOUR "+th.n.toUpperCase()+" IS UNIQUE</div><div class='section-body'>"+ins.unique+"</div>";
-      }
-      html += "<div class='section-label'>AT WORK</div><div class='section-body'>"+(th.atWork||"")+"</div>";
-      html += "<div class='section-label'>AT YOUR BEST</div><div class='section-body'>"+(th.atBest||"")+"</div>";
-      html += "<div class='section-label'>HOW TO LEAN IN</div><div class='section-body'>"+(th.leanIn||"")+"</div>";
-      if (ins && ins.blindSpots) {
-        html += "<div class='section-label' style='color:#DC2626'>WATCH OUT</div><div class='section-body'>"+ins.blindSpots+"</div>";
-      }
+      var col = dc(t.id);
+      html += "<div class='cover-theme'>";
+      html += "<div class='cover-num' style='color:"+col+"'>"+(i+1)+"</div>";
+      html += "<div><div class='cover-tname'>"+TH[t.id].n+"</div><div class='cover-tdomain' style='color:"+col+"'>"+dn(t.id)+"</div></div>";
       html += "</div>";
     });
-    // Blends page
+    html += "</div></div></div>";
+
+    // PROFILE PAGE
+    if (insights && (insights.fullProfile || insights.summary || insights.dominantDomain)) {
+      html += "<div class='page page-break'>";
+      html += "<div class='header-bar'><span class='header-brand'>Strengths Discovery</span><span class='header-name'>"+(name||"")+"</span></div>";
+      html += "<h2 style='font-size:22pt;margin:0 0 6px;font-weight:800'>Your Strengths Profile</h2>";
+      html += "<div style='font-size:10pt;color:#999;margin-bottom:20px'>What makes you, you.</div>";
+      if (insights.summary) {
+        html += "<div class='profile-box' style='background:linear-gradient(135deg,#f5f0ff,#eff6ff);border:1px solid #e8e6f0;text-align:center'>";
+        html += "<div style='font-size:8pt;font-weight:700;color:#6D28D9;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px'>Your Operating Style</div>";
+        html += "<div style='font-size:15pt;font-weight:700;color:#1a1a2e;line-height:1.4'>\""+insights.summary+"\"</div>";
+        html += "</div>";
+      }
+      if (insights.fullProfile) {
+        html += "<div style='margin:20px 0'>";
+        html += "<div class='section-hd' style='color:#6D28D9'>Who You Are At Your Best</div>";
+        html += "<div style='font-size:10.5pt;color:#444;line-height:1.7'>"+insights.fullProfile+"</div>";
+        html += "</div>";
+      }
+      if (insights.dominantDomain) {
+        html += "<div style='margin:20px 0'>";
+        html += "<div class='section-hd' style='color:#6D28D9'>Your Domain Mix</div>";
+        html += "<div style='font-size:10.5pt;color:#444;line-height:1.7'>"+insights.dominantDomain+"</div>";
+        html += "</div>";
+      }
+      if (insights.blindSpotProfile) {
+        html += "<div class='profile-box' style='background:#fef2f2;border:1px solid #fecaca'>";
+        html += "<div style='font-size:8pt;font-weight:700;color:#DC2626;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px'>Your Blind Spot Pattern</div>";
+        html += "<div style='font-size:10.5pt;color:#555;line-height:1.65'>"+insights.blindSpotProfile+"</div>";
+        html += "</div>";
+      }
+      html += "</div>";
+    }
+
+    // INDIVIDUAL THEME PAGES
+    top5.forEach(function(t,i){
+      var th=TH[t.id]; var rd=REVEAL_DATA[t.id]||{}; var col=dc(t.id); var bg=dbg(t.id); var lbg=ddbg(t.id);
+      var rarity = (rd.pct||0)<=8?"Rare":(rd.pct||0)<=15?"Uncommon":"Common";
+      var rarCol = rarity==="Rare"?"#DC2626":rarity==="Uncommon"?"#7C3AED":"#999";
+      var ins = insights && insights.themes ? insights.themes[t.id] : null;
+
+      html += "<div class='theme-page page-break'>";
+      html += "<div class='header-bar'><span class='header-brand'>Strengths Discovery</span><span class='header-name'>"+(name||"")+" \u00b7 #"+(i+1)+" of 34</span></div>";
+
+      // Theme header
+      html += "<div style='display:flex;align-items:flex-end;gap:20px;margin-bottom:4px'>";
+      html += "<div class='theme-rank' style='color:"+col+"'>"+(i+1)+"</div>";
+      html += "<div><div class='theme-name'>"+th.n+"</div>";
+      html += "<div class='theme-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div></div>";
+
+      html += "<hr class='theme-divider' style='background:"+col+"'/>";
+      html += "<div class='theme-desc'>"+th.desc+"</div>";
+
+      // Stats row
+      html += "<div style='margin:8px 0 4px'>";
+      html += "<span class='theme-stat' style='background:"+dbg(t.id)+";color:"+col+"'>"+(rd.pct||"?")+"% have this in top 5 \u00b7 "+rarity+"</span>";
+      html += "</div>";
+      html += "<div class='theme-company'>In good company: <b>"+(rd.fic||"")+"</b> (Fictional) &nbsp;\u00b7&nbsp; <b>"+(rd.real||"")+"</b> (Real World)</div>";
+
+      html += "<div class='section-divider'></div>";
+
+      // WHY UNIQUE (AI)
+      if (ins && ins.unique) {
+        html += "<div class='section'>";
+        html += "<div class='section-hd' style='color:"+col+"'>Why Your "+th.n+" Is Unique</div>";
+        html += "<div class='section-bd'>"+ins.unique+"</div></div>";
+      }
+
+      // AT WORK + AT YOUR BEST side by side concept, but stacked for print
+      html += "<div class='section'>";
+      html += "<div class='section-hd' style='color:"+col+"'>At Work</div>";
+      html += "<div class='section-bd'>"+th.atWork+"</div></div>";
+
+      html += "<div class='section'>";
+      html += "<div class='section-hd' style='color:"+col+"'>At Your Best</div>";
+      html += "<div class='section-bd'>"+th.atBest+"</div></div>";
+
+      // ACTION ITEMS (AI)
+      if (ins && ins.actionItems && ins.actionItems.length > 0) {
+        html += "<div class='section'>";
+        html += "<div class='section-hd' style='color:"+col+"'>Action Items This Week</div>";
+        html += "<ul class='action-list'>";
+        ins.actionItems.forEach(function(item, idx) {
+          html += "<li class='action-item'><span class='action-bullet' style='background:"+col+"'>"+(idx+1)+"</span><span>"+item+"</span></li>";
+        });
+        html += "</ul></div>";
+      }
+
+      // LEADERSHIP EDGE (AI)
+      if (ins && ins.leadershipEdge) {
+        html += "<div class='section'>";
+        html += "<div class='section-hd' style='color:"+col+"'>Your Leadership Edge</div>";
+        html += "<div class='section-bd'>"+ins.leadershipEdge+"</div></div>";
+      }
+
+      // BLIND SPOTS (AI)
+      if (ins && ins.blindSpots) {
+        html += "<div class='team-box' style='background:#fef2f2;border-color:#fecaca'>";
+        html += "<div class='team-box-label' style='color:#DC2626'>Watch Out</div>";
+        html += "<div>"+ins.blindSpots+"</div></div>";
+      }
+
+      // TEAM TIP (AI)
+      if (ins && ins.teamTip) {
+        html += "<div class='team-box'>";
+        html += "<div class='team-box-label'>For Your Manager &amp; Teammates</div>";
+        html += "<div>"+ins.teamTip+"</div></div>";
+      }
+
+      html += "</div>"; // end theme-page
+    });
+
+    // BLENDS PAGE
     if (insights && insights.blends && insights.blends.length > 0) {
-      html += "<div class='page-break'>";
-      html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>"+(name||"")+"</span></div>";
-      html += "<h2>How Your Strengths Combine</h2>";
-      html += "<div class='desc' style='margin-bottom:16px'>Your top 5 don't operate in isolation. Here's how they interact.</div>";
+      html += "<div class='page page-break'>";
+      html += "<div class='header-bar'><span class='header-brand'>Strengths Discovery</span><span class='header-name'>"+(name||"")+"</span></div>";
+      html += "<h2 style='font-size:22pt;margin:0 0 4px;font-weight:800'>Strength Combinations</h2>";
+      html += "<div style='font-size:10pt;color:#999;margin-bottom:20px'>Your top 5 don't operate in isolation. Here's how they combine to create something unique.</div>";
       insights.blends.forEach(function(b) {
         var nameA = TH[b.a] ? TH[b.a].n : b.a;
         var nameB = TH[b.b] ? TH[b.b].n : b.b;
-        html += "<div style='margin-bottom:12px;padding:10px 14px;border-left:3px solid #6D28D9;background:#f8f7fc;border-radius:0 6px 6px 0'>";
-        html += "<div style='font-weight:bold;font-size:10pt;color:#1a1a2e;margin-bottom:2px'>"+nameA+" + "+nameB+"</div>";
-        html += "<div style='font-size:10pt;color:#555'>"+b.text+"</div>";
+        var colA = TH[b.a] ? dc(b.a) : "#6D28D9";
+        html += "<div class='blend-card'>";
+        html += "<div class='blend-header' style='background:"+colA+"'>";
+        html += "<span class='blend-title'>"+nameA+"</span><span class='blend-plus'>+</span><span class='blend-title'>"+nameB+"</span>";
         html += "</div>";
+        html += "<div class='blend-body'>";
+        html += "<div class='blend-tagline'>"+b.text+"</div>";
+        if (b.detail) { html += "<div style='color:#666;margin-top:4px'>"+b.detail+"</div>"; }
+        html += "</div></div>";
       });
       html += "</div>";
     }
-    // Summary page
-    if (insights && insights.summary) {
-      html += "<div class='page-break'>";
-      html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>"+(name||"")+"</span></div>";
-      html += "<div style='margin-top:100px;text-align:center'>";
-      html += "<div style='font-size:10pt;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px'>YOUR OPERATING STYLE</div>";
-      html += "<div style='font-size:16pt;font-style:italic;color:#1a1a2e;line-height:1.6;max-width:400px;margin:0 auto'>\""+insights.summary+"\"</div>";
-      html += "</div></div>";
-    }
-  } else {
-    // Full 34
-    html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>Theme Sequence Report</span></div>";
-    html += "<div style='margin-top:60px'><div style='color:#999;font-size:12pt;margin-bottom:4px'>"+(name||"")+"</div>";
-    html += "<h1>Theme Sequence<br/>Report</h1><hr class='hr'/>";
-    html += "<div class='desc'>Your complete ranking of all 34 strength themes. Your top themes represent your natural talents. The themes toward the bottom are less apparent in your day-to-day behaviors.</div></div>";
-    html += "<div class='page-break'>";
-    html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>"+(name||"")+"</span></div>";
-    html += "<h2>Your Full 34</h2>";
 
-    var sections = [{name:"STRENGTHEN",desc:"Your signature themes. Lead with these.",s:0,e:5},{name:"NAVIGATE",desc:"These support your top 5. Use them intentionally.",s:5,e:10},{name:"DEVELOP",desc:"These show potential. Invest selectively.",s:10,e:20},{name:"MANAGE",desc:"Less natural. Be aware of them.",s:20,e:34}];
+    // SUMMARY / CLOSING PAGE
+    html += "<div class='summary-page page-break'>";
+    html += "<div class='summary-label'>Your Strengths DNA</div>";
+    html += "<div style='display:flex;gap:12px;justify-content:center;margin-bottom:30px;flex-wrap:wrap'>";
+    top5.forEach(function(t) {
+      html += "<span style='padding:8px 18px;border-radius:24px;font-weight:700;font-size:11pt;color:"+dc(t.id)+";background:"+dbg(t.id)+";border:1px solid "+dc(t.id)+"20'>"+TH[t.id].n+"</span>";
+    });
+    html += "</div>";
+    if (insights && insights.summary) {
+      html += "<div class='summary-quote'>\""+insights.summary+"\"</div>";
+    }
+    html += "<div style='font-size:10pt;color:#999;margin-top:20px'>Strengths Discovery \u00b7 "+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</div>";
+    html += "</div>";
+
+  } else {
+    // FULL 34 REPORT
+    // Cover
+    html += "<div class='cover-dark'>";
+    html += "<div class='cover-content'>";
+    html += "<div class='cover-label'>Strengths Discovery</div>";
+    html += "<div class='cover-title'>"+(name||"Your")+"'s<br/>Full 34 Report</div>";
+    html += "<div class='cover-subtitle'>Your complete ranking of all 34 strength themes, from most to least dominant.</div>";
+    html += "</div></div>";
+
+    // Ranking pages
+    html += "<div class='page page-break'>";
+    html += "<div class='header-bar'><span class='header-brand'>Strengths Discovery</span><span class='header-name'>"+(name||"")+" \u00b7 Theme Sequence</span></div>";
+
+    var maxScore = ranked[0] ? ranked[0].score : 1;
+    var sections = [
+      {name:"Strengthen",desc:"Your signature themes. Lead with these every day.",s:0,e:5,color:"#6D28D9"},
+      {name:"Navigate",desc:"Strong supporting themes. Use them intentionally.",s:5,e:10,color:"#2563EB"},
+      {name:"Develop",desc:"Moderate themes with growth potential.",s:10,e:20,color:"#059669"},
+      {name:"Manage",desc:"Less natural themes. Be aware of them in high-stakes moments.",s:20,e:34,color:"#999"}
+    ];
     sections.forEach(function(sec){
-      html += "<div style='margin-top:16px'><div style='font-weight:bold;color:#6D28D9;font-size:11pt'>"+sec.name+"</div>";
-      html += "<div style='font-size:9pt;color:#999;margin-bottom:8px'>"+sec.desc+"</div>";
+      html += "<div style='margin-top:20px'>";
+      html += "<div style='display:flex;align-items:baseline;gap:10px;margin-bottom:6px'>";
+      html += "<span style='font-size:13pt;font-weight:800;color:"+sec.color+"'>"+sec.name+"</span>";
+      html += "<span style='font-size:9pt;color:#999'>"+sec.desc+"</span></div>";
       for(var i=sec.s;i<Math.min(sec.e,ranked.length);i++){
         var t=ranked[i]; var th=TH[t.id]; var col=dc(t.id); var isT5=i<5;
-        html += "<div class='rank-row'><div class='rank-num"+(isT5?" top5":"")+"' style='"+(isT5?"color:"+col:"")+"'>"+(i+1)+".</div>";
-        html += "<div class='rank-name"+(isT5?" top5":"")+"'>"+th.n+"</div>";
+        var barW = Math.max(4, Math.round((t.score/maxScore)*200));
+        html += "<div class='rank-row' style='"+(isT5?"background:#f8f7fc;border-radius:6px;padding:6px 8px;margin:2px 0":"")+"'>";
+        html += "<div class='rank-num' style='"+(isT5?"color:"+col+";font-size:12pt":"")+"'>"+(i+1)+"</div>";
+        html += "<div class='rank-bar' style='width:"+barW+"px;background:"+col+"'></div>";
+        html += "<div class='rank-name' style='"+(isT5?"font-weight:800;font-size:11pt":"")+"'>"+th.n+"</div>";
         html += "<div class='rank-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div>";
       }
       html += "</div>";
+      if (sec.e === 5 || sec.e === 10 || sec.e === 20) {
+        html += "<div style='height:1px;background:#e8e6f0;margin:12px 0'></div>";
+      }
     });
     html += "</div>";
   }
@@ -1591,26 +1767,37 @@ async function generateInsights(ranked, name) {
   var t5domains = top5.map(function(t) { return DOMAINS[TH[t.id].d].name; });
   var t10names = top10.map(function(t) { return TH[t.id].n; });
 
-  var prompt = "You are a strengths coach analyzing someone's assessment results. Their name is " + (name || "this person") + ".\n\n" +
+  var bottom5 = ranked.slice(-5);
+  var b5names = bottom5.map(function(t) { return TH[t.id].n; });
+
+  var prompt = "You are an elite strengths coach writing a premium, deeply personalized assessment report. The person's name is " + (name || "this person") + ".\n\n" +
     "Their top 5 strengths in order: " + t5names.join(", ") + "\n" +
     "Their domains: " + t5domains.join(", ") + "\n" +
-    "Their top 10: " + t10names.join(", ") + "\n\n" +
+    "Their top 10: " + t10names.join(", ") + "\n" +
+    "Their bottom 5 (weakest): " + b5names.join(", ") + "\n\n" +
     "Generate a JSON object with NO other text, no markdown backticks, no preamble. Just raw JSON.\n\n" +
     "The JSON should have this structure:\n" +
     "{\n" +
     '  "themes": {\n' +
     '    "<theme_key>": {\n' +
-    '      "unique": "2-3 sentences about why THIS person\'s version of this strength is unique given their specific combination. Reference how their other top 5 strengths interact with this one. Write in second person (you). Be specific and insightful, not generic.",\n' +
-    '      "blindSpots": "2-3 sentences about what to watch out for with this strength. Be honest and direct, not sugarcoated. Write in second person."\n' +
+    '      "unique": "3-4 sentences about why THIS person\'s version of this strength is unique given their specific combination. Reference how their other top 5 strengths interact with this one. Be deeply specific, not generic. Write in second person (you).",\n' +
+    '      "blindSpots": "2-3 sentences about what to watch out for. Be honest and direct, not sugarcoated. Write in second person.",\n' +
+    '      "actionItems": ["Specific action item 1 they can take THIS WEEK to leverage this strength (one sentence)", "Specific action item 2 (one sentence)", "Specific action item 3 (one sentence)"],\n' +
+    '      "teamTip": "1-2 sentences about how teammates and managers should work with this person given this strength. Write about them in third person.",\n' +
+    '      "leadershipEdge": "1-2 sentences about the unique leadership advantage this strength gives them. Write in second person."\n' +
     "    }\n" +
     "  },\n" +
     '  "blends": [\n' +
-    '    { "a": "<theme1_key>", "b": "<theme2_key>", "text": "One punchy sentence about how these two strengths interact in this person. Like a tagline." }\n' +
+    '    { "a": "<theme1_key>", "b": "<theme2_key>", "text": "One punchy sentence about how these two strengths interact. Like a tagline.", "detail": "2-3 sentences expanding on this combination with a specific real-world example of when this blend would shine." }\n' +
     "  ],\n" +
-    '  "summary": "One sentence that captures this person\'s entire operating style based on all 5. Write it like a brand statement. Direct, memorable, no fluff."\n' +
+    '  "summary": "One sentence that captures this person\'s entire operating style based on all 5. Write it like a brand statement. Direct, memorable, no fluff.",\n' +
+    '  "fullProfile": "A 3-4 sentence paragraph painting a vivid picture of who this person is at their best. Reference their specific top 5 by name. This should feel like a coach who truly knows them is describing them to a hiring manager. Write in third person using their name.",\n' +
+    '  "blindSpotProfile": "2-3 sentences about their overall blind spot pattern based on the COMBINATION of their top 5 and their bottom 5. What kind of work or situations might drain them? Write in second person.",\n' +
+    '  "dominantDomain": "1-2 sentences about what it means that their strengths cluster in the domains they do. Reference the specific domain mix."\n' +
     "}\n\n" +
     "Theme keys to use: " + top5.map(function(t) { return t.id; }).join(", ") + "\n\n" +
     "For blends, generate all 10 pairwise combinations of the top 5 (1+2, 1+3, 1+4, 1+5, 2+3, 2+4, 2+5, 3+4, 3+5, 4+5).\n\n" +
+    "IMPORTANT: Be deeply personalized. Reference their SPECIFIC combination, not generic descriptions. Every insight should feel like it could ONLY apply to someone with THIS exact top 5.\n\n" +
     "Remember: ONLY output valid JSON. No backticks, no explanation, no preamble.";
 
   try {
