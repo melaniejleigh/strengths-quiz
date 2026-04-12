@@ -489,7 +489,7 @@ function getNextBatch(answers, ranked) {
   return candidates.slice(0, 10).map(function(x) { return x.i; });
 }
 
-/* ---- STORAGE (localStorage for progress, Supabase for final results) ---- */
+/* ---- STORAGE ---- */
 var SKEY_PREFIX = "arc-quiz-g1-";
 function getKey(email) { return SKEY_PREFIX + email.toLowerCase().trim(); }
 function saveData(email, d) { try { localStorage.setItem(getKey(email), JSON.stringify(d)); } catch(e) { /* */ } }
@@ -747,12 +747,24 @@ function RevealScreen(props) {
                   </div>
                   {isOpen && th.atWork && (
                     <div style={{padding:"0 16px 16px"}}>
+                      {props.insights && props.insights.themes && props.insights.themes[t.id] && (
+                        <div style={{marginBottom:12,padding:"12px 14px",borderRadius:10,background:"rgba(109,40,217,0.1)",border:"1px solid rgba(109,40,217,0.15)"}}>
+                          <div style={{fontSize:9,letterSpacing:2,textTransform:"uppercase",color:"#c4b5fd",fontWeight:600,marginBottom:6}}>WHY YOUR {th.n.toUpperCase()} IS UNIQUE</div>
+                          <div style={{fontSize:12,color:"rgba(255,255,255,0.65)",lineHeight:1.65}}>{props.insights.themes[t.id].unique}</div>
+                        </div>
+                      )}
                       {[{label:"AT WORK",text:th.atWork},{label:"AT YOUR BEST",text:th.atBest},{label:"HOW TO LEAN IN",text:th.leanIn}].map(function(sec){
                         return(<div key={sec.label} style={{marginBottom:12,padding:"12px 14px",borderRadius:10,background:"rgba(0,0,0,0.2)"}}>
                           <div style={{fontSize:9,letterSpacing:2,textTransform:"uppercase",color:dc,fontWeight:600,marginBottom:6}}>{sec.label}</div>
                           <div style={{fontSize:12,color:"rgba(255,255,255,0.55)",lineHeight:1.65}}>{sec.text}</div>
                         </div>);
                       })}
+                      {props.insights && props.insights.themes && props.insights.themes[t.id] && props.insights.themes[t.id].blindSpots && (
+                        <div style={{marginBottom:0,padding:"12px 14px",borderRadius:10,background:"rgba(220,38,38,0.08)",border:"1px solid rgba(220,38,38,0.12)"}}>
+                          <div style={{fontSize:9,letterSpacing:2,textTransform:"uppercase",color:"#fca5a5",fontWeight:600,marginBottom:6}}>WATCH OUT</div>
+                          <div style={{fontSize:12,color:"rgba(255,255,255,0.55)",lineHeight:1.65}}>{props.insights.themes[t.id].blindSpots}</div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -785,7 +797,7 @@ function RevealScreen(props) {
               {top5.map(function(t,i){return <div key={i} style={{flex:1,background:getColor(t.id)}}/>;}) }
             </div>
             <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:19,fontStyle:"italic",color:"rgba(255,255,255,0.55)",lineHeight:1.6,maxWidth:300,margin:0}}>
-              {firstName}, you {top5.map(function(t,i){var v=["lead with action","see the smartest path","stay flexible when plans change","are driven to win","generate ideas others miss"];return(i<4?v[i]+", ":v[i]+"."); }).join("")}
+              {props.insights && props.insights.summary ? props.insights.summary : firstName + ", you " + top5.map(function(t,i){var v=["lead with your top talent","see the path forward","adapt when things shift","push for the win","bring fresh ideas"];return(i<4?v[i]+", ":v[i]+"."); }).join("")}
             </p>
           </div>
         </div>
@@ -877,6 +889,39 @@ function PracticeQuestion(props) {
   );
 }
 
+/* ---- THEME NAME TO ID MAP ---- */
+var THEME_NAME_MAP = {};
+ALL_T.forEach(function(id) { THEME_NAME_MAP[TH[id].n.toLowerCase().replace("-","")] = id; });
+THEME_NAME_MAP["self assurance"] = "self_assurance";
+THEME_NAME_MAP["selfassurance"] = "self_assurance";
+
+function parseGallupText(text) {
+  var lines = text.split(/\n/);
+  var found = [];
+  var seen = {};
+  lines.forEach(function(line) {
+    var m = line.match(/^\s*(\d{1,2})[\.\)\s]+([A-Za-z\- ]+)/);
+    if (m) {
+      var num = parseInt(m[1]);
+      var raw = m[2].trim().replace(/[®™]/g, "").trim().toLowerCase().replace(/[\s-]+/g, " ").replace("self assurance","self_assurance");
+      var key = raw.replace(/\s+/g, "").replace("-","");
+      var id = THEME_NAME_MAP[key] || THEME_NAME_MAP[raw] || null;
+      if (!id) {
+        ALL_T.forEach(function(tid) {
+          if (TH[tid].n.toLowerCase().replace("-","").replace(" ","") === key) id = tid;
+        });
+      }
+      if (id && !seen[id] && num >= 1 && num <= 34) {
+        found.push({ rank: num, id: id });
+        seen[id] = true;
+      }
+    }
+  });
+  found.sort(function(a, b) { return a.rank - b.rank; });
+  if (found.length < 5) return null;
+  return found.map(function(f, i) { return { id: f.id, score: Math.round(40 - i * 1.2), n: 0 }; });
+}
+
 /* ---- WELCOME ---- */
 function Welcome(props) {
   const [practiced, setPracticed] = useState(false);
@@ -884,6 +929,9 @@ function Welcome(props) {
   const [email, setEmail] = useState("");
   const [checking, setChecking] = useState(false);
   const [foundSaved, setFoundSaved] = useState(null);
+  const [importMode, setImportMode] = useState(false);
+  const [pasteText, setPasteText] = useState("");
+  const [importError, setImportError] = useState("");
   var canBegin = practiced && name.trim().length > 0 && email.trim().includes("@");
 
   function checkEmail() {
@@ -895,6 +943,16 @@ function Welcome(props) {
       if (s.name) setName(s.name);
     } else { setFoundSaved(null); }
     setChecking(false);
+  }
+
+  function handleImport() {
+    var ranked = parseGallupText(pasteText);
+    if (!ranked || ranked.length < 5) {
+      setImportError("Could not find enough themes. Make sure you pasted the numbered list (1. Ideation, 2. Activator, etc.)");
+      return;
+    }
+    setImportError("");
+    props.onImport(ranked, name || "Friend", email);
   }
 
   var inputStyle = { padding: "12px 16px", borderRadius: 8, border: "1px solid #e8e6f0", fontSize: 15, width: "100%", maxWidth: 320, textAlign: "center", fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none", boxSizing: "border-box", background: "#fff", color: "#1a1a2e" };
@@ -939,10 +997,25 @@ function Welcome(props) {
           {!foundSaved && !checking && canBegin && (
             <button onClick={function() { props.onStart(false, email, name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Begin</button>
           )}
-          <div style={{ maxWidth: 320, margin: "12px auto 0", padding: "10px 14px", background: "#f0f9ff", borderRadius: 8, border: "1px solid #bae6fd" }}>
+          <div style={{ maxWidth: 320, margin: "12px auto 0", padding: "10px 14px", background: "#e0f2fe", borderRadius: 8, border: "1px solid #bae6fd" }}>
             <p style={{ fontSize: 11, color: "#0369a1", lineHeight: 1.5, margin: 0 }}>By proceeding, your full 34 strengths ranking, name, and email will be visible to the quiz creator for training purposes. Your individual answers will remain anonymous.</p>
           </div>
           <p style={{ fontSize: 11, color: "#9999aa", marginTop: 12 }}>Your progress saves automatically. Use the same email to pick up where you left off.</p>
+          {email.trim().toLowerCase() === "mickey.ellenwood@gmail.com" && !importMode && !foundSaved && (
+            <button onClick={function() { setImportMode(true); }} style={{ marginTop: 10, fontSize: 12, color: "#6D28D9", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>I already have my CliftonStrengths 34 results</button>
+          )}
+          {importMode && (
+            <div style={{ marginTop: 16, textAlign: "left", maxWidth: 420, margin: "16px auto 0", padding: "20px 24px", background: "#f8f7fc", borderRadius: 10, border: "1px solid #e8e6f0" }}>
+              <p style={{ fontSize: 14, fontWeight: 700, color: "#1a1a2e", margin: "0 0 8px" }}>Paste your results</p>
+              <p style={{ fontSize: 12, color: "#9999aa", margin: "0 0 12px", lineHeight: 1.4 }}>Paste your ranked list of 34 strengths, or copy all the text from your CliftonStrengths PDF and paste it here. We'll find the ranking.</p>
+              <textarea value={pasteText} onChange={function(e) { setPasteText(e.target.value); setImportError(""); }} placeholder={"1. Ideation\n2. Activator\n3. Strategic\n..."} style={{ width: "100%", minHeight: 120, padding: 12, borderRadius: 8, border: "1px solid #e8e6f0", fontSize: 13, fontFamily: "monospace", resize: "vertical", boxSizing: "border-box", background: "#fff", color: "#1a1a2e" }} />
+              {importError && <p style={{ fontSize: 12, color: "#DC2626", margin: "8px 0 0" }}>{importError}</p>}
+              <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                <button onClick={handleImport} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Load My Results</button>
+                <button onClick={function() { setImportMode(false); setPasteText(""); setImportError(""); }} style={{ padding: "10px 20px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "#fff", color: "#555570", fontSize: 14 }}>Cancel</button>
+              </div>
+            </div>
+          )}
           {name.trim().toLowerCase() === "test" && <button onClick={function() {
             var testRanked = ["ideation","activator","strategic","relator","competition","communication","adaptability","command","arranger","restorative","self_assurance","maximizer","futuristic","individualization","significance","input","woo","achiever","intellection","learner","positivity","focus","deliberative","analytical","context","empathy","developer","includer","belief","responsibility","discipline","harmony","connectedness","consistency"].map(function(id, i) { return { id: id, score: Math.round(40 - i * 1.2), n: 0 }; });
             props.onStart(false, email || "test@test.com", name || "Test");
@@ -1068,7 +1141,7 @@ function ShareCard(props) {
 }
 
 /* ---- PRINT-TO-PDF ---- */
-function printReport(type, ranked, name) {
+function printReport(type, ranked, name, insights) {
   var top5 = ranked.slice(0, 5);
   var css = "body{font-family:Helvetica,Arial,sans-serif;color:#1a1a2e;margin:0;padding:40px 50px;font-size:11pt;line-height:1.6} h1{font-size:28pt;margin:0 0 4px} h2{font-size:18pt;margin:24px 0 8px} h3{font-size:13pt;margin:16px 0 4px;color:#6D28D9} .domain{font-size:9pt;font-weight:bold;letter-spacing:1px} .desc{color:#555;margin:4px 0 12px} .section-label{font-size:9pt;font-weight:bold;color:#6D28D9;letter-spacing:1.5px;text-transform:uppercase;margin:14px 0 4px} .section-body{color:#555;margin:0 0 8px} .hr{border:none;border-top:2px solid #6D28D9;margin:16px 0} .hr-light{border:none;border-top:1px solid #e8e6f0;margin:12px 0} .rank-row{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid #eee} .rank-num{width:30px;font-weight:bold;color:#9999aa} .rank-num.top5{color:#6D28D9} .rank-name{flex:1;font-weight:600} .rank-name.top5{font-weight:bold} .rank-domain{font-size:9pt;color:#999} .page-break{page-break-before:always} .header{font-size:8pt;color:#999;border-bottom:2px solid #6D28D9;padding-bottom:6px;margin-bottom:24px;display:flex;justify-content:space-between} .company{font-size:10pt;color:#555;margin:8px 0} @media print{body{padding:30px 40px}}";
 
@@ -1103,11 +1176,43 @@ function printReport(type, ranked, name) {
       html += "<div style='font-size:10pt;color:#555;margin-bottom:4px'><b>"+(rd.pct||"?")+"% </b>of people have this in their top 5 <span style='color:"+col+"'>("+rarity+")</span></div>";
       html += "<div class='company'>In Good Company: <b>"+(rd.fic||"")+"</b> (Fictional) &nbsp;|&nbsp; <b>"+(rd.real||"")+"</b> (Real World)</div>";
       html += "<hr class='hr-light'/>";
+      var ins = insights && insights.themes ? insights.themes[t.id] : null;
+      if (ins && ins.unique) {
+        html += "<div class='section-label' style='color:#6D28D9'>WHY YOUR "+th.n.toUpperCase()+" IS UNIQUE</div><div class='section-body'>"+ins.unique+"</div>";
+      }
       html += "<div class='section-label'>AT WORK</div><div class='section-body'>"+(th.atWork||"")+"</div>";
       html += "<div class='section-label'>AT YOUR BEST</div><div class='section-body'>"+(th.atBest||"")+"</div>";
       html += "<div class='section-label'>HOW TO LEAN IN</div><div class='section-body'>"+(th.leanIn||"")+"</div>";
+      if (ins && ins.blindSpots) {
+        html += "<div class='section-label' style='color:#DC2626'>WATCH OUT</div><div class='section-body'>"+ins.blindSpots+"</div>";
+      }
       html += "</div>";
     });
+    // Blends page
+    if (insights && insights.blends && insights.blends.length > 0) {
+      html += "<div class='page-break'>";
+      html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>"+(name||"")+"</span></div>";
+      html += "<h2>How Your Strengths Combine</h2>";
+      html += "<div class='desc' style='margin-bottom:16px'>Your top 5 don't operate in isolation. Here's how they interact.</div>";
+      insights.blends.forEach(function(b) {
+        var nameA = TH[b.a] ? TH[b.a].n : b.a;
+        var nameB = TH[b.b] ? TH[b.b].n : b.b;
+        html += "<div style='margin-bottom:12px;padding:10px 14px;border-left:3px solid #6D28D9;background:#f8f7fc;border-radius:0 6px 6px 0'>";
+        html += "<div style='font-weight:bold;font-size:10pt;color:#1a1a2e;margin-bottom:2px'>"+nameA+" + "+nameB+"</div>";
+        html += "<div style='font-size:10pt;color:#555'>"+b.text+"</div>";
+        html += "</div>";
+      });
+      html += "</div>";
+    }
+    // Summary page
+    if (insights && insights.summary) {
+      html += "<div class='page-break'>";
+      html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>"+(name||"")+"</span></div>";
+      html += "<div style='margin-top:100px;text-align:center'>";
+      html += "<div style='font-size:10pt;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px'>YOUR OPERATING STYLE</div>";
+      html += "<div style='font-size:16pt;font-style:italic;color:#1a1a2e;line-height:1.6;max-width:400px;margin:0 auto'>\""+insights.summary+"\"</div>";
+      html += "</div></div>";
+    }
   } else {
     // Full 34
     html += "<div class='header'><span style='font-weight:bold;color:#6D28D9'>STRENGTHS DISCOVERY</span><span>Theme Sequence Report</span></div>";
@@ -1209,6 +1314,7 @@ function ResultsScreen(props) {
     var rk = cardProps.rank;
     var th = TH[t.id];
     var dc = DOMAINS[th.d].color;
+    var ins = props.insights && props.insights.themes ? props.insights.themes[t.id] : null;
     return (
       <div style={{ marginBottom: 16, borderRadius: 14, border: "1px solid #e8e6f0", overflow: "hidden", background: "#fff" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "18px 18px 14px", borderBottom: "1px solid #e8e6f0", background: "#f8f7fc" }}>
@@ -1220,9 +1326,18 @@ function ResultsScreen(props) {
         </div>
         <div style={{ padding: "14px 18px 6px" }}>
           <p style={{ fontSize: 14, lineHeight: 1.6, color: "#555570", margin: "0 0 14px" }}>{th.desc}</p>
+          {ins && ins.unique && (
+            <div style={{ marginBottom: 10, padding: "12px 14px", borderRadius: 8, background: "#f3f0ff", border: "1px solid #e8e0ff" }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#6D28D9", letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>Why Your {th.n} Is Unique</div>
+              <div style={{ fontSize: 13, lineHeight: 1.6, color: "#555570" }}>{ins.unique}</div>
+            </div>
+          )}
           <SectionButton themeId={t.id} section="atWork" label="At Work" text={th.atWork} />
           <SectionButton themeId={t.id} section="atBest" label="At Your Best" text={th.atBest} />
           <SectionButton themeId={t.id} section="leanIn" label="How to Lean In" text={th.leanIn} />
+          {ins && ins.blindSpots && (
+            <SectionButton themeId={t.id} section="blindSpots" label="Watch Out" text={ins.blindSpots} />
+          )}
         </div>
       </div>
     );
@@ -1315,8 +1430,8 @@ function ResultsScreen(props) {
         <p style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", marginBottom: 8 }}>Download Your Reports</p>
         <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 14 }}>Save as PDF from the print dialog that opens.</p>
         <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={function() { printReport("top5", ranked, props.name); }} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Top 5 Report</button>
-          <button onClick={function() { printReport("full34", ranked, props.name); }} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Full 34 Report</button>
+          <button onClick={function() { printReport("top5", ranked, props.name, props.insights); }} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Top 5 Report</button>
+          <button onClick={function() { printReport("full34", ranked, props.name, props.insights); }} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Full 34 Report</button>
         </div>
       </div>
 
@@ -1329,10 +1444,13 @@ function ResultsScreen(props) {
           var body = (props.name || "Hi") + "'s Top 5 Strengths\n\n";
           top5.forEach(function(t, i) {
             var th = TH[t.id];
+            var ins = props.insights && props.insights.themes ? props.insights.themes[t.id] : null;
             body += (i + 1) + ". " + th.n + " (" + DOMAINS[th.d].name + ")\n" + th.desc + "\n\n";
+            if (ins && ins.unique) body += "WHY YOUR " + th.n.toUpperCase() + " IS UNIQUE: " + ins.unique + "\n\n";
             if (th.atWork) body += "AT WORK: " + th.atWork + "\n\n";
             if (th.atBest) body += "AT YOUR BEST: " + th.atBest + "\n\n";
             if (th.leanIn) body += "HOW TO LEAN IN: " + th.leanIn + "\n\n";
+            if (ins && ins.blindSpots) body += "WATCH OUT: " + ins.blindSpots + "\n\n";
             body += "---\n\n";
           });
           body += "Full ranking:\n";
@@ -1363,8 +1481,79 @@ function ResultsScreen(props) {
   );
 }
 
+/* ---- GENERATE INSIGHTS VIA CLAUDE API ---- */
+async function generateInsights(ranked, name) {
+  var top5 = ranked.slice(0, 5);
+  var top10 = ranked.slice(0, 10);
+  var t5names = top5.map(function(t) { return TH[t.id].n; });
+  var t5domains = top5.map(function(t) { return DOMAINS[TH[t.id].d].name; });
+  var t10names = top10.map(function(t) { return TH[t.id].n; });
+
+  var prompt = "You are a strengths coach analyzing someone's assessment results. Their name is " + (name || "this person") + ".\n\n" +
+    "Their top 5 strengths in order: " + t5names.join(", ") + "\n" +
+    "Their domains: " + t5domains.join(", ") + "\n" +
+    "Their top 10: " + t10names.join(", ") + "\n\n" +
+    "Generate a JSON object with NO other text, no markdown backticks, no preamble. Just raw JSON.\n\n" +
+    "The JSON should have this structure:\n" +
+    "{\n" +
+    '  "themes": {\n' +
+    '    "<theme_key>": {\n' +
+    '      "unique": "2-3 sentences about why THIS person\'s version of this strength is unique given their specific combination. Reference how their other top 5 strengths interact with this one. Write in second person (you). Be specific and insightful, not generic.",\n' +
+    '      "blindSpots": "2-3 sentences about what to watch out for with this strength. Be honest and direct, not sugarcoated. Write in second person."\n' +
+    "    }\n" +
+    "  },\n" +
+    '  "blends": [\n' +
+    '    { "a": "<theme1_key>", "b": "<theme2_key>", "text": "One punchy sentence about how these two strengths interact in this person. Like a tagline." }\n' +
+    "  ],\n" +
+    '  "summary": "One sentence that captures this person\'s entire operating style based on all 5. Write it like a brand statement. Direct, memorable, no fluff."\n' +
+    "}\n\n" +
+    "Theme keys to use: " + top5.map(function(t) { return t.id; }).join(", ") + "\n\n" +
+    "For blends, generate all 10 pairwise combinations of the top 5 (1+2, 1+3, 1+4, 1+5, 2+3, 2+4, 2+5, 3+4, 3+5, 4+5).\n\n" +
+    "Remember: ONLY output valid JSON. No backticks, no explanation, no preamble.";
+
+  try {
+    var response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 3000,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+    var data = await response.json();
+    var text = data.content.map(function(c) { return c.text || ""; }).join("");
+    var clean = text.replace(/```json|```/g, "").trim();
+    return JSON.parse(clean);
+  } catch (e) {
+    console.error("Insights generation failed:", e);
+    return null;
+  }
+}
+
+/* ---- GENERATING SCREEN ---- */
+function GeneratingScreen(props) {
+  const [dots, setDots] = useState("");
+  useEffect(function() {
+    var i = setInterval(function() { setDots(function(d) { return d.length >= 3 ? "" : d + "."; }); }, 500);
+    return function() { clearInterval(i); };
+  }, []);
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "linear-gradient(160deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+      <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(109,40,217,0.2) 0%, transparent 60%)", filter: "blur(80px)" }} />
+      <div style={{ position: "relative", textAlign: "center", padding: "0 32px" }}>
+        <div style={{ width: 48, height: 48, border: "3px solid rgba(255,255,255,0.1)", borderTop: "3px solid #6D28D9", borderRadius: "50%", margin: "0 auto 24px", animation: "spin 1s linear infinite" }} />
+        <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", marginBottom: 8 }}>Analyzing your strengths{dots}</div>
+        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>We're generating personalized insights based on your unique combination.</p>
+      </div>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}
+
 /* ---- MAIN APP ---- */
-export default function App() {
+export default function Quiz() {
   const [screen, setScreen] = useState("welcome");
   const [answers, setAnswers] = useState([]);
   const [queue, setQueue] = useState([]);
@@ -1373,6 +1562,7 @@ export default function App() {
   const [ranked, setRanked] = useState(null);
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
+  const [insights, setInsights] = useState(null);
 
   var coreQ = useMemo(function() {
     return shuffle(Array.from({ length: 90 }, function(_, i) { return i; }));
@@ -1386,6 +1576,14 @@ export default function App() {
     }
   }, [answers, qi, screen, queue, phase, userEmail, userName]);
 
+  function goToReveal(sc, nm) {
+    setScreen("generating");
+    generateInsights(sc, nm).then(function(ins) {
+      setInsights(ins);
+      setScreen("reveal");
+    });
+  }
+
   function handleStart(resume, email, name) {
     setUserEmail(email);
     setUserName(name);
@@ -1393,7 +1591,12 @@ export default function App() {
       var s = loadData(email);
       if (s && s.answers && s.answers.length > 0) {
         setAnswers(s.answers);
-        if (s.completed && s.ranked) { setRanked(s.ranked); setScreen("results"); return; }
+        if (s.completed && s.ranked) {
+          setRanked(s.ranked);
+          if (s.insights) { setInsights(s.insights); setScreen("results"); }
+          else { goToReveal(s.ranked, s.name || name); }
+          return;
+        }
         setQueue(s.queue || coreQ);
         setQi(s.qi || 0);
         setPhase(s.phase || "core");
@@ -1413,7 +1616,10 @@ export default function App() {
       var sc = calcScores(na);
       var nb = getNextBatch(na, sc);
       if (nb.length === 0 || na.length >= 200) {
-        setRanked(sc); saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName }); submitToSupabase(userEmail, userName, sc); setScreen("reveal");
+        setRanked(sc);
+        saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName });
+        submitToSupabase(userEmail, userName, sc);
+        goToReveal(sc, userName);
       } else {
         setPhase("adaptive"); var nq = queue.concat(nb); setQueue(nq); setQi(queue.length);
       }
@@ -1421,16 +1627,24 @@ export default function App() {
   }
 
   function handleRetake() {
-    setAnswers([]); setRanked(null); setQueue(coreQ); setQi(0); setPhase("core"); clearData(userEmail); setScreen("welcome");
+    setAnswers([]); setRanked(null); setInsights(null); setQueue(coreQ); setQi(0); setPhase("core"); clearData(userEmail); setScreen("welcome");
+  }
+
+  function finishReveal() {
+    if (userEmail && ranked) {
+      saveData(userEmail, { answers: answers, ranked: ranked, completed: true, name: userName, insights: insights });
+    }
+    setScreen("results");
   }
 
   return (
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n) { setRanked(r); setUserName(n); setScreen("reveal"); }} />}
+      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n) { setRanked(r); setUserName(n); goToReveal(r, n); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n); }} />}
       {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={function() { setScreen("welcome"); }} />}
-      {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} onFinish={function() { setScreen("results"); }} />}
-      {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} />}
+      {screen === "generating" && <GeneratingScreen />}
+      {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} />}
+      {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} />}
     </div>
   );
 }
