@@ -497,29 +497,48 @@ function loadData(email) { try { var r = localStorage.getItem(getKey(email)); re
 function clearData(email) { try { localStorage.removeItem(getKey(email)); } catch(e) { /* */ } }
 
 /* ---- SUPABASE LOOKUP ---- */
-async function lookupSupabase(email) {
+async function checkSupabaseExists(email) {
   if (!supabase) return null;
   try {
     var { data, error } = await supabase
       .from("quiz_results")
-      .select("name, top_5, rankings, domain_scores, created_at")
+      .select("name, created_at")
       .eq("email", email.toLowerCase().trim())
       .order("created_at", { ascending: false })
       .limit(1);
     if (error || !data || data.length === 0) return null;
+    return { name: data[0].name, hasResults: true };
+  } catch (e) { return null; }
+}
+
+async function verifyPinAndGetResults(email, pin) {
+  if (!supabase) return null;
+  try {
+    var { data, error } = await supabase
+      .from("quiz_results")
+      .select("name, top_5, rankings, domain_scores, created_at, pin")
+      .eq("email", email.toLowerCase().trim())
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error || !data || data.length === 0) return { error: "No results found" };
     var row = data[0];
-    // Reconstruct ranked array from stored rankings
+    if (row.pin !== pin) return { error: "Incorrect PIN" };
     var ranked = row.rankings.map(function(r) {
       return { id: r.id, score: r.score };
     });
     return { name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at };
-  } catch (e) { console.error("Supabase lookup failed:", e); return null; }
+  } catch (e) { return { error: "Lookup failed" }; }
+}
+
+function generatePin() {
+  return String(Math.floor(1000 + Math.random() * 9000));
 }
 
 /* ---- SUPABASE SUBMISSION ---- */
 async function submitToSupabase(email, name, ranked) {
-  if (!supabase) return;
+  if (!supabase) return null;
   try {
+    var pin = generatePin();
     var top5 = ranked.slice(0, 5).map(function(t) { return t.id; });
     var domainScores = {};
     DO.forEach(function(d) {
@@ -535,8 +554,10 @@ async function submitToSupabase(email, name, ranked) {
       top_5: top5,
       rankings: ranked.map(function(t) { return { id: t.id, score: t.score }; }),
       domain_scores: domainScores,
+      pin: pin,
     });
-  } catch (e) { console.error("Failed to submit results:", e); }
+    return pin;
+  } catch (e) { console.error("Failed to submit results:", e); return null; }
 }
 
 /* ---- SHUFFLE ---- */
@@ -954,9 +975,15 @@ function Welcome(props) {
   const [importError, setImportError] = useState("");
   var canBegin = practiced && name.trim().length > 0 && email.trim().includes("@");
 
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
+  const [dbRecord, setDbRecord] = useState(null);
+
   function checkEmail() {
     if (!email.trim().includes("@")) return;
     setChecking(true);
+    setPinError("");
+    setDbRecord(null);
     var s = loadData(email);
     if (s && s.answers && s.answers.length > 0) {
       setFoundSaved(s);
@@ -964,14 +991,33 @@ function Welcome(props) {
       setChecking(false);
     } else {
       // Nothing in localStorage — check Supabase for completed results
-      lookupSupabase(email).then(function(result) {
-        if (result && result.ranked) {
-          setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true });
+      checkSupabaseExists(email).then(function(result) {
+        if (result && result.hasResults) {
+          setDbRecord(result);
           if (result.name) setName(result.name);
-        } else { setFoundSaved(null); }
+        } else { setDbRecord(null); }
+        setFoundSaved(null);
         setChecking(false);
-      }).catch(function() { setFoundSaved(null); setChecking(false); });
+      }).catch(function() { setFoundSaved(null); setDbRecord(null); setChecking(false); });
     }
+  }
+
+  function handlePinSubmit() {
+    if (pinInput.length !== 4) { setPinError("PIN must be 4 digits"); return; }
+    setPinError("");
+    setChecking(true);
+    verifyPinAndGetResults(email, pinInput).then(function(result) {
+      if (result && result.error) {
+        setPinError(result.error);
+        setChecking(false);
+      } else if (result && result.ranked) {
+        setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true });
+        setChecking(false);
+      } else {
+        setPinError("Something went wrong");
+        setChecking(false);
+      }
+    });
   }
 
   function handleImport() {
@@ -1013,11 +1059,22 @@ function Welcome(props) {
             <input type="text" placeholder="Your name" value={name} onChange={function(e) { setName(e.target.value); }} style={inputStyle} />
             <input type="email" placeholder="Your email" value={email} onChange={function(e) { setEmail(e.target.value); setFoundSaved(null); }} onBlur={checkEmail} style={inputStyle} />
           </div>
-          {checking && <p style={{ fontSize: 12, color: "#9999aa" }}>Checking for saved progress...</p>}
+          {checking && <p style={{ fontSize: 12, color: "#9999aa" }}>Checking...</p>}
+          {dbRecord && !foundSaved && !checking && (
+            <div style={{ marginBottom: 16 }}>
+              <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{dbRecord.name ? ", " + dbRecord.name : ""}! Enter your 4-digit PIN to view your results.</p>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                <input type="text" inputMode="numeric" maxLength={4} placeholder="4-digit PIN" value={pinInput} onChange={function(e) { setPinInput(e.target.value.replace(/\D/g, "").slice(0, 4)); setPinError(""); }} style={{ ...inputStyle, maxWidth: 160, letterSpacing: 8, fontSize: 20, textAlign: "center" }} />
+                {pinError && <p style={{ fontSize: 12, color: "#DC2626", margin: "0" }}>{pinError}</p>}
+                <button onClick={handlePinSubmit} disabled={pinInput.length !== 4} style={{ padding: "12px 36px", borderRadius: 8, border: "none", cursor: pinInput.length === 4 ? "pointer" : "default", background: pinInput.length === 4 ? "#6D28D9" : "#ccc", color: "#fff", fontSize: 15, fontWeight: 600 }}>Verify PIN</button>
+                <button onClick={function() { setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh Instead</button>
+              </div>
+            </div>
+          )}
           {foundSaved && (
             <div style={{ marginBottom: 16 }}>
               {foundSaved.fromDatabase ? (
-                <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! We found your previous results.</p>
+                <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>PIN verified! Ready to view your results.</p>
               ) : (
                 <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! You have {foundSaved.answers.length} answers saved.</p>
               )}
@@ -1027,7 +1084,7 @@ function Welcome(props) {
                 ) : (
                   <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Resume</button>
                 )}
-                <button onClick={function() { props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
+                <button onClick={function() { setFoundSaved(null); setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
               </div>
             </div>
           )}
@@ -1411,6 +1468,14 @@ function ResultsScreen(props) {
         <h1 style={{ fontSize: 28, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>{props.name ? props.name + "\u2019s" : "Your"} Strengths Profile</h1>
       </div>
 
+      {props.pin && (
+        <div style={{ textAlign: "center", marginBottom: 20, padding: "14px 20px", borderRadius: 10, background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
+          <p style={{ fontSize: 13, color: "#166534", fontWeight: 600, margin: "0 0 4px" }}>Your Results PIN</p>
+          <p style={{ fontSize: 28, fontWeight: 700, color: "#166534", letterSpacing: 6, margin: "0 0 4px", fontFamily: "monospace" }}>{props.pin}</p>
+          <p style={{ fontSize: 11, color: "#15803d", margin: 0 }}>Save this PIN to access your results later with your email.</p>
+        </div>
+      )}
+
       <div style={{ textAlign: "center", marginBottom: 28, padding: "16px 20px", borderRadius: 12, background: da[0].color + "14", border: "1px solid " + da[0].color + "33" }}>
         <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: 2, color: da[0].color, marginBottom: 3, fontWeight: 600 }}>Dominant Domain</div>
         <div style={{ fontSize: 20, fontWeight: 700, color: da[0].color }}>{da[0].name}</div>
@@ -1597,6 +1662,7 @@ export default function Quiz() {
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [insights, setInsights] = useState(null);
+  const [userPin, setUserPin] = useState(null);
 
   var coreQ = useMemo(function() {
     return shuffle(Array.from({ length: 90 }, function(_, i) { return i; }));
@@ -1652,7 +1718,7 @@ export default function Quiz() {
       if (nb.length === 0 || na.length >= 200) {
         setRanked(sc);
         saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName });
-        submitToSupabase(userEmail, userName, sc);
+        submitToSupabase(userEmail, userName, sc).then(function(pin) { if (pin) setUserPin(pin); });
         goToReveal(sc, userName);
       } else {
         setPhase("adaptive"); var nq = queue.concat(nb); setQueue(nq); setQi(queue.length);
@@ -1678,7 +1744,7 @@ export default function Quiz() {
       {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={function() { setScreen("welcome"); }} />}
       {screen === "generating" && <GeneratingScreen />}
       {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} />}
-      {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} />}
+      {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} />}
     </div>
   );
 }
