@@ -496,6 +496,26 @@ function saveData(email, d) { try { localStorage.setItem(getKey(email), JSON.str
 function loadData(email) { try { var r = localStorage.getItem(getKey(email)); return r ? JSON.parse(r) : null; } catch(e) { return null; } }
 function clearData(email) { try { localStorage.removeItem(getKey(email)); } catch(e) { /* */ } }
 
+/* ---- SUPABASE LOOKUP ---- */
+async function lookupSupabase(email) {
+  if (!supabase) return null;
+  try {
+    var { data, error } = await supabase
+      .from("quiz_results")
+      .select("name, top_5, rankings, domain_scores, created_at")
+      .eq("email", email.toLowerCase().trim())
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error || !data || data.length === 0) return null;
+    var row = data[0];
+    // Reconstruct ranked array from stored rankings
+    var ranked = row.rankings.map(function(r) {
+      return { id: r.id, score: r.score };
+    });
+    return { name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at };
+  } catch (e) { console.error("Supabase lookup failed:", e); return null; }
+}
+
 /* ---- SUPABASE SUBMISSION ---- */
 async function submitToSupabase(email, name, ranked) {
   if (!supabase) return;
@@ -941,8 +961,17 @@ function Welcome(props) {
     if (s && s.answers && s.answers.length > 0) {
       setFoundSaved(s);
       if (s.name) setName(s.name);
-    } else { setFoundSaved(null); }
-    setChecking(false);
+      setChecking(false);
+    } else {
+      // Nothing in localStorage — check Supabase for completed results
+      lookupSupabase(email).then(function(result) {
+        if (result && result.ranked) {
+          setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true });
+          if (result.name) setName(result.name);
+        } else { setFoundSaved(null); }
+        setChecking(false);
+      }).catch(function() { setFoundSaved(null); setChecking(false); });
+    }
   }
 
   function handleImport() {
@@ -987,9 +1016,17 @@ function Welcome(props) {
           {checking && <p style={{ fontSize: 12, color: "#9999aa" }}>Checking for saved progress...</p>}
           {foundSaved && (
             <div style={{ marginBottom: 16 }}>
-              <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! You have {foundSaved.answers.length} answers saved.</p>
+              {foundSaved.fromDatabase ? (
+                <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! We found your previous results.</p>
+              ) : (
+                <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! You have {foundSaved.answers.length} answers saved.</p>
+              )}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Resume</button>
+                {foundSaved.fromDatabase && foundSaved.completed ? (
+                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
+                ) : (
+                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Resume</button>
+                )}
                 <button onClick={function() { props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
               </div>
             </div>
@@ -1512,15 +1549,12 @@ async function generateInsights(ranked, name) {
     "Remember: ONLY output valid JSON. No backticks, no explanation, no preamble.";
 
   try {
-    var response = await fetch("https://api.anthropic.com/v1/messages", {
+    var response = await fetch("/.netlify/functions/generate-insights", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 3000,
-        messages: [{ role: "user", content: prompt }],
-      }),
+      body: JSON.stringify({ prompt: prompt }),
     });
+    if (!response.ok) { console.error("Insights API error:", response.status); return null; }
     var data = await response.json();
     var text = data.content.map(function(c) { return c.text || ""; }).join("");
     var clean = text.replace(/```json|```/g, "").trim();
