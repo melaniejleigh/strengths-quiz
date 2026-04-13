@@ -3093,50 +3093,84 @@ function ResultsScreen(props) {
         })}
       </div>
 
-      <div style={{ display: "flex", gap: 3, marginBottom: 24, background: "#f8f7fc", borderRadius: 7, padding: 3, border: "1px solid #e8e6f0" }}>
-        {[{ id: "top5", l: "Top 5" }, { id: "full", l: "Full 34" }, { id: "domains", l: "By Domain" }].map(function(tab) {
+      {/* ---- HERO: Download Reports ---- */}
+      <div style={{ marginBottom: 32, padding: "28px 24px", borderRadius: 16, background: "linear-gradient(135deg, #6D28D9 0%, #7C3AED 50%, #8B5CF6 100%)", textAlign: "center" }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#e0d4ff", marginBottom: 6, fontWeight: 600 }}>Your Personalized Reports</div>
+        <p style={{ fontSize: 20, fontWeight: 700, color: "#fff", margin: "0 0 4px" }}>Download Your Strengths Reports</p>
+        <p style={{ fontSize: 13, color: "#d4c4ff", margin: "0 0 20px", lineHeight: 1.5 }}>AI-powered insights tailored to your unique profile, beautifully formatted and ready to share.</p>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <button onClick={function() { printReport("top5", ranked, props.name, props.insights); }} style={{ padding: "14px 28px", borderRadius: 10, border: "2px solid #fff", cursor: "pointer", background: "#fff", color: "#6D28D9", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 18 }}>{"\u2B07"}</span> Top 5 Report
+          </button>
+          <button onClick={function() { printReport("full34", ranked, props.name, props.insights); }} style={{ padding: "14px 28px", borderRadius: 10, border: "2px solid rgba(255,255,255,0.4)", cursor: "pointer", background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 18 }}>{"\u2B07"}</span> Full 34 Report
+          </button>
+        </div>
+      </div>
+
+      {/* ---- Quick Glance: Top 5 list ---- */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#6D28D9", marginBottom: 12, fontWeight: 600, textAlign: "center" }}>Your Top 5 at a Glance</div>
+        {top5.map(function(t, i) {
+          var th = TH[t.id];
+          var dc = DOMAINS[th.d].color;
           return (
-            <button key={tab.id} onClick={function() { setView(tab.id); }} style={{ flex: 1, padding: 9, borderRadius: 5, border: "none", background: view === tab.id ? "#6D28D9" : "transparent", color: view === tab.id ? "#fff" : "#555570", fontSize: 13, fontWeight: view === tab.id ? 600 : 400, cursor: "pointer" }}>{tab.l}</button>
+            <div key={t.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", marginBottom: 6, borderRadius: 10, background: "#f8f7fc", border: "1px solid #e8e6f0" }}>
+              <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, background: dc, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 700 }}>{i + 1}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e" }}>{th.n}</div>
+                <div style={{ fontSize: 11, color: dc, fontWeight: 500 }}>{DOMAINS[th.d].name}</div>
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: dc }}>{t.score}</div>
+            </div>
           );
         })}
       </div>
 
-      {view === "top5" && (
-        <div>
-          <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 16, textAlign: "center" }}>Tap each section to learn how this strength shows up for you.</p>
-          {top5.map(function(t, i) { return <Top5Card key={t.id} t={t} rank={i + 1} />; })}
-        </div>
-      )}
-
-      {view === "full" && ranked.map(function(t) { return <SmallCard key={t.id} t={t} />; })}
-
-      {view === "domains" && DO.map(function(d) {
-        return (
-          <div key={d} style={{ marginBottom: 28 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-              <div style={{ width: 8, height: 8, borderRadius: 2, background: DOMAINS[d].color }} />
-              <h2 style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", margin: 0 }}>{DOMAINS[d].name}</h2>
-            </div>
-            {byD[d].map(function(t) { return <SmallCard key={t.id} t={t} />; })}
-          </div>
-        );
-      })}
-
-      <div style={{ textAlign: "center", marginTop: 36, paddingTop: 24, borderTop: "1px solid #e8e6f0" }}>
-        <p style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", marginBottom: 4 }}>Share Your Strengths</p>
+      {/* ---- Share Card ---- */}
+      <div style={{ textAlign: "center", marginBottom: 32 }}>
         <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 0 }}>Screenshot this card and share it with your team.</p>
         <ShareCard ranked={ranked} name={props.name} />
       </div>
 
-      <div style={{ textAlign: "center", marginTop: 24, padding: "20px 24px", borderRadius: 12, background: "#f8f7fc", border: "1px solid #e8e6f0" }}>
-        <p style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", marginBottom: 8 }}>Download Your Reports</p>
-        <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 14 }}>Save as PDF from the print dialog that opens.</p>
-        <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={function() { printReport("top5", ranked, props.name, props.insights); }} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Top 5 Report</button>
-          <button onClick={function() { printReport("full34", ranked, props.name, props.insights); }} style={{ padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 14, fontWeight: 600 }}>Full 34 Report</button>
+      {/* ---- Explore Section ---- */}
+      <div style={{ borderTop: "1px solid #e8e6f0", paddingTop: 28, marginBottom: 24 }}>
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
+          <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#6D28D9", marginBottom: 4, fontWeight: 600 }}>Explore Your Results</div>
+          <p style={{ fontSize: 13, color: "#9999aa", margin: 0 }}>Dig into each theme and see how your strengths show up.</p>
         </div>
+
+        <div style={{ display: "flex", gap: 3, marginBottom: 20, background: "#f8f7fc", borderRadius: 7, padding: 3, border: "1px solid #e8e6f0" }}>
+          {[{ id: "top5", l: "Top 5" }, { id: "full", l: "Full 34" }, { id: "domains", l: "By Domain" }].map(function(tab) {
+            return (
+              <button key={tab.id} onClick={function() { setView(tab.id); }} style={{ flex: 1, padding: 9, borderRadius: 5, border: "none", background: view === tab.id ? "#6D28D9" : "transparent", color: view === tab.id ? "#fff" : "#555570", fontSize: 13, fontWeight: view === tab.id ? 600 : 400, cursor: "pointer" }}>{tab.l}</button>
+            );
+          })}
+        </div>
+
+        {view === "top5" && (
+          <div>
+            <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 16, textAlign: "center" }}>Tap each section to learn how this strength shows up for you.</p>
+            {top5.map(function(t, i) { return <Top5Card key={t.id} t={t} rank={i + 1} />; })}
+          </div>
+        )}
+
+        {view === "full" && ranked.map(function(t) { return <SmallCard key={t.id} t={t} />; })}
+
+        {view === "domains" && DO.map(function(d) {
+          return (
+            <div key={d} style={{ marginBottom: 28 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                <div style={{ width: 8, height: 8, borderRadius: 2, background: DOMAINS[d].color }} />
+                <h2 style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", margin: 0 }}>{DOMAINS[d].name}</h2>
+              </div>
+              {byD[d].map(function(t) { return <SmallCard key={t.id} t={t} />; })}
+            </div>
+          );
+        })}
       </div>
 
+      {/* ---- Email + Actions ---- */}
       <div style={{ textAlign: "center", marginTop: 24, padding: "20px 24px", borderRadius: 12, background: "#f8f7fc", border: "1px solid #e8e6f0" }}>
         <p style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", marginBottom: 8 }}>Email Your Results</p>
         <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 14 }}>Send yourself a summary of your top 5 strengths.</p>
