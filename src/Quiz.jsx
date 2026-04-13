@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "./supabaseClient";
-import html2pdf from "html2pdf.js";
+// html2pdf removed — using iframe preview + browser print-to-PDF for full CSS fidelity
 
 /* ---- DOMAINS ---- */
 var DOMAINS = {
@@ -2363,7 +2363,7 @@ function printReport(type, ranked, name, insights) {
     ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:9pt;margin:0 3px 6px}"
   ].join("\n");
 
-  var html = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Strengths Report")+"</title><style>"+css+"</style></head><body>";
+  var html = "";
 
   // ===== TOP 5 REPORT =====
   if (type === "top5") {
@@ -2914,46 +2914,54 @@ function printReport(type, ranked, name, insights) {
     html += "</div></div></div>";
   }
 
-  html += "</body></html>";
+  var fullHtml = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Strengths Report")+"</title><style>"+css+"\n@media print{.no-print{display:none!important}}</style></head><body>"+html+"</body></html>";
 
-  // Generate real PDF via html2pdf using iframe so styles render properly
-  var fileName = (name||"Strengths").replace(/[^a-zA-Z0-9]/g,"_") + "_" + (type==="top5"?"Top5":"Full34") + "_Report.pdf";
-  var iframe = document.createElement("iframe");
-  iframe.style.cssText = "position:fixed;left:0;top:0;width:816px;height:1056px;opacity:0;pointer-events:none;z-index:-1";
-  document.body.appendChild(iframe);
-  var idoc = iframe.contentDocument || iframe.contentWindow.document;
-  idoc.open(); idoc.write(html); idoc.close();
+  // Show preview modal with the report, plus download button
+  var overlay = document.createElement("div");
+  overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center";
 
-  // Give styles + layout time to apply, then generate PDF
-  setTimeout(function() {
-    var sourceEl = idoc.body;
-    html2pdf().set({
-      margin: 0,
-      filename: fileName,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, width: 816, windowWidth: 816 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-      pagebreak: { mode: ["css", "legacy"], avoid: [".f34-theme", ".blend-card", ".ai-item"] }
-    }).from(sourceEl).save().then(function() {
-      document.body.removeChild(iframe);
-    }).catch(function(err) {
-      console.error("PDF generation failed:", err);
-      document.body.removeChild(iframe);
-      // Fallback: open in iframe for print
-      var frame = document.createElement("iframe");
-      frame.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:99999;background:#fff";
-      document.body.appendChild(frame);
-      var fdoc = frame.contentDocument || frame.contentWindow.document;
-      fdoc.open(); fdoc.write(html); fdoc.close();
-      var closeBtn = fdoc.createElement("div");
-      closeBtn.innerHTML = "\u2715 Close";
-      closeBtn.className = "no-print";
-      closeBtn.style.cssText = "position:fixed;top:12px;right:16px;background:#6D28D9;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;z-index:100;font-family:sans-serif";
-      closeBtn.onclick = function() { document.body.removeChild(frame); };
-      fdoc.body.appendChild(closeBtn);
-      frame.contentWindow.print();
-    });
-  }, 500);
+  // Top toolbar
+  var toolbar = document.createElement("div");
+  toolbar.className = "no-print";
+  toolbar.style.cssText = "width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#1a1a2e;border-radius:0 0 12px 12px;flex-shrink:0";
+
+  var titleSpan = document.createElement("span");
+  titleSpan.textContent = (type==="top5"?"Top 5":"Full 34") + " Strengths Report";
+  titleSpan.style.cssText = "color:#fff;font-size:14px;font-weight:600;font-family:sans-serif";
+
+  var btnGroup = document.createElement("div");
+  btnGroup.style.cssText = "display:flex;gap:8px;align-items:center";
+
+  var dlBtn = document.createElement("button");
+  dlBtn.textContent = "\u2B07 Download PDF";
+  dlBtn.style.cssText = "background:#6D28D9;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:sans-serif";
+
+  var closeBtn = document.createElement("button");
+  closeBtn.textContent = "\u2715";
+  closeBtn.style.cssText = "background:rgba(255,255,255,0.1);color:#fff;border:none;width:34px;height:34px;border-radius:8px;font-size:16px;cursor:pointer;font-family:sans-serif";
+
+  btnGroup.appendChild(dlBtn);
+  btnGroup.appendChild(closeBtn);
+  toolbar.appendChild(titleSpan);
+  toolbar.appendChild(btnGroup);
+
+  // iframe preview
+  var frame = document.createElement("iframe");
+  frame.style.cssText = "flex:1;width:100%;max-width:860px;border:none;margin:8px 0 12px;border-radius:8px;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,0.3)";
+
+  overlay.appendChild(toolbar);
+  overlay.appendChild(frame);
+  document.body.appendChild(overlay);
+
+  var fdoc = frame.contentDocument || frame.contentWindow.document;
+  fdoc.open(); fdoc.write(fullHtml); fdoc.close();
+
+  // Download: trigger print dialog on the iframe (saves as PDF with full CSS fidelity)
+  dlBtn.onclick = function() { frame.contentWindow.print(); };
+
+  // Close
+  closeBtn.onclick = function() { document.body.removeChild(overlay); };
+  overlay.addEventListener("click", function(e) { if (e.target === overlay) document.body.removeChild(overlay); });
 }
 
 /* ---- RESULTS ---- */
