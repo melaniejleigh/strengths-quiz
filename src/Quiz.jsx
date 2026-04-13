@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "./supabaseClient";
+import html2pdf from "html2pdf.js";
 
 /* ---- DOMAINS ---- */
 var DOMAINS = {
@@ -2282,86 +2283,84 @@ function printReport(type, ranked, name, insights) {
   function dbg(id){var t=TH[id];return t?domainBgs[t.d]||"#f5f0ff":"#f5f0ff";}
   function dn(id){var t=TH[id];return t?DOMAINS[t.d].name:"";}
 
+  // Fixed 8.5x11 letter page (612x792pt) - width set for html2pdf at 8.5in
   var css = [
     "*{box-sizing:border-box;margin:0;padding:0}",
-    "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:10pt;line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}",
-    ".page{padding:48px 54px;min-height:100vh;position:relative}",
+    "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:9pt;line-height:1.5;width:8.5in}",
+    ".page{padding:36px 48px;position:relative}",
     ".page-break{page-break-before:always}",
     // Header
-    ".hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1.5px solid #e2e0ea;margin-bottom:32px;font-size:8pt}",
+    ".hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1.5px solid #e2e0ea;margin-bottom:18px;font-size:7.5pt}",
     ".hdr-brand{font-weight:800;color:#6D28D9;letter-spacing:2.5px;text-transform:uppercase}",
     ".hdr-meta{color:#aaa;font-weight:500}",
     // Cover
-    ".cover{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;min-height:100vh;padding:0}",
-    ".cover-inner{padding:0 64px 80px}",
-    ".cover-label{font-size:9pt;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;font-weight:600}",
-    ".cover-title{font-size:42pt;font-weight:800;line-height:1.05;margin-bottom:16px}",
-    ".cover-sub{font-size:12pt;color:rgba(255,255,255,0.4);line-height:1.6;max-width:400px}",
-    ".cover-themes{margin-top:44px}",
-    ".cover-row{display:flex;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.06)}",
-    ".cover-num{font-size:26pt;font-weight:800;width:44px;text-align:right}",
-    ".cover-tname{font-size:14pt;font-weight:700}",
-    ".cover-tdomain{font-size:8pt;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:0.5}",
+    ".cover{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;height:11in;width:8.5in;padding:0}",
+    ".cover-inner{padding:0 56px 64px}",
+    ".cover-label{font-size:8pt;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;font-weight:600}",
+    ".cover-title{font-size:36pt;font-weight:800;line-height:1.05;margin-bottom:12px}",
+    ".cover-sub{font-size:11pt;color:rgba(255,255,255,0.4);line-height:1.5;max-width:380px}",
+    ".cover-themes{margin-top:36px}",
+    ".cover-row{display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06)}",
+    ".cover-num{font-size:22pt;font-weight:800;width:36px;text-align:right}",
+    ".cover-tname{font-size:12pt;font-weight:700}",
+    ".cover-tdomain{font-size:7pt;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:0.5}",
     // Section styles
-    ".sec-label{font-size:7.5pt;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px}",
-    ".sec-body{font-size:10pt;color:#444;line-height:1.7}",
-    ".callout{padding:24px 28px;border-radius:12px;margin:16px 0;line-height:1.7}",
-    ".quote-box{text-align:center;padding:32px;border-radius:14px;background:linear-gradient(135deg,#f5f0ff,#eff6ff);border:1px solid #e8e6f0;margin:20px 0}",
-    ".quote-text{font-size:14pt;font-weight:700;color:#1a1a2e;line-height:1.45}",
-    // Theme pages
-    ".theme-hdr{margin-bottom:20px}",
-    ".theme-rank{font-size:48pt;font-weight:900;line-height:1}",
-    ".theme-name{font-size:26pt;font-weight:800;line-height:1.15}",
-    ".theme-domain{font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:4px}",
-    ".theme-bar{height:3px;border:none;border-radius:2px;margin:14px 0}",
-    ".theme-thrive{font-size:11pt;color:#333;line-height:1.7;font-style:italic;margin-bottom:16px}",
-    ".theme-section{margin-top:20px}",
-    ".theme-section h3{font-size:11pt;font-weight:700;color:#1a1a2e;margin-bottom:6px}",
-    ".theme-section p{font-size:9.5pt;color:#555;line-height:1.65;margin-bottom:8px}",
+    ".sec-label{font-size:7pt;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px}",
+    ".sec-body{font-size:9pt;color:#444;line-height:1.55}",
+    ".callout{padding:16px 20px;border-radius:10px;margin:10px 0;line-height:1.55}",
+    ".quote-box{text-align:center;padding:20px;border-radius:10px;background:linear-gradient(135deg,#f5f0ff,#eff6ff);border:1px solid #e8e6f0;margin:14px 0}",
+    ".quote-text{font-size:12pt;font-weight:700;color:#1a1a2e;line-height:1.4}",
+    // Theme pages (Top 5 deep dives)
+    ".theme-hdr{margin-bottom:12px}",
+    ".theme-rank{font-size:36pt;font-weight:900;line-height:1}",
+    ".theme-name{font-size:22pt;font-weight:800;line-height:1.15}",
+    ".theme-domain{font-size:7pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px}",
+    ".theme-bar{height:2px;border:none;border-radius:2px;margin:8px 0}",
+    ".theme-thrive{font-size:9.5pt;color:#333;line-height:1.55;font-style:italic;margin-bottom:10px}",
+    ".theme-section{margin-top:12px}",
+    ".theme-section h3{font-size:9.5pt;font-weight:700;color:#1a1a2e;margin-bottom:4px}",
+    ".theme-section p{font-size:8.5pt;color:#555;line-height:1.55;margin-bottom:5px}",
     // Blind spots
-    ".bs-box{padding:18px 22px;border-radius:10px;background:#fafafa;border-left:3px solid #999;margin:8px 0;font-size:9.5pt;color:#555;line-height:1.6}",
+    ".bs-box{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #999;margin:5px 0;font-size:8.5pt;color:#555;line-height:1.5}",
     // Action items
-    ".ai-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f0eff5}",
-    ".ai-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8pt;font-weight:800;color:#fff;flex-shrink:0;margin-top:2px}",
-    ".ai-text{font-size:9.5pt;color:#444;line-height:1.6}",
+    ".ai-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0eff5}",
+    ".ai-num{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7pt;font-weight:800;color:#fff;flex-shrink:0;margin-top:2px}",
+    ".ai-text{font-size:8.5pt;color:#444;line-height:1.5}",
     // Blend cards
-    ".blend-card{margin-bottom:12px;border-radius:10px;overflow:hidden;border:1px solid #e8e6f0}",
-    ".blend-hdr{padding:10px 16px;display:flex;align-items:center;gap:8px}",
-    ".blend-title{font-weight:700;font-size:10pt;color:#fff}",
-    ".blend-plus{font-size:11pt;font-weight:300;color:rgba(255,255,255,0.5)}",
-    ".blend-body{padding:12px 16px;font-size:9.5pt;line-height:1.6;color:#444}",
-    ".blend-tag{font-weight:700;color:#1a1a2e;margin-bottom:3px}",
-    // Full 34
-    ".rank-row{display:flex;align-items:center;gap:10px;padding:5px 2px;border-bottom:1px solid #f5f4fa}",
-    ".rank-num{width:26px;font-weight:700;font-size:10pt;text-align:right;color:#ccc}",
-    ".rank-bar{height:5px;border-radius:3px;min-width:3px}",
-    ".rank-name{font-weight:600;font-size:10pt;flex:1}",
-    ".rank-domain{font-size:7.5pt;font-weight:600;letter-spacing:1px;text-transform:uppercase}",
-    ".band-label{font-size:12pt;font-weight:800;margin:24px 0 4px}",
-    ".band-desc{font-size:9pt;color:#999;margin-bottom:10px}",
-    // Full 34 theme compact
-    ".f34-theme{page-break-inside:avoid;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #eeecf5}",
-    ".f34-hdr{display:flex;align-items:center;gap:14px;margin-bottom:8px}",
-    ".f34-rank{font-size:20pt;font-weight:900;width:36px;text-align:right}",
-    ".f34-name{font-size:14pt;font-weight:800}",
-    ".f34-domain{font-size:7.5pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}",
-    ".f34-thrive{font-size:10pt;color:#333;font-style:italic;line-height:1.6;margin-bottom:10px}",
-    ".f34-desc{font-size:9.5pt;color:#555;line-height:1.6;margin-bottom:10px}",
-    ".f34-bs{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #ddd;margin:6px 0;font-size:9pt;color:#666;line-height:1.55}",
-    ".f34-copy{font-size:10pt;color:#444;line-height:1.65;margin-bottom:6px}",
-    ".f34-label{font-size:7.5pt;font-weight:700;color:#888;letter-spacing:2px;text-transform:uppercase;margin:12px 0 6px;padding-top:8px;border-top:1px solid #f0eff5}",
+    ".blend-card{margin-bottom:8px;border-radius:8px;overflow:hidden;border:1px solid #e8e6f0}",
+    ".blend-hdr{padding:7px 12px;display:flex;align-items:center;gap:6px}",
+    ".blend-title{font-weight:700;font-size:9pt;color:#fff}",
+    ".blend-plus{font-size:10pt;font-weight:300;color:rgba(255,255,255,0.5)}",
+    ".blend-body{padding:8px 12px;font-size:8.5pt;line-height:1.5;color:#444}",
+    ".blend-tag{font-weight:700;color:#1a1a2e;margin-bottom:2px}",
+    // Full 34 ranking overview
+    ".rank-row{display:flex;align-items:center;gap:8px;padding:3px 2px;border-bottom:1px solid #f5f4fa}",
+    ".rank-num{width:22px;font-weight:700;font-size:9pt;text-align:right;color:#ccc}",
+    ".rank-bar{height:4px;border-radius:3px;min-width:3px}",
+    ".rank-name{font-weight:600;font-size:9pt;flex:1}",
+    ".rank-domain{font-size:7pt;font-weight:600;letter-spacing:1px;text-transform:uppercase}",
+    ".band-label{font-size:10pt;font-weight:800;margin:14px 0 2px}",
+    ".band-desc{font-size:8pt;color:#999;margin-bottom:6px}",
+    // Full 34 theme entries - compact flowing layout
+    ".f34-theme{page-break-inside:avoid;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eeecf5}",
+    ".f34-hdr{display:flex;align-items:center;gap:10px;margin-bottom:4px}",
+    ".f34-rank{font-size:16pt;font-weight:900;width:28px;text-align:right}",
+    ".f34-name{font-size:12pt;font-weight:800}",
+    ".f34-domain{font-size:6.5pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}",
+    ".f34-copy{font-size:8.5pt;color:#444;line-height:1.5;margin-bottom:4px}",
+    ".f34-label{font-size:6.5pt;font-weight:700;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 3px;padding-top:5px;border-top:1px solid #f0eff5}",
+    // Section dividers (inline, not full-page)
+    ".sec-divider{page-break-before:always;padding:24px 0 12px;margin-bottom:8px;border-bottom:2px solid #e8e6f0}",
+    ".sec-divider-title{font-size:14pt;font-weight:800;color:#1a1a2e;margin-bottom:3px}",
+    ".sec-divider-sub{font-size:7.5pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}",
+    ".sec-divider-desc{font-size:8.5pt;color:#666;line-height:1.5}",
     // Domain balance
-    ".domain-block{padding:16px 20px;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;gap:16px}",
-    ".domain-bar{height:8px;border-radius:4px;flex:1}",
-    ".domain-name{font-size:10pt;font-weight:700;width:140px}",
-    ".domain-count{font-size:10pt;font-weight:700;width:30px;text-align:right}",
-    // Reflection
-    ".refl-item{padding:14px 18px;border-radius:8px;background:#f8f7fc;border:1px solid #e8e6f0;margin-bottom:8px;font-size:10pt;color:#444;line-height:1.5}",
-    // Summary page
-    ".summary-pg{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100vh;padding:60px}",
-    ".pill{display:inline-block;padding:7px 18px;border-radius:22px;font-weight:700;font-size:10pt;margin:0 4px 8px}",
-    // Print overrides
-    "@media print{.page{padding:36px 44px} .cover{-webkit-print-color-adjust:exact;print-color-adjust:exact} .theme-rank,.cover-num,.ai-num,.blend-hdr{-webkit-print-color-adjust:exact;print-color-adjust:exact} .no-print{display:none!important}}"
+    ".domain-block{padding:10px 14px;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;gap:12px}",
+    ".domain-bar{height:6px;border-radius:3px;flex:1}",
+    ".domain-name{font-size:9pt;font-weight:700;width:130px}",
+    ".domain-count{font-size:9pt;font-weight:700;width:30px;text-align:right}",
+    // Summary / pill
+    ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:9pt;margin:0 3px 6px}"
   ].join("\n");
 
   var html = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Strengths Report")+"</title><style>"+css+"</style></head><body>";
@@ -2591,24 +2590,23 @@ function printReport(type, ranked, name, insights) {
     html += "<div class='cover-label'>Strengths Discovery</div>";
     html += "<div class='cover-title'>Full 34<br/>Strengths Report</div>";
     html += "<div class='cover-sub'>A complete view of your strengths profile</div>";
-    html += "<div style='margin-top:44px;font-size:16pt;font-weight:600;color:rgba(255,255,255,0.85)'>"+(name||"")+"</div>";
-    html += "<div style='margin-top:6px;font-size:10pt;color:rgba(255,255,255,0.35)'>"+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</div>";
+    html += "<div style='margin-top:36px;font-size:14pt;font-weight:600;color:rgba(255,255,255,0.85)'>"+(name||"")+"</div>";
+    html += "<div style='margin-top:4px;font-size:9pt;color:rgba(255,255,255,0.35)'>"+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</div>";
     html += "</div></div>";
 
-    // --- 2. INTRO PAGE: How to Read This Report ---
+    // --- 2. INTRO + RANKING on the same flow ---
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+"</span></div>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px'>How to Read This Report</h2>";
-    html += "<p class='sec-body' style='margin-bottom:14px'>This report shows all 34 strengths themes in rank order, from most dominant to least dominant. The themes at the top of your profile are the clearest patterns in how you naturally think, work, and contribute. As you move down the ranking, the themes become less instinctive and less central, but they do not become flaws.</p>";
-    html += "<p class='sec-body' style='margin-bottom:14px'>Your lower-ranked themes are not weaknesses to fix. They are simply less dominant patterns in your profile. The goal is not to become equally strong in all 34 themes, but to understand where you naturally lead and use those strengths with more intention.</p>";
-    html += "<p class='sec-body' style='margin-bottom:14px'>This report is designed to give you a complete view of your profile. It is meant to help you recognize which strengths are most natural to you, which ones support you in the right context, and which ones are less likely to be part of your default style. The most valuable development work usually comes from strengthening the healthiest expression of your top themes, not from trying to force equal growth across all 34.</p>";
-    html += "<p class='sec-body'>Use this report as a map, not a mandate. It is here to help you understand the full shape of your strengths, not to turn every lower-ranked theme into a problem to solve.</p>";
+    html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:10px'>How to Read This Report</h2>";
+    html += "<p class='sec-body' style='margin-bottom:8px'>This report shows all 34 strengths themes in rank order, from most dominant to least dominant. The themes at the top are the clearest patterns in how you naturally think, work, and contribute. As you move down the ranking, the themes become less instinctive and less central, but they do not become flaws.</p>";
+    html += "<p class='sec-body' style='margin-bottom:8px'>Your lower-ranked themes are not weaknesses to fix. They are simply less dominant patterns. The goal is not to become equally strong in all 34, but to understand where you naturally lead and use those strengths with more intention.</p>";
+    html += "<p class='sec-body' style='margin-bottom:8px'>Use this report as a map, not a mandate. It is here to help you understand the full shape of your strengths, not to turn every lower-ranked theme into a problem to solve.</p>";
     html += "</div>";
 
     // --- 3. FULL RANKING OVERVIEW ---
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Full Ranking</span></div>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px'>Your Full Ranking</h2>";
+    html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:12px'>Your Full Ranking</h2>";
 
     var maxScore = ranked[0] ? ranked[0].score : 1;
     var bands = [
@@ -2639,14 +2637,14 @@ function printReport(type, ranked, name, insights) {
     // --- 4. BIG PICTURE: What Stands Out ---
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Big Picture</span></div>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>What Stands Out in Your Profile</h2>";
-    html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>A synthesis of your full 34 ranking.</p>";
+    html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:4px'>What Stands Out in Your Profile</h2>";
+    html += "<p style='font-size:8.5pt;color:#999;margin-bottom:14px'>A synthesis of your full 34 ranking.</p>";
 
     // AI interpretation
     if (insights && insights.full34Interpretation) {
-      html += "<div style='margin-bottom:24px'><p class='sec-body'>"+insights.full34Interpretation+"</p></div>";
+      html += "<div style='margin-bottom:14px'><p class='sec-body'>"+insights.full34Interpretation+"</p></div>";
     } else if (insights && insights.fullProfile) {
-      html += "<div style='margin-bottom:24px'><p class='sec-body'>"+insights.fullProfile+"</p></div>";
+      html += "<div style='margin-bottom:14px'><p class='sec-body'>"+insights.fullProfile+"</p></div>";
     }
 
     // Domain distribution
@@ -2656,8 +2654,8 @@ function printReport(type, ranked, name, insights) {
       domainCounts[TH[t.id].d]++;
       if(i<10) domainTop10[TH[t.id].d]++;
     });
-    html += "<div style='margin-top:20px'>";
-    html += "<div class='sec-label' style='color:#6D28D9;margin-bottom:12px'>Domain Distribution</div>";
+    html += "<div style='margin-top:12px'>";
+    html += "<div class='sec-label' style='color:#6D28D9;margin-bottom:8px'>Domain Distribution</div>";
     var domOrder = ["strategic_thinking","executing","influencing","relationship_building"];
     domOrder.forEach(function(did){
       var dname = DOMAINS[did].name;
@@ -2665,20 +2663,20 @@ function printReport(type, ranked, name, insights) {
       var total = domainCounts[did];
       var inTop = domainTop10[did];
       var barPct = Math.round((total/34)*100);
-      html += "<div style='display:flex;align-items:center;gap:12px;margin-bottom:8px'>";
-      html += "<div style='width:130px;font-size:9pt;font-weight:600;color:#333'>"+dname+"</div>";
-      html += "<div style='flex:1;height:8px;background:#f0eff5;border-radius:4px;overflow:hidden'><div style='height:100%;width:"+barPct+"%;background:"+dcol+";border-radius:4px'></div></div>";
-      html += "<div style='width:80px;text-align:right;font-size:8.5pt;color:#888'>"+total+" total";
-      if(inTop>0) html += " <span style='color:"+dcol+";font-weight:700'>("+inTop+" in top 10)</span>";
+      html += "<div style='display:flex;align-items:center;gap:10px;margin-bottom:5px'>";
+      html += "<div style='width:120px;font-size:8.5pt;font-weight:600;color:#333'>"+dname+"</div>";
+      html += "<div style='flex:1;height:6px;background:#f0eff5;border-radius:3px;overflow:hidden'><div style='height:100%;width:"+barPct+"%;background:"+dcol+";border-radius:3px'></div></div>";
+      html += "<div style='width:80px;text-align:right;font-size:8pt;color:#888'>"+total+" total";
+      if(inTop>0) html += " <span style='color:"+dcol+";font-weight:600'>("+inTop+" in top 10)</span>";
       html += "</div></div>";
     });
     html += "</div>";
 
     // AI domain interpretation
     if (insights && insights.full34DomainMix) {
-      html += "<div style='margin-top:16px'><p class='sec-body'>"+insights.full34DomainMix+"</p></div>";
+      html += "<div style='margin-top:10px'><p class='sec-body'>"+insights.full34DomainMix+"</p></div>";
     } else if (insights && insights.dominantDomain) {
-      html += "<div style='margin-top:16px'><p class='sec-body'>"+insights.dominantDomain+"</p></div>";
+      html += "<div style='margin-top:10px'><p class='sec-body'>"+insights.dominantDomain+"</p></div>";
     }
     html += "</div>";
 
@@ -2847,67 +2845,47 @@ function printReport(type, ranked, name, insights) {
       return ""; // lower sections use awareness cue instead
     }
 
-    // Section definitions
+    // Section definitions - inline dividers, not full splash pages
     var sections = [
       {name:"The Top 5",sub:"Dominant",s:0,e:5,color:"#6D28D9",
-       intro:"These are your most dominant strengths, the clearest patterns in how you naturally work, think, and contribute. This is where the greatest developmental value usually lives.",
-       perPage:1},
+       intro:"These are your most dominant strengths, the clearest patterns in how you naturally work, think, and contribute. This is where the greatest developmental value usually lives."},
       {name:"6\u201310",sub:"Supporting",s:5,e:10,color:"#2563EB",
-       intro:"These are strong supporting strengths. They may not define you as clearly as your top five, but they show up often and add meaningful range to how you operate.",
-       perPage:2},
+       intro:"These are strong supporting strengths. They may not define you as clearly as your top five, but they show up often and add meaningful range to how you operate."},
       {name:"11\u201317",sub:"Available",s:10,e:17,color:"#0891B2",
-       intro:"These strengths are present and available, but they are not primary lead patterns. You may draw on them in the right context, even if they are not your strongest defaults.",
-       perPage:2},
+       intro:"These strengths are present and available, but they are not primary lead patterns. You may draw on them in the right context, even if they are not your strongest defaults."},
       {name:"18\u201326",sub:"Situational",s:17,e:26,color:"#059669",
-       intro:"These are less instinctive strengths. They are not weaknesses, just themes you are less likely to lead with naturally. You may still use them situationally or appreciate them more when others bring them into the room.",
-       perPage:2},
+       intro:"These are less instinctive strengths. They are not weaknesses, just themes you are less likely to lead with naturally. You may still use them situationally or appreciate them more when others bring them into the room."},
       {name:"27\u201334",sub:"Least Dominant",s:26,e:34,color:"#9CA3AF",
-       intro:"These are your least dominant themes. They are not flaws to fix. They are simply less central to how you naturally operate and are more likely to be supported through context, structure, or partnership than through instinct alone.",
-       perPage:3}
+       intro:"These are your least dominant themes. They are not flaws to fix. They are simply less central to how you naturally operate and are more likely to be supported through context, structure, or partnership than through instinct alone."}
     ];
 
     sections.forEach(function(sec) {
-      // Section intro page
-      html += "<div class='page page-break'>";
-      html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; "+sec.sub+"</span></div>";
-      html += "<div style='display:flex;flex-direction:column;justify-content:center;min-height:60vh'>";
-      html += "<div style='max-width:480px'>";
-      html += "<div style='font-size:9pt;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:"+sec.color+";margin-bottom:8px'>Section</div>";
-      html += "<h2 style='font-size:28pt;font-weight:800;margin-bottom:12px;color:#1a1a2e'>"+sec.name+" <span style='font-weight:400;color:"+sec.color+"'>"+sec.sub+"</span></h2>";
-      html += "<p class='sec-body' style='font-size:11pt;line-height:1.7;color:#555'>"+sec.intro+"</p>";
-      html += "</div></div></div>";
+      // Inline section divider — starts a new page but doesn't waste a full page
+      html += "<div class='sec-divider'>";
+      html += "<div class='sec-divider-sub' style='color:"+sec.color+"'>"+sec.sub+"</div>";
+      html += "<div class='sec-divider-title'>"+sec.name+"</div>";
+      html += "<div class='sec-divider-desc'>"+sec.intro+"</div>";
+      html += "</div>";
 
-      // Theme entries
-      var count = 0;
+      // Theme entries — flow continuously, page-break-inside:avoid keeps them whole
       for (var ti = sec.s; ti < Math.min(sec.e, ranked.length); ti++) {
         var t = ranked[ti]; var th = TH[t.id]; var col = dc(t.id);
-        var isTop5 = ti < 5;
-
-        // Page breaks: 1 per page for Top 5, 2 for middle, 2-3 for lower
-        if (count % sec.perPage === 0) {
-          if (count > 0) html += "</div>";
-          html += "<div class='page page-break'>";
-          html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; "+sec.sub+"</span></div>";
-        }
 
         html += "<div class='f34-theme'>";
         // Theme header: rank + name + domain
         html += "<div class='f34-hdr'>";
-        html += "<div class='f34-rank' style='color:"+col+";font-size:"+(isTop5?"24pt":"20pt")+"'>"+(ti+1)+"</div>";
-        html += "<div><div class='f34-name' style='font-size:"+(isTop5?"16pt":"14pt")+"'>"+th.n+"</div>";
+        html += "<div class='f34-rank' style='color:"+col+"'>"+(ti+1)+"</div>";
+        html += "<div><div class='f34-name'>"+th.n+"</div>";
         html += "<div class='f34-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div></div>";
 
-        // Subtle domain color bar
-        html += "<hr class='theme-bar' style='background:"+col+";opacity:0.3'>";
-
         // Intro paragraph (rank-specific)
-        html += "<p class='f34-copy' style='margin-bottom:8px'>"+rankIntro(ti, th)+"</p>";
+        html += "<p class='f34-copy'>"+rankIntro(ti, th)+"</p>";
 
         // Context line (thrive / available / low)
-        html += "<p class='f34-copy' style='margin-bottom:10px;font-style:italic;color:#555'>"+contextLine(ti, th)+"</p>";
+        html += "<p class='f34-copy' style='font-style:italic;color:#555'>"+contextLine(ti, th)+"</p>";
 
         // Core line
-        html += "<p class='f34-copy' style='margin-bottom:12px'>"+coreLine(ti, th)+"</p>";
+        html += "<p class='f34-copy'>"+coreLine(ti, th)+"</p>";
 
         // Special section (blind spots / watch for / underused advantage / works best when / support strategy)
         if (th.overuseTrigger1 || th.underuseAdvantage || th.supportCondition) {
@@ -2917,49 +2895,62 @@ function printReport(type, ranked, name, insights) {
         // Closing line (Top 5 and Supporting only)
         var cl = closingLine(ti, th);
         if (cl) {
-          html += "<p class='f34-copy' style='font-style:italic;color:#666;margin-top:8px'>"+cl+"</p>";
+          html += "<p class='f34-copy' style='font-style:italic;color:#666;margin-top:4px'>"+cl+"</p>";
         }
 
         html += "</div>"; // end f34-theme
-        count++;
       }
-      html += "</div>"; // close last page of section
     });
 
-    // --- 10. CLOSING PAGE ---
-    html += "<div class='page page-break' style='display:flex;flex-direction:column;justify-content:center;min-height:100vh'>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px;text-align:center'>How to Use This Report</h2>";
-    html += "<div style='max-width:500px;margin:0 auto'>";
-    html += "<p class='sec-body' style='margin-bottom:14px;text-align:center'>This report is meant to help you understand the full shape of your strengths profile, not to turn every lower-ranked theme into a development project.</p>";
-    html += "<p class='sec-body' style='margin-bottom:14px;text-align:center'>Your top themes are where you are most likely to find the greatest return from deeper reflection, stronger application, and more intentional development. The rest of your profile still matters, but not every theme needs equal attention.</p>";
-    html += "<p class='sec-body' style='margin-bottom:14px;text-align:center'>Use this report to understand where you naturally lead, where you have supporting range, and where you may be more likely to rely on context, structure, or partnership. Use your Top 5 report for the deeper coaching and application work.</p>";
-    html += "<div style='text-align:center;margin-top:32px'>";
-    html += "<p style='font-size:10pt;color:#bbb'>Strengths Discovery &middot; "+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</p>";
+    // --- CLOSING ---
+    html += "<div style='page-break-before:always;padding:36px 48px'>";
+    html += "<h2 style='font-size:18pt;font-weight:800;margin-bottom:14px;text-align:center'>How to Use This Report</h2>";
+    html += "<div style='max-width:480px;margin:0 auto'>";
+    html += "<p class='sec-body' style='margin-bottom:10px;text-align:center'>This report is meant to help you understand the full shape of your strengths profile, not to turn every lower-ranked theme into a development project.</p>";
+    html += "<p class='sec-body' style='margin-bottom:10px;text-align:center'>Your top themes are where you are most likely to find the greatest return from deeper reflection, stronger application, and more intentional development. The rest of your profile still matters, but not every theme needs equal attention.</p>";
+    html += "<p class='sec-body' style='margin-bottom:10px;text-align:center'>Use this report to understand where you naturally lead, where you have supporting range, and where you may be more likely to rely on context, structure, or partnership. Use your Top 5 report for the deeper coaching and application work.</p>";
+    html += "<div style='text-align:center;margin-top:20px'>";
+    html += "<p style='font-size:9pt;color:#bbb'>Strengths Discovery &middot; "+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</p>";
     html += "</div></div></div>";
   }
 
   html += "</body></html>";
 
-  // Render in iframe
-  var frame = document.createElement("iframe");
-  frame.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:99999;background:#fff";
-  document.body.appendChild(frame);
-  var fdoc = frame.contentDocument || frame.contentWindow.document;
-  fdoc.open();
-  fdoc.write(html);
-  fdoc.close();
-  var closeBtn = fdoc.createElement("div");
-  closeBtn.innerHTML = "\u2715 Close";
-  closeBtn.className = "no-print";
-  closeBtn.style.cssText = "position:fixed;top:12px;right:16px;background:#6D28D9;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;z-index:100;font-family:sans-serif";
-  closeBtn.onclick = function() { document.body.removeChild(frame); };
-  fdoc.body.appendChild(closeBtn);
-  var printBtn = fdoc.createElement("div");
-  printBtn.innerHTML = "\uD83D\uDDA8 Save as PDF";
-  printBtn.className = "no-print";
-  printBtn.style.cssText = "position:fixed;top:12px;right:120px;background:#1a1a2e;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;z-index:100;font-family:sans-serif";
-  printBtn.onclick = function() { frame.contentWindow.print(); };
-  fdoc.body.appendChild(printBtn);
+  // Generate real PDF via html2pdf and trigger download
+  var container = document.createElement("div");
+  container.style.cssText = "position:absolute;left:-9999px;top:0";
+  document.body.appendChild(container);
+  container.innerHTML = html;
+  // Wait for styles to apply
+  var sourceEl = container.querySelector("body") || container;
+  var fileName = (name||"Strengths").replace(/[^a-zA-Z0-9]/g,"_") + "_" + (type==="top5"?"Top5":"Full34") + "_Report.pdf";
+
+  html2pdf().set({
+    margin: 0,
+    filename: fileName,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, width: 816, windowWidth: 816 },
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    pagebreak: { mode: ["css", "legacy"], avoid: [".f34-theme", ".blend-card", ".ai-item"] }
+  }).from(sourceEl).save().then(function() {
+    document.body.removeChild(container);
+  }).catch(function(err) {
+    console.error("PDF generation failed:", err);
+    document.body.removeChild(container);
+    // Fallback: open in iframe for print
+    var frame = document.createElement("iframe");
+    frame.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:99999;background:#fff";
+    document.body.appendChild(frame);
+    var fdoc = frame.contentDocument || frame.contentWindow.document;
+    fdoc.open(); fdoc.write(html); fdoc.close();
+    var closeBtn = fdoc.createElement("div");
+    closeBtn.innerHTML = "\u2715 Close";
+    closeBtn.className = "no-print";
+    closeBtn.style.cssText = "position:fixed;top:12px;right:16px;background:#6D28D9;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;z-index:100;font-family:sans-serif";
+    closeBtn.onclick = function() { document.body.removeChild(frame); };
+    fdoc.body.appendChild(closeBtn);
+    frame.contentWindow.print();
+  });
 }
 
 /* ---- RESULTS ---- */
