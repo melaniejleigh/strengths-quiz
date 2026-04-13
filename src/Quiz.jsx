@@ -2088,7 +2088,7 @@ async function generateInsights(ranked, name) {
     "6. Full 34 ranking (for full34Interpretation and full34DomainMix): " + ranked.map(function(t,i) { return (i+1)+"."+TH[t.id].n+"("+DOMAINS[TH[t.id].d].name+")"; }).join(", ");
 
   try {
-    var response = await fetch("/.netlify/functions/generate-insights", {
+    var response = await fetch("/api/generate-insights", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: prompt }),
