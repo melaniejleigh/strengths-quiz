@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { supabase } from "./supabaseClient";
-// html2pdf removed — using iframe preview + browser print-to-PDF for full CSS fidelity
+import html2pdf from "html2pdf.js";
 
 /* ---- ERROR BOUNDARY ---- */
 class ErrorBoundary extends React.Component {
@@ -1148,7 +1148,7 @@ function printReport(type, ranked, name, insights) {
     "*{box-sizing:border-box;margin:0;padding:0}",
     "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:9pt;line-height:1.5;width:8.5in}",
     ".page{padding:36px 48px;position:relative}",
-    ".page-break{page-break-before:always}",
+    ".page-break{page-break-before:always;break-before:page}",
     // Header
     ".hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1.5px solid #e2e0ea;margin-bottom:18px;font-size:7.5pt}",
     ".hdr-brand{font-weight:800;color:#6D28D9;letter-spacing:2.5px;text-transform:uppercase}",
@@ -1774,54 +1774,47 @@ function printReport(type, ranked, name, insights) {
     html += "</div></div></div>";
   }
 
-  var fullHtml = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Strengths Report")+"</title><style>"+css+"\n@media print{.no-print{display:none!important}}</style></head><body>"+html+"</body></html>";
+  var fullHtml = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Strengths Report")+"</title><style>"+css+"</style></head><body>"+html+"</body></html>";
 
-  // Show preview modal with the report, plus download button
+  // Show generating overlay
   var overlay = document.createElement("div");
-  overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center";
-
-  // Top toolbar
-  var toolbar = document.createElement("div");
-  toolbar.className = "no-print";
-  toolbar.style.cssText = "width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#1a1a2e;border-radius:0 0 12px 12px;flex-shrink:0";
-
-  var titleSpan = document.createElement("span");
-  titleSpan.textContent = (type==="top5"?"Top 5":"Full 34") + " Strengths Report";
-  titleSpan.style.cssText = "color:#fff;font-size:14px;font-weight:600;font-family:sans-serif";
-
-  var btnGroup = document.createElement("div");
-  btnGroup.style.cssText = "display:flex;gap:8px;align-items:center";
-
-  var dlBtn = document.createElement("button");
-  dlBtn.textContent = "\u2B07 Download PDF";
-  dlBtn.style.cssText = "background:#6D28D9;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:sans-serif";
-
-  var closeBtn = document.createElement("button");
-  closeBtn.textContent = "\u2715";
-  closeBtn.style.cssText = "background:rgba(255,255,255,0.1);color:#fff;border:none;width:34px;height:34px;border-radius:8px;font-size:16px;cursor:pointer;font-family:sans-serif";
-
-  btnGroup.appendChild(dlBtn);
-  btnGroup.appendChild(closeBtn);
-  toolbar.appendChild(titleSpan);
-  toolbar.appendChild(btnGroup);
-
-  // iframe preview
-  var frame = document.createElement("iframe");
-  frame.style.cssText = "flex:1;width:100%;max-width:860px;border:none;margin:8px 0 12px;border-radius:8px;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,0.3)";
-
-  overlay.appendChild(toolbar);
-  overlay.appendChild(frame);
+  overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:rgba(0,0,0,0.7);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'DM Sans',system-ui,sans-serif";
+  var statusBox = document.createElement("div");
+  statusBox.style.cssText = "text-align:center;color:#fff";
+  statusBox.innerHTML = "<div style='width:40px;height:40px;border:3px solid rgba(255,255,255,0.15);border-top:3px solid #6D28D9;border-radius:50%;margin:0 auto 16px;animation:spin 1s linear infinite'></div><div style='font-size:18px;font-weight:600;margin-bottom:6px'>Generating your PDF...</div><div style='font-size:13px;color:rgba(255,255,255,0.5)'>This may take a moment</div>";
+  var styleTag = document.createElement("style");
+  styleTag.textContent = "@keyframes spin{to{transform:rotate(360deg)}}";
+  overlay.appendChild(styleTag);
+  overlay.appendChild(statusBox);
   document.body.appendChild(overlay);
 
-  var fdoc = frame.contentDocument || frame.contentWindow.document;
-  fdoc.open(); fdoc.write(fullHtml); fdoc.close();
+  // Create a hidden container for html2pdf to render from
+  var container = document.createElement("div");
+  container.style.cssText = "position:absolute;left:-9999px;top:0;width:8.5in";
+  container.innerHTML = html;
+  // Apply the report styles
+  var styleEl = document.createElement("style");
+  styleEl.textContent = css;
+  container.insertBefore(styleEl, container.firstChild);
+  document.body.appendChild(container);
 
-  // Download: trigger print dialog on the iframe (saves as PDF with full CSS fidelity)
-  dlBtn.onclick = function() { frame.contentWindow.print(); };
+  var fileName = (name || "Strengths") + " - " + (type === "top5" ? "Top 5 Report" : "Full 34 Report") + ".pdf";
 
-  // Close
-  closeBtn.onclick = function() { document.body.removeChild(overlay); };
-  overlay.addEventListener("click", function(e) { if (e.target === overlay) document.body.removeChild(overlay); });
+  html2pdf().set({
+    margin: 0,
+    filename: fileName,
+    image: { type: "jpeg", quality: 0.95 },
+    html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
+  }).from(container).save().then(function() {
+    document.body.removeChild(container);
+    document.body.removeChild(overlay);
+  }).catch(function(err) {
+    console.error("PDF generation failed:", err);
+    document.body.removeChild(container);
+    statusBox.innerHTML = "<div style='font-size:18px;font-weight:600;margin-bottom:10px'>PDF generation failed</div><div style='font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px'>Try using your browser's print function instead.</div><button onclick='this.closest(\"div\").parentElement.remove()' style='padding:10px 24px;border-radius:8px;border:none;background:#6D28D9;color:#fff;font-size:14px;font-weight:600;cursor:pointer'>Close</button>";
+  });
 }
 
 /* ---- RESULTS ---- */
