@@ -378,7 +378,7 @@ async function verifyPinAndGetResults(email, pin) {
   try {
     var { data, error } = await supabase
       .from("quiz_results")
-      .select("name, top_5, rankings, domain_scores, created_at, pin")
+      .select("name, top_5, rankings, domain_scores, created_at, pin, insights")
       .eq("email", email.toLowerCase().trim())
       .order("created_at", { ascending: false })
       .limit(1);
@@ -388,8 +388,20 @@ async function verifyPinAndGetResults(email, pin) {
     var ranked = row.rankings.map(function(r) {
       return { id: r.id, score: r.score };
     });
-    return { name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at };
+    return { name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at, insights: row.insights || null };
   } catch (e) { return { error: "Lookup failed" }; }
+}
+
+async function saveInsightsToSupabase(email, insights) {
+  if (!supabase || !email || !insights) return;
+  try {
+    await supabase
+      .from("quiz_results")
+      .update({ insights: insights })
+      .eq("email", email.toLowerCase().trim())
+      .order("created_at", { ascending: false })
+      .limit(1);
+  } catch (e) { console.error("Failed to save insights:", e); }
 }
 
 function generatePin() {
@@ -942,7 +954,7 @@ function Welcome(props) {
               )}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
                 {foundSaved.fromDatabase && foundSaved.completed ? (
-                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
+                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name, foundSaved.insights); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
                 ) : (
                   <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Resume</button>
                 )}
@@ -2150,7 +2162,13 @@ export default function Quiz() {
     }
   }, [answers, qi, screen, queue, phase, userEmail, userName]);
 
-  function goToReveal(sc, nm, skipReveal) {
+  function goToReveal(sc, nm, skipReveal, existingInsights) {
+    if (existingInsights) {
+      // Already have insights from database — show immediately
+      setInsights(existingInsights);
+      setScreen(skipReveal ? "results" : "reveal");
+      return;
+    }
     if (skipReveal) {
       // Show results immediately, generate insights in background
       setScreen("results");
@@ -2159,6 +2177,7 @@ export default function Quiz() {
           setInsights(ins);
           if (userEmail) {
             saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: nm, insights: ins });
+            saveInsightsToSupabase(userEmail, ins);
           }
         }
       });
@@ -2166,6 +2185,7 @@ export default function Quiz() {
       setScreen("generating");
       generateInsights(sc, nm).then(function(ins) {
         setInsights(ins);
+        if (userEmail) { saveInsightsToSupabase(userEmail, ins); }
         setScreen("reveal");
       });
     }
@@ -2227,7 +2247,7 @@ export default function Quiz() {
   return (
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n) { setRanked(r); setUserName(n); goToReveal(r, n, true); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n, true); }} />}
+      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); goToReveal(r, n, true, ins); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n, true); }} />}
       {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={function() { setScreen("welcome"); }} />}
       {screen === "generating" && <GeneratingScreen />}
       {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} />}
