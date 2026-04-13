@@ -3130,12 +3130,6 @@ function ResultsScreen(props) {
         })}
       </div>
 
-      {/* ---- Share Card ---- */}
-      <div style={{ textAlign: "center", marginBottom: 32 }}>
-        <p style={{ fontSize: 13, color: "#9999aa", marginBottom: 0 }}>Screenshot this card and share it with your team.</p>
-        <ShareCard ranked={ranked} name={props.name} />
-      </div>
-
       {/* ---- Explore Section ---- */}
       <div style={{ borderTop: "1px solid #e8e6f0", paddingTop: 28, marginBottom: 24 }}>
         <div style={{ textAlign: "center", marginBottom: 16 }}>
