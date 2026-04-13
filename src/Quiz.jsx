@@ -2151,14 +2151,24 @@ export default function Quiz() {
   }, [answers, qi, screen, queue, phase, userEmail, userName]);
 
   function goToReveal(sc, nm, skipReveal) {
-    setScreen("generating");
-    generateInsights(sc, nm).then(function(ins) {
-      setInsights(ins);
-      if (skipReveal && userEmail) {
-        saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: nm, insights: ins });
-      }
-      setScreen(skipReveal ? "results" : "reveal");
-    });
+    if (skipReveal) {
+      // Show results immediately, generate insights in background
+      setScreen("results");
+      generateInsights(sc, nm).then(function(ins) {
+        if (ins) {
+          setInsights(ins);
+          if (userEmail) {
+            saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: nm, insights: ins });
+          }
+        }
+      });
+    } else {
+      setScreen("generating");
+      generateInsights(sc, nm).then(function(ins) {
+        setInsights(ins);
+        setScreen("reveal");
+      });
+    }
   }
 
   function handleStart(resume, email, name) {
