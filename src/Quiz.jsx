@@ -2916,41 +2916,44 @@ function printReport(type, ranked, name, insights) {
 
   html += "</body></html>";
 
-  // Generate real PDF via html2pdf and trigger download
-  var container = document.createElement("div");
-  container.style.cssText = "position:absolute;left:-9999px;top:0";
-  document.body.appendChild(container);
-  container.innerHTML = html;
-  // Wait for styles to apply
-  var sourceEl = container.querySelector("body") || container;
+  // Generate real PDF via html2pdf using iframe so styles render properly
   var fileName = (name||"Strengths").replace(/[^a-zA-Z0-9]/g,"_") + "_" + (type==="top5"?"Top5":"Full34") + "_Report.pdf";
+  var iframe = document.createElement("iframe");
+  iframe.style.cssText = "position:fixed;left:0;top:0;width:816px;height:1056px;opacity:0;pointer-events:none;z-index:-1";
+  document.body.appendChild(iframe);
+  var idoc = iframe.contentDocument || iframe.contentWindow.document;
+  idoc.open(); idoc.write(html); idoc.close();
 
-  html2pdf().set({
-    margin: 0,
-    filename: fileName,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, width: 816, windowWidth: 816 },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    pagebreak: { mode: ["css", "legacy"], avoid: [".f34-theme", ".blend-card", ".ai-item"] }
-  }).from(sourceEl).save().then(function() {
-    document.body.removeChild(container);
-  }).catch(function(err) {
-    console.error("PDF generation failed:", err);
-    document.body.removeChild(container);
-    // Fallback: open in iframe for print
-    var frame = document.createElement("iframe");
-    frame.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:99999;background:#fff";
-    document.body.appendChild(frame);
-    var fdoc = frame.contentDocument || frame.contentWindow.document;
-    fdoc.open(); fdoc.write(html); fdoc.close();
-    var closeBtn = fdoc.createElement("div");
-    closeBtn.innerHTML = "\u2715 Close";
-    closeBtn.className = "no-print";
-    closeBtn.style.cssText = "position:fixed;top:12px;right:16px;background:#6D28D9;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;z-index:100;font-family:sans-serif";
-    closeBtn.onclick = function() { document.body.removeChild(frame); };
-    fdoc.body.appendChild(closeBtn);
-    frame.contentWindow.print();
-  });
+  // Give styles + layout time to apply, then generate PDF
+  setTimeout(function() {
+    var sourceEl = idoc.body;
+    html2pdf().set({
+      margin: 0,
+      filename: fileName,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, width: 816, windowWidth: 816 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      pagebreak: { mode: ["css", "legacy"], avoid: [".f34-theme", ".blend-card", ".ai-item"] }
+    }).from(sourceEl).save().then(function() {
+      document.body.removeChild(iframe);
+    }).catch(function(err) {
+      console.error("PDF generation failed:", err);
+      document.body.removeChild(iframe);
+      // Fallback: open in iframe for print
+      var frame = document.createElement("iframe");
+      frame.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:99999;background:#fff";
+      document.body.appendChild(frame);
+      var fdoc = frame.contentDocument || frame.contentWindow.document;
+      fdoc.open(); fdoc.write(html); fdoc.close();
+      var closeBtn = fdoc.createElement("div");
+      closeBtn.innerHTML = "\u2715 Close";
+      closeBtn.className = "no-print";
+      closeBtn.style.cssText = "position:fixed;top:12px;right:16px;background:#6D28D9;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;z-index:100;font-family:sans-serif";
+      closeBtn.onclick = function() { document.body.removeChild(frame); };
+      fdoc.body.appendChild(closeBtn);
+      frame.contentWindow.print();
+    });
+  }, 500);
 }
 
 /* ---- RESULTS ---- */
