@@ -1,6 +1,24 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { supabase } from "./supabaseClient";
 // html2pdf removed — using iframe preview + browser print-to-PDF for full CSS fidelity
+
+/* ---- ERROR BOUNDARY ---- */
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
+  static getDerivedStateFromError(error) { return { hasError: true, error: error }; }
+  componentDidCatch(error, info) { console.error("React Error Boundary caught:", error, info); }
+  render() {
+    if (this.state.hasError) {
+      return React.createElement("div", { style: { maxWidth: 480, margin: "80px auto", padding: "40px 24px", textAlign: "center", fontFamily: "'DM Sans', system-ui, sans-serif" } },
+        React.createElement("h1", { style: { fontSize: 24, color: "#1a1a2e", marginBottom: 12 } }, "Something went wrong"),
+        React.createElement("p", { style: { fontSize: 14, color: "#555570", lineHeight: 1.6, marginBottom: 20 } }, "There was an error loading this page. Try refreshing, or clear your browser data for this site and try again."),
+        React.createElement("p", { style: { fontSize: 12, color: "#9999aa", marginBottom: 20 } }, String(this.state.error)),
+        React.createElement("button", { onClick: function() { window.location.reload(); }, style: { padding: "12px 32px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 15, fontWeight: 600 } }, "Refresh Page")
+      );
+    }
+    return this.props.children;
+  }
+}
 
 /* ---- DOMAINS ---- */
 var DOMAINS = {
@@ -395,12 +413,19 @@ async function verifyPinAndGetResults(email, pin) {
 async function saveInsightsToSupabase(email, insights) {
   if (!supabase || !email || !insights) return;
   try {
-    await supabase
+    // First get the most recent row's id, then update it
+    var { data } = await supabase
       .from("quiz_results")
-      .update({ insights: insights })
+      .select("id")
       .eq("email", email.toLowerCase().trim())
       .order("created_at", { ascending: false })
       .limit(1);
+    if (data && data.length > 0) {
+      await supabase
+        .from("quiz_results")
+        .update({ insights: insights })
+        .eq("id", data[0].id);
+    }
   } catch (e) { console.error("Failed to save insights:", e); }
 }
 
@@ -885,7 +910,7 @@ function Welcome(props) {
         setPinError(result.error);
         setChecking(false);
       } else if (result && result.ranked) {
-        setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true });
+        setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true, insights: result.insights || null });
         setChecking(false);
       } else {
         setPinError("Something went wrong");
@@ -2245,6 +2270,7 @@ export default function Quiz() {
   }
 
   return (
+    <ErrorBoundary>
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); goToReveal(r, n, true, ins); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n, true); }} />}
@@ -2253,5 +2279,6 @@ export default function Quiz() {
       {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} />}
       {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} />}
     </div>
+    </ErrorBoundary>
   );
 }
