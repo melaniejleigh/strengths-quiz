@@ -1776,45 +1776,119 @@ function printReport(type, ranked, name, insights) {
 
   var fullHtml = "<html><head><title>"+(name||"")+" - "+(type==="top5"?"Top 5 Strengths Report":"Full 34 Strengths Report")+"</title><style>"+css+"</style></head><body>"+html+"</body></html>";
 
-  // Show generating overlay
+  // Show preview modal with scaled-down view + real PDF download
   var overlay = document.createElement("div");
-  overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:rgba(0,0,0,0.7);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'DM Sans',system-ui,sans-serif";
-  var statusBox = document.createElement("div");
-  statusBox.style.cssText = "text-align:center;color:#fff";
-  statusBox.innerHTML = "<div style='width:40px;height:40px;border:3px solid rgba(255,255,255,0.15);border-top:3px solid #6D28D9;border-radius:50%;margin:0 auto 16px;animation:spin 1s linear infinite'></div><div style='font-size:18px;font-weight:600;margin-bottom:6px'>Generating your PDF...</div><div style='font-size:13px;color:rgba(255,255,255,0.5)'>This may take a moment</div>";
-  var styleTag = document.createElement("style");
-  styleTag.textContent = "@keyframes spin{to{transform:rotate(360deg)}}";
-  overlay.appendChild(styleTag);
-  overlay.appendChild(statusBox);
+  overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:rgba(0,0,0,0.7);display:flex;flex-direction:column;align-items:center;font-family:'DM Sans',system-ui,sans-serif";
+
+  // Toolbar
+  var toolbar = document.createElement("div");
+  toolbar.style.cssText = "width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#1a1a2e;border-radius:0 0 12px 12px;flex-shrink:0;box-sizing:border-box";
+
+  var titleSpan = document.createElement("span");
+  titleSpan.textContent = (type==="top5"?"Top 5":"Full 34") + " Strengths Report";
+  titleSpan.style.cssText = "color:#fff;font-size:14px;font-weight:600";
+
+  var btnGroup = document.createElement("div");
+  btnGroup.style.cssText = "display:flex;gap:8px;align-items:center";
+
+  var dlBtn = document.createElement("button");
+  dlBtn.textContent = "\u2B07 Download PDF";
+  dlBtn.style.cssText = "background:#6D28D9;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer";
+
+  var closeBtn = document.createElement("button");
+  closeBtn.textContent = "\u2715";
+  closeBtn.style.cssText = "background:rgba(255,255,255,0.1);color:#fff;border:none;width:34px;height:34px;border-radius:8px;font-size:16px;cursor:pointer";
+
+  btnGroup.appendChild(dlBtn);
+  btnGroup.appendChild(closeBtn);
+  toolbar.appendChild(titleSpan);
+  toolbar.appendChild(btnGroup);
+
+  // Scrollable preview area with scaled iframe
+  var previewWrap = document.createElement("div");
+  previewWrap.style.cssText = "flex:1;width:100%;max-width:860px;overflow-y:auto;overflow-x:hidden;margin:8px 0 12px;border-radius:8px;background:#e8e6f0;-webkit-overflow-scrolling:touch";
+
+  var frame = document.createElement("iframe");
+  // The iframe renders at full 816px (8.5in) width, then we scale it to fit the preview container
+  frame.style.cssText = "width:816px;border:none;background:#fff;display:block;transform-origin:top left";
+
+  previewWrap.appendChild(frame);
+  overlay.appendChild(toolbar);
+  overlay.appendChild(previewWrap);
   document.body.appendChild(overlay);
 
-  // Create a hidden container for html2pdf to render from
-  var container = document.createElement("div");
-  container.style.cssText = "position:absolute;left:-9999px;top:0;width:8.5in";
-  container.innerHTML = html;
-  // Apply the report styles
-  var styleEl = document.createElement("style");
-  styleEl.textContent = css;
-  container.insertBefore(styleEl, container.firstChild);
-  document.body.appendChild(container);
+  // Write content to iframe
+  var fdoc = frame.contentDocument || frame.contentWindow.document;
+  fdoc.open(); fdoc.write(fullHtml); fdoc.close();
 
-  var fileName = (name || "Strengths") + " - " + (type === "top5" ? "Top 5 Report" : "Full 34 Report") + ".pdf";
+  // Scale the iframe to fit the preview container width
+  function scalePreview() {
+    var containerW = previewWrap.clientWidth;
+    var scale = Math.min(containerW / 816, 1);
+    frame.style.transform = "scale(" + scale + ")";
+    // Set the iframe height based on content, then adjust wrapper to show scaled version
+    var contentH = fdoc.documentElement.scrollHeight || fdoc.body.scrollHeight || 5000;
+    frame.style.height = contentH + "px";
+    previewWrap.style.height = "auto"; // let flex handle it
+    // The visual height after scaling
+    frame.parentElement.style.height = Math.ceil(contentH * scale) + "px";
+    frame.parentElement.style.overflow = "visible";
+    // Re-wrap: we need a container that clips
+    previewWrap.style.overflow = "auto";
+  }
 
-  html2pdf().set({
-    margin: 0,
-    filename: fileName,
-    image: { type: "jpeg", quality: 0.95 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
-  }).from(container).save().then(function() {
-    document.body.removeChild(container);
-    document.body.removeChild(overlay);
-  }).catch(function(err) {
-    console.error("PDF generation failed:", err);
-    document.body.removeChild(container);
-    statusBox.innerHTML = "<div style='font-size:18px;font-weight:600;margin-bottom:10px'>PDF generation failed</div><div style='font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px'>Try using your browser's print function instead.</div><button onclick='this.closest(\"div\").parentElement.remove()' style='padding:10px 24px;border-radius:8px;border:none;background:#6D28D9;color:#fff;font-size:14px;font-weight:600;cursor:pointer'>Close</button>";
-  });
+  // Wait for iframe content to render, then scale
+  frame.onload = scalePreview;
+  setTimeout(scalePreview, 200);
+  window.addEventListener("resize", scalePreview);
+
+  // Download: use html2pdf for a real PDF
+  dlBtn.onclick = function() {
+    dlBtn.disabled = true;
+    dlBtn.textContent = "Generating...";
+    dlBtn.style.opacity = "0.6";
+
+    // Create hidden container for html2pdf
+    var container = document.createElement("div");
+    container.style.cssText = "position:absolute;left:-9999px;top:0;width:8.5in";
+    container.innerHTML = html;
+    var styleEl = document.createElement("style");
+    styleEl.textContent = css;
+    container.insertBefore(styleEl, container.firstChild);
+    document.body.appendChild(container);
+
+    var fileName = (name || "Strengths") + " - " + (type === "top5" ? "Top 5 Report" : "Full 34 Report") + ".pdf";
+
+    html2pdf().set({
+      margin: 0,
+      filename: fileName,
+      image: { type: "jpeg", quality: 0.95 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
+    }).from(container).save().then(function() {
+      document.body.removeChild(container);
+      dlBtn.disabled = false;
+      dlBtn.textContent = "\u2713 Downloaded!";
+      dlBtn.style.opacity = "1";
+      setTimeout(function() { dlBtn.textContent = "\u2B07 Download PDF"; }, 2000);
+    }).catch(function(err) {
+      console.error("PDF generation failed:", err);
+      document.body.removeChild(container);
+      dlBtn.disabled = false;
+      dlBtn.textContent = "\u2B07 Download PDF";
+      dlBtn.style.opacity = "1";
+      alert("PDF generation failed. Please try again.");
+    });
+  };
+
+  // Close
+  function cleanup() {
+    window.removeEventListener("resize", scalePreview);
+    if (overlay.parentElement) document.body.removeChild(overlay);
+  }
+  closeBtn.onclick = cleanup;
+  overlay.addEventListener("click", function(e) { if (e.target === overlay) cleanup(); });
 }
 
 /* ---- RESULTS ---- */
