@@ -2503,7 +2503,7 @@ function printReport(type, ranked, name, insights) {
         html += "<div class='theme-section' style='margin-top:24px'>";
         html += "<h3 style='color:"+col+"'>Apply Your "+th.n+"</h3>";
         th.actionItems.forEach(function(item, idx) {
-          html += "<div class='ai-item'><span class='ai-num' style='background:"+col+"'>"+(idx+1)+"</span><span class='ai-text'>"+item+"</span></div>";
+          html += "<div class='ai-item'><span class='ai-num' style='background:"+col+"'>"+(idx+1)+"</span><span class='ai-text'>"+item.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")+"</span></div>";
         });
         html += "</div>";
       }
