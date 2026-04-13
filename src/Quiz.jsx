@@ -13,6 +13,34 @@ var DO = ["executing","influencing","relationship_building","strategic_thinking"
 /* ---- THEMES ---- */
 var TH = {
   achiever: { n: "Achiever", d: "executing", desc: "You have a constant internal drive to get things done. You take immense satisfaction in being busy and productive.",
+    availableTendency: "stay productive, keep pace, and bring energy to steady output",
+    awarenessCue: "the work is stalling because no one is pushing it toward completion",
+    coreContext: "there is real work to finish and forward movement to protect",
+    coreResult: "turn effort into visible results",
+    defaultTendency: "meaning, quality, strategy, or people",
+    introAction: "drive",
+    introObject: "meaningful work toward completion",
+    introPayoff: "so progress is visible and momentum stays alive",
+    investmentMove: "build recovery and prioritization into your productivity so motion stays tied to what matters",
+    lowDefault: "generate steady output for its own sake",
+    lowMiss: "when a situation needs more stamina, follow-through, or visible productivity",
+    lowRisk: "drift, underexecution, or too much emphasis on meaning without enough movement",
+    naturalTendency: "push for output, momentum, and visible progress",
+    overuseCost1: "making rest, reflection, or recovery feel suspicious",
+    overuseCost2: "creating resentment, burnout, or dependency",
+    overusePattern1: "you may overvalue busyness and undervalue quieter but important work",
+    overusePattern2: "you may become the engine for everyone else",
+    overuseTrigger1: "when effort becomes tied too tightly to identity",
+    overuseTrigger2: "when you keep carrying more simply because you can",
+    partnershipCue: "pairing with people who naturally create momentum, pace, and completion pressure",
+    supportBenefit: "maintain momentum without forcing yourself to manufacture it alone",
+    supportCondition: "the work needs stronger pace, completion energy, or execution discipline",
+    supportPartner: "people who naturally create pace and keep things moving",
+    supportStructure: "deadlines, accountability, clear deliverables, or external momentum",
+    themePriority: "pure output and visible productivity",
+    underuseAdvantage: "sustained effort and follow-through",
+    underuseCost: "slowing progress that could have been steadier",
+    underuseMiss: "work can lose pace or consistency",
     atWork: "You are the engine. You take on more than your share, stay late, come in early. When there is a gap in capacity, you fill it before anyone asks. Your output is consistently higher than your peers and you set the pace for what productivity looks like.",
     atBest: "You create momentum on every account you touch. People trust you to deliver because you always do. Your energy is contagious and your work ethic gives the team confidence that things will get done.",
     leanIn: "Track your wins visibly, not just for recognition but so you can see the patterns in where your drive produces the most impact. Volunteer for the high-output, high-stakes moments where your stamina gives the team an edge. Set stretch goals for yourself and share them with your manager so they can point your engine at the right targets.",
@@ -20,6 +48,34 @@ var TH = {
     blindSpots: ["Your drive can make rest feel suspicious and slower people feel vaguely irritating, even when they are not actually underperforming. Because effort is so tied to your identity, you may overvalue busyness and undervalue reflection, recovery, or work that is important but less visibly productive.", "You can also become the person who keeps carrying more simply because you can. That may make you look dependable, but it can quietly create resentment, burnout, and a team culture where other people let your engine compensate for their lack of urgency."],
     actionItems: ["**Aim your drive at outcomes, not just output.** Being productive is satisfying, but not every finished task matters equally. Make sure your energy is going toward the work that actually moves the business, the team, or your goals forward.", "**Track what is enough.** Your instinct is to keep going, even after the important thing is already done well. Build clearer stopping points so your stamina stays an asset instead of turning into overwork that nobody asked for.", "**Do not automatically absorb every gap.** Just because you can pick up the slack does not mean you should. When you always compensate for other people's inconsistency, you protect the short term but reinforce the long-term problem.", "**Let rest count as part of performance.** You are not weaker for needing recovery, you are just human. Treat rest like maintenance for the machine rather than proof that the machine is failing.", "**Celebrate progress before you move the goalpost.** You are quick to focus on what is next, which can make wins feel strangely brief. Taking a minute to register what you actually completed makes your ambition more sustainable and your life less like an endless treadmill."] },
   arranger: { n: "Arranger", d: "executing", desc: "You can organize, but you also have flexibility. You figure out how all the pieces can be arranged for maximum productivity.",
+    availableTendency: "step into complexity and reorganize people, priorities, or resources into something more workable",
+    awarenessCue: "the current setup is making the work harder than it needs to be",
+    coreContext: "there are many moving parts and no obvious clean path",
+    coreResult: "make complexity function more effectively",
+    defaultTendency: "clear lanes, stronger structure, or fewer simultaneous variables",
+    introAction: "reorganize",
+    introObject: "moving pieces into a better configuration",
+    introPayoff: "so complexity becomes workable instead of overwhelming",
+    investmentMove: "decide earlier when reconfiguration is improving the system and when it is just keeping motion alive",
+    lowDefault: "dynamically reshuffle people and resources in the middle of complexity",
+    lowMiss: "when a situation needs more orchestration, flexibility, or reconfiguration",
+    lowRisk: "overreliance on static structure even when a smarter arrangement is available",
+    naturalTendency: "coordinate variables, reshuffle resources, and make complex systems work better",
+    overuseCost1: "creating instability, shifting expectations, or a plan that never settles",
+    overuseCost2: "making the system depend on your flexibility instead of building scalable structure",
+    overusePattern1: "you may keep reconfiguring longer than others can follow",
+    overusePattern2: "you may take on too much hidden orchestration work yourself",
+    overuseTrigger1: "when you can see too many possible combinations",
+    overuseTrigger2: "when you become the central switchboard for everything",
+    partnershipCue: "relying on people who naturally coordinate complexity and optimize configurations",
+    supportBenefit: "manage moving parts without becoming the human switchboard",
+    supportCondition: "the situation is messy enough that the current setup is not working",
+    supportPartner: "people who naturally enjoy juggling complexity and restructuring systems",
+    supportStructure: "visible dependencies, staffing maps, or clear coordination tools",
+    themePriority: "dynamic coordination and real-time reconfiguration",
+    underuseAdvantage: "flexible orchestration and better configuration",
+    underuseCost: "missing easier, smarter, or more functional arrangements",
+    underuseMiss: "teams may stick with clunky setups longer than they need to",
     atWork: "You see the whole board. When there are multiple clients, competing deadlines, and shifting priorities, you instinctively rearrange the pieces to make it work. You think in configurations, not just task lists.",
     atBest: "You bring calm to chaos. You make the complex feel manageable. You find combinations of people and resources that others would not have seen, and you do it fast enough that the team barely notices the complexity you just absorbed.",
     leanIn: "Seek out the most operationally complex accounts and projects. Ask to be involved in staffing conversations and project planning, because your ability to see how the pieces fit is one of the firm's biggest assets. When things change, lean into the reconfiguration rather than resisting it. That is where you shine.",
@@ -27,6 +83,34 @@ var TH = {
     blindSpots: ["Because you see so many possible combinations, you can keep rearranging longer than other people can comfortably follow. What feels to you like smart adaptation can feel to others like instability, shifting expectations, or a plan that never fully settles.", "You may also take on too much orchestration yourself. When you become the central switchboard for everything, people rely on your flexibility instead of building their own structure, and you end up carrying hidden coordination work that is hard to scale."],
     actionItems: ["**Reconfigure with a reason, not just because you can.** Your gift is making the system work better, but not every tweak is worth the disruption it creates. Be clear about what problem the reconfiguration is solving before you move the pieces around again.", "**Show people the logic behind the shuffle.** You can adapt faster than most people can process. A quick explanation of why priorities changed or why roles shifted helps others experience your flexibility as strategic rather than chaotic.", "**Build systems that do not depend entirely on you.** Your instinct is to manage complexity in real time, but that can make you the bottleneck without realizing it. Create repeatable structures so the team benefits from your mind even when you are not actively juggling every variable.", "**Use your range to improve staffing and collaboration.** You often see combinations of people and resources that others miss. Speak those observations out loud, because your pattern recognition is wasted if it stays trapped in your head.", "**Do not confuse usefulness with centrality.** You do not need to be in the middle of everything to be valuable. Sometimes your highest-leverage move is designing a better setup and then stepping back enough to let it run."] },
   belief: { n: "Belief", d: "executing", desc: "You have core values that are enduring. Out of these values emerges a defined purpose for your life.",
+    availableTendency: "bring conviction, steadiness, and a stronger sense of purpose into decisions",
+    awarenessCue: "the room is making a technically sound decision that feels morally thin",
+    coreContext: "the question is not just what works, but what matters",
+    coreResult: "keep decisions grounded in values rather than convenience alone",
+    defaultTendency: "strategy, adaptability, outcomes, or pragmatism",
+    introAction: "anchor",
+    introObject: "work in what feels real, right, and worth doing",
+    introPayoff: "so effort stays connected to purpose instead of drifting into the hollow",
+    investmentMove: "keep testing whether your convictions still match the reality you are serving",
+    lowDefault: "explicitly lead through values-first conviction",
+    lowMiss: "when a decision needs more purpose, principle, or clarity about what is worth standing for",
+    lowRisk: "overemphasis on efficiency, strategy, or outcomes without enough grounding in meaning",
+    naturalTendency: "orient around values, meaning, and what feels worth standing for",
+    overuseCost1: "narrowing flexibility in situations that contain real complexity",
+    overuseCost2: "preserving meaning in theory while ignoring reality in practice",
+    overusePattern1: "you may become rigid or less willing to engage nuance",
+    overusePattern2: "you may stay committed to people, missions, or organizations after the fit is gone",
+    overuseTrigger1: "when your first moral read hardens too quickly",
+    overuseTrigger2: "when loyalty and identity get tightly fused",
+    partnershipCue: "leaning on people who naturally keep purpose, mission, and principle in view",
+    supportBenefit: "make stronger value-based decisions without needing conviction to be your first reflex",
+    supportCondition: "the work needs more clarity about what matters and why",
+    supportPartner: "people who naturally keep purpose and principle visible",
+    supportStructure: "mission language, decision principles, or explicit values criteria",
+    themePriority: "values-based conviction and mission-first steadiness",
+    underuseAdvantage: "purpose-based clarity and conviction",
+    underuseCost: "weakening commitment, coherence, or moral steadiness",
+    underuseMiss: "teams can become overly transactional or efficient without enough meaning",
     atWork: "You are the moral compass. You care deeply about whether the work matters, not just whether it ships. You bring a sense of purpose that anchors the team during long stretches and tough cycles.",
     atBest: "Your values give you clarity when everything else is ambiguous. You make decisions quickly because your compass is always pointing the same direction. People trust you because they know exactly where you stand, and that consistency is rare.",
     leanIn: "Actively connect the work to the mission, out loud, for other people. When you feel energized by a project, name why. When something feels misaligned, say so early rather than letting it build. Your values are your superpower, so make them visible to the team rather than carrying them quietly.",
@@ -34,6 +118,34 @@ var TH = {
     blindSpots: ["Your conviction gives you clarity, but it can also make you rigid when a situation is more complex than your first moral read allows. Others may experience you as principled and grounded, or as quietly immovable when they are trying to explore tradeoffs, nuance, or competing priorities.", "You may also stay loyal to missions, people, or organizations long after the reality no longer matches the values you thought you were serving. When identity and purpose get tightly fused, it can be hard to admit that something meaningful to you is no longer aligned in practice."],
     actionItems: ["**Make your values visible in useful ways.** Do not assume people know what matters to you or why you are pushing on something. When you name the principle at stake clearly, your conviction becomes a source of alignment rather than just personal intensity.", "**Stay principled without becoming brittle.** A strong value system should give you direction, not trap you in one interpretation forever. Leave room for the possibility that the right answer may still require nuance, timing, or a more complicated path than your first instinct prefers.", "**Choose work that your values can actually sustain.** You are not built for purely transactional effort for very long. The more your responsibilities connect to something you genuinely believe in, the more resilient, focused, and effective you become.", "**Notice where loyalty is outliving reality.** Your commitment is admirable, but it can keep you attached to people or systems that no longer deserve it. Periodically ask whether you are being faithful to the mission itself or just to the version of it you first fell in love with.", "**Let purpose support your life, not consume it.** Meaning matters to you, but not every good life decision has to serve a grand cause. Sometimes it is enough that something is healthy, honest, and deeply right for you."] },
   consistency: { n: "Consistency", d: "executing", desc: "You are keenly aware of the need to treat people the same. You crave stable routines and clear rules.",
+    availableTendency: "create clearer expectations and more even-handed structure",
+    awarenessCue: "people are making up the rules as they go, and trust is starting to fray",
+    coreContext: "fairness matters and people need to know the rules of the game",
+    coreResult: "reduce arbitrariness and build trust through clarity",
+    defaultTendency: "flexibility, nuance, speed, or individualized judgment",
+    introAction: "create",
+    introObject: "clear and fair systems",
+    introPayoff: "so people know the rules and trust the structure",
+    investmentMove: "keep asking whether sameness is actually serving fairness in the moment",
+    lowDefault: "standardize, equalize, and rely on fairness through structure",
+    lowMiss: "when a situation needs clearer rules, equal treatment, or more stable process",
+    lowRisk: "overreliance on case-by-case judgment without enough consistency",
+    naturalTendency: "care about fairness, equal standards, and systems people can count on",
+    overuseCost1: "making necessary nuance harder than it needs to be",
+    overuseCost2: "protecting sameness at the expense of better judgment",
+    overusePattern1: "you may resist exceptions even when they are justified",
+    overusePattern2: "you may flatten meaningful differences in need, talent, or circumstance",
+    overuseTrigger1: "when sameness starts to feel safer than judgment",
+    overuseTrigger2: "when fairness becomes defined too narrowly as equal treatment",
+    partnershipCue: "using partners who naturally create fair standards and stable systems",
+    supportBenefit: "increase trust without needing standardization to be your first instinct",
+    supportCondition: "the group is feeling uneven treatment or avoidable ambiguity",
+    supportPartner: "people who naturally build stable, fair, and predictable systems",
+    supportStructure: "policies, decision rules, or consistent process design",
+    themePriority: "fairness-by-structure and even-handed standards",
+    underuseAdvantage: "stable standards and trustworthy fairness",
+    underuseCost: "weakening trust in the system",
+    underuseMiss: "teams may tolerate too much inconsistency, favoritism, or avoidable ambiguity",
     atWork: "You make sure the rules are applied fairly. You build processes, standardize templates, and advocate for equal treatment. You notice when someone is getting a different deal, and you ask why.",
     atBest: "You create fairness and predictability. People know what to expect from you and from the systems you build. Teams run better because of the structures you put in place, and people feel safe because they know the ground rules are stable.",
     leanIn: "Own the systems. Volunteer to build the SOPs, the onboarding processes, the internal playbooks. Position yourself as the person who ensures quality and fairness across accounts. When you see inconsistencies, frame your observations as opportunities to improve rather than complaints.",
@@ -41,6 +153,34 @@ var TH = {
     blindSpots: ["Your commitment to fairness can make you skeptical of exceptions, even when an exception is justified. What feels to you like protecting equity can sometimes come across as rigid or overly standardized when a situation actually calls for discretion, context, or a more individualized response.", "You may also spend so much energy making things even that you flatten important differences in talent, need, urgency, or circumstance. Equal treatment is not always the same as effective treatment, and if you are not careful, fairness can become a shield against the messier work of judgment."],
     actionItems: ["**Build systems people can trust.** Your instinct for fairness is one of your biggest assets, especially in environments where inconsistency breeds resentment. Use it to create processes, expectations, and standards that people experience as clear, stable, and credible.", "**Distinguish fairness from sameness.** The goal is not to treat every situation identically, it is to treat people justly and transparently. When an exception is warranted, explain the logic so your flexibility does not undermine the trust you work so hard to build.", "**Use consistency to reduce noise, not nuance.** Strong systems should make better judgment easier, not replace it. Leave room for context when the facts genuinely support a different approach.", "**Speak up when the rules are unevenly applied.** You notice double standards quickly, and that awareness is valuable. Frame what you see as a structural issue to solve, not just a frustration to name, so your instinct becomes a leadership contribution rather than a private annoyance.", "**Let predictability support your life, not harden it.** Routines and standards steady you, but they should not become a reason to resist every change. The healthiest version of your strength creates order people can rely on, without turning flexibility into a threat."] },
   deliberative: { n: "Deliberative", d: "executing", desc: "You take serious care in making decisions. You anticipate obstacles and think through what could go wrong.",
+    availableTendency: "bring caution, judgment, and better risk awareness to decisions",
+    awarenessCue: "the room is moving faster than the risk profile justifies",
+    coreContext: "the stakes are real and the downside matters",
+    coreResult: "protect the work from avoidable mistakes",
+    defaultTendency: "pace, experimentation, or faster movement",
+    introAction: "anticipate",
+    introObject: "risk before taking the next step",
+    introPayoff: "so the move is smart, not just fast",
+    investmentMove: "keep using your caution as discernment, not as a permanent brake",
+    lowDefault: "slow down to scan downside before moving",
+    lowMiss: "when a situation needs more caution, restraint, or risk awareness",
+    lowRisk: "moving too quickly or too optimistically",
+    naturalTendency: "think carefully, scan for downside, and prefer a measured move over a rushed one",
+    overuseCost1: "slowing movement more than the situation requires",
+    overuseCost2: "missing opportunities that were worth the calculated risk",
+    overusePattern1: "you may seem guarded, hesitant, or harder to read than you intend",
+    overusePattern2: "you may overestimate the cost of moving too soon and underestimate the cost of moving too late",
+    overuseTrigger1: "when caution becomes the main lens through which everything gets filtered",
+    overuseTrigger2: "when avoiding error starts to feel more important than timing",
+    partnershipCue: "relying on people who naturally scan risk and slow down premature decisions",
+    supportBenefit: "protect against avoidable mistakes without needing caution to drive everything",
+    supportCondition: "the stakes have risen enough that the downside needs real attention",
+    supportPartner: "people who naturally slow the room down and ask harder questions",
+    supportStructure: "risk reviews, decision gates, or a pause that forces better judgment",
+    themePriority: "measured caution and downside scanning",
+    underuseAdvantage: "discernment, risk-scanning, and measured judgment",
+    underuseCost: "exposing the work to avoidable risk",
+    underuseMiss: "the room may move too quickly without fully considering downside",
     atWork: "You are the risk spotter. Before the team commits to a strategy, you have already thought through what could go wrong. You are careful with sensitive information, selective about trust, and thorough in your thinking.",
     atBest: "You protect the team from avoidable mistakes. You ask the questions no one else is asking. In high-stakes environments where one wrong move can be costly, your caution is one of the firm's most valuable assets.",
     leanIn: "Position yourself as the person who pressure-tests strategies before they go to the client. Offer to do the risk review, the compliance check, the 'what could go wrong' pass. Your thoroughness is not slowness, it is quality assurance. Make that role explicit rather than informal.",
@@ -48,6 +188,34 @@ var TH = {
     blindSpots: ["Your carefulness can protect people from avoidable mistakes, but it can also make you seem overly guarded, skeptical, or hard to read. Others may experience your restraint as wisdom, or as reluctance, pessimism, or a refusal to engage before certainty is available.", "You may also overestimate the cost of moving too soon and underestimate the cost of moving too late. In trying to avoid error, you can miss timing, momentum, or opportunities that would have been worth the calculated risk."],
     actionItems: ["**Use caution where it adds value.** Your ability to spot what could go wrong is a major asset, especially in high-stakes work. Focus that strength on the decisions, risks, and commitments that truly warrant scrutiny rather than applying the same level of caution to everything.", "**Name the risk clearly.** People benefit most from your judgment when you articulate what you are seeing, not just when you feel uneasy. The more specific you can be about the downside, likelihood, and consequence, the more actionable your caution becomes.", "**Decide what level of certainty is enough.** Waiting can feel responsible, but perfect information is rarely available. Define the threshold that would make a decision prudent, then move once that threshold is met instead of letting caution quietly become avoidance.", "**Let people earn trust in stages.** You do not need to throw your instincts out, but not everyone should have to break through a wall to work with you well. Small signals of openness can preserve your discernment without making collaboration feel unnecessarily guarded.", "**Notice where vigilance becomes exhaustion.** Being alert to problems can keep you sharp, but it can also keep your nervous system on duty all the time. Build places in your life where you do not have to scan so hard, because calm is not the same as carelessness."] },
   discipline: { n: "Discipline", d: "executing", desc: "You enjoy routine and structure. Your world is best described by the order you create.",
+    availableTendency: "create structure, steadiness, and more reliable ways of working",
+    awarenessCue: "the work is getting harder because nothing is organized clearly enough",
+    coreContext: "the environment is messy enough that stronger order would reduce friction",
+    coreResult: "make the work cleaner, more manageable, and more reliable",
+    defaultTendency: "fluidity, improvisation, or looser structure",
+    introAction: "create",
+    introObject: "order, structure, and reliable routines",
+    introPayoff: "so chaos does not get to run the day",
+    investmentMove: "let structure serve the outcome instead of becoming the outcome",
+    lowDefault: "build strong routines and maintain order automatically",
+    lowMiss: "when a situation needs clearer structure, stronger prioritization, or more consistent process",
+    lowRisk: "relying on flexibility in places where order would help more",
+    naturalTendency: "build systems, routines, and clear priorities that keep things under control",
+    overuseCost1: "making flexibility harder than it needs to be",
+    overuseCost2: "making change harder than it needs to be",
+    overusePattern1: "you may become overly rigid, particular, or controlling",
+    overusePattern2: "you may resist experimentation because it looks messy before it looks useful",
+    overuseTrigger1: "when disorder starts to feel more threatening than it is",
+    overuseTrigger2: "when preserving order becomes more important than testing a better way",
+    partnershipCue: "relying on people who naturally create and maintain clean systems",
+    supportBenefit: "reduce chaos without needing structure to drive everything you do",
+    supportCondition: "the mess is now costing more than the effort it would take to organize it",
+    supportPartner: "people who naturally create order and maintain process discipline",
+    supportStructure: "routines, checklists, visible priorities, or external systems",
+    themePriority: "order, routine, and reliable process",
+    underuseAdvantage: "reliable structure and stronger prioritization",
+    underuseCost: "creating friction that stronger systems could have prevented",
+    underuseMiss: "important work can stay needlessly chaotic or poorly organized",
     atWork: "You are the most organized person in the room. Your files are named correctly, your calendar is tight, your processes are documented. When shared systems fall apart, you are the one who notices and fixes them.",
     atBest: "You create the structure that lets everyone else do their best work. You reduce friction, eliminate confusion, and make the invisible work of organization visible. Things do not fall through the cracks on your watch.",
     leanIn: "Build systems for the team, not just yourself. Your organizational skills scale beautifully when you turn them outward. Offer to own the project management tools, the file structures, the status update cadences. The more of the firm's infrastructure runs through your systems, the more indispensable you become.",
@@ -55,6 +223,34 @@ var TH = {
     blindSpots: ["Your need for structure can make disorder feel more threatening to you than it does to other people. What feels to you like basic responsibility can come across as rigid, controlling, or overly particular when others are operating with more fluidity and still getting to a workable result.", "You may also spend so much energy maintaining order that you become resistant to experimentation, spontaneity, or any process that looks messy before it becomes effective. In trying to prevent things from slipping, you can accidentally make change harder than it needs to be."],
     actionItems: ["**Use structure to create freedom, not just control.** Your systems are most valuable when they reduce friction and make strong work easier for everyone. Build order that serves the outcome, not order for its own sake.", "**Distinguish what matters from what merely bothers you.** Not every inconsistency is a problem, and not every messy process is broken. Save your strongest energy for the gaps that actually create risk, confusion, or missed results.", "**Let people be different without assuming they are wrong.** Your way is often efficient and responsible, but it is not the only way to produce quality. The more you can separate preference from principle, the easier it becomes to collaborate without feeling quietly aggravated all the time.", "**Plan for change instead of resisting it by reflex.** Structure does not have to mean static. When something new is coming, use your strength to build the process around it rather than spending all your energy wishing the old process still worked.", "**Give yourself permission to be off duty sometimes.** You notice what is out of place almost automatically, which can make relaxing strangely hard. Create small zones in life where enough really is enough, because not everything needs optimization to be okay."] },
   focus: { n: "Focus", d: "executing", desc: "You can take a direction, follow through, and stay on track. You prioritize, then act.",
+    availableTendency: "narrow attention, name the target, and keep the work aligned to what matters most",
+    awarenessCue: "everything suddenly feels important, and the real priority is disappearing",
+    coreContext: "the room is at risk of distraction, fake urgency, or too many simultaneous priorities",
+    coreResult: "keep the work moving toward the right target",
+    defaultTendency: "openness, responsiveness, or multiple possibilities",
+    introAction: "lock onto",
+    introObject: "the main objective",
+    introPayoff: "so the work stays pointed instead of scattering",
+    investmentMove: "keep your target discipline strong, but leave some room for ideas that need more runway",
+    lowDefault: "narrow quickly to one target and protect it hard",
+    lowMiss: "when the work needs stronger prioritization or better protection from distraction",
+    lowRisk: "staying too open, too diffuse, or too easily pulled off target",
+    naturalTendency: "orient around the goal, protect attention, and keep priorities from drifting",
+    overuseCost1: "missing possibilities that needed more room before their value became clear",
+    overuseCost2: "sacrificing important but less target-shaped realities",
+    overusePattern1: "you may cut off ideas or side paths too early",
+    overusePattern2: "you may treat relationships, recovery, or creativity like interruptions",
+    overuseTrigger1: "when protecting the goal becomes more important than exploring the field",
+    overuseTrigger2: "when progress toward the objective becomes the only thing that counts",
+    partnershipCue: "relying on people who naturally protect focus and keep the work on target",
+    supportBenefit: "protect what matters without needing to narrow everything yourself",
+    supportCondition: "the group is getting noisy, scattered, or pulled into side quests",
+    supportPartner: "people who naturally keep the group aligned to the main objective",
+    supportStructure: "explicit priorities, visible goals, or a decision about what not to do",
+    themePriority: "directional narrowing and objective protection",
+    underuseAdvantage: "sharper prioritization and stronger directional clarity",
+    underuseCost: "diluting energy that should have gone to the main objective",
+    underuseMiss: "the work can scatter across too many competing demands",
     atWork: "You keep the team on track. When conversations drift, you bring them back. When priorities multiply, you cut through to the one that matters most. You are disciplined about where you spend your time and protective of your attention.",
     atBest: "You accomplish more than people who work longer hours because every minute is pointed at the goal. You help teams avoid scope creep and stay oriented toward outcomes. Your clarity of purpose is a gift to every project you touch.",
     leanIn: "Be the person who names the priority. In kickoff meetings, in strategy sessions, in Slack threads that are drifting, be the one who says 'the one thing that matters here is...' That instinct is incredibly valuable and most people do not have it. Also, protect your focused time aggressively, because that is where your best work happens.",
@@ -62,6 +258,34 @@ var TH = {
     blindSpots: ["Your clarity can be a gift to a team, but it can also make you impatient with exploration, side paths, or anything that does not obviously serve the goal. Others may experience you as disciplined and sharp, or as narrow, dismissive, and too quick to cut off ideas that need a little more room before their value becomes clear.", "You may also overidentify with progress toward the target and underweight what is being lost along the way. Relationships, recovery, creativity, and emerging opportunities can all start to feel like interruptions when they do not fit neatly inside the current objective."],
     actionItems: ["**Name the priority out loud.** One of the best uses of your strength is helping people cut through clutter and remember what actually matters. When a group is drifting, your ability to define the objective can save time, energy, and a lot of fake urgency.", "**Recheck the target before you accelerate.** Your discipline is powerful, but it works best when the goal itself is still the right one. Build in moments to confirm that the objective remains relevant so your focus does not become efficient movement in the wrong direction.", "**Leave a small lane open for discovery.** Not every worthwhile thing announces itself as a priority at the start. Giving some space to emerging ideas will make you more adaptive without weakening the strength that makes you effective.", "**Do not mistake interruption for insignificance.** Some of what breaks your concentration is truly noise, and some of it is relationship, context, or information you actually need. The more carefully you make that distinction, the more useful your focus becomes to other people.", "**Let your life hold something besides the next milestone.** You are naturally future-aimed and outcome-driven, which makes you effective but can make satisfaction feel perpetually deferred. Build in moments where completion is allowed to feel complete before you move the target again."] },
   responsibility: { n: "Responsibility", d: "executing", desc: "You take psychological ownership of what you say you will do. You are committed to honesty and loyalty.",
+    availableTendency: "create reliability, follow-through, and trust through ownership",
+    awarenessCue: "tasks are being discussed, but no one is truly carrying them",
+    coreContext: "commitments matter and people need to know someone will actually carry the work",
+    coreResult: "make trust real through dependable action",
+    defaultTendency: "flexibility, renegotiation, or looser commitment boundaries",
+    introAction: "own",
+    introObject: "what you said you would carry",
+    introPayoff: "so trust is built through real follow-through",
+    investmentMove: "keep honoring your word, but get better at renegotiating before overcommitting",
+    lowDefault: "treat commitments as deeply personal obligations",
+    lowMiss: "when stronger ownership, reliability, or follow-through would stabilize the work",
+    lowRisk: "tolerating more flexibility or ambiguity around commitments than the situation can handle",
+    naturalTendency: "take commitments seriously and feel personally accountable for doing what you said",
+    overuseCost1: "becoming overloaded or resentful while everyone else relaxes",
+    overuseCost2: "turning integrity into unnecessary burden",
+    overusePattern1: "you may take on too much because you do not want standards to slip",
+    overusePattern2: "you may struggle to renegotiate even when the reality has changed",
+    overuseTrigger1: "when taking ownership starts to feel morally preferable to leaving it with someone else",
+    overuseTrigger2: "when a commitment feels irreversible once spoken",
+    partnershipCue: "leaning on people who naturally create trust through accountability and follow-through",
+    supportBenefit: "raise trust without needing personal obligation to drive every decision",
+    supportCondition: "the work is slipping because no one feels truly accountable for it",
+    supportPartner: "people who naturally treat commitments as serious and follow them through",
+    supportStructure: "clear ownership lines, commitment tracking, or explicit follow-up",
+    themePriority: "personal ownership and follow-through",
+    underuseAdvantage: "dependable ownership and stronger trust",
+    underuseCost: "lowering reliability and trust",
+    underuseMiss: "work can get dropped, blurred, or weakly owned",
     atWork: "You are the person everyone trusts with the high-stakes deliverable. When you say you will do something, it is done. You take ownership psychologically, not just operationally.",
     atBest: "You are the most reliable person in the building. Clients trust you. Partners trust you. Your word is your bond, and that creates a foundation of confidence for the entire team.",
     leanIn: "Let your reliability become your brand. Take on the commitments that matter most, the ones where follow-through is critical. Be selective about what you commit to so that everything you do touch gets your full attention. Your track record of delivery is one of the most valuable currencies in consulting. Spend it wisely.",
@@ -69,6 +293,34 @@ var TH = {
     blindSpots: ["Your sense of obligation can make you say yes too quickly, carry more than is reasonable, and feel personally accountable for things that should never have become yours alone. What feels to you like integrity and dependability can turn into overcommitment, resentment, or a pattern where other people's lack of ownership gets quietly absorbed by you.", "You may also hold yourself to such a high standard of follow-through that flexibility starts to feel like failure. If circumstances change, you can struggle to renegotiate, delegate, or let go without feeling like you are breaking your word, even when adapting would actually be the more responsible move."],
     actionItems: ["**Treat your yes like a scarce resource.** Your reliability is valuable precisely because people believe it means something. The more carefully you commit, the more power and credibility your follow-through continues to carry.", "**Separate ownership from overownership.** It is one thing to take responsibility for your work, your promises, and your role. It is another to become the cleanup crew for every loose end in the system just because leaving it undone would bother you more than it bothers everyone else.", "**Renegotiate early when reality changes.** Adjusting a commitment is not the same as abandoning it. When you communicate clearly and early, you preserve trust far better than if you silently strain under something that no longer fits the facts.", "**Make your standards visible, not just personal.** You often hold yourself to an internal code that is stronger than what others realize. Naming expectations clearly can keep you from assuming everyone is operating from the same sense of duty when they are very much not.", "**Build a life that does not depend on being indispensable.** Being the dependable one has probably earned you a lot, but it can also trap you in a role where your value feels tied to carrying more than other people can. Real strength includes knowing that your worth is not limited to what you can hold together."] },
   restorative: { n: "Restorative", d: "executing", desc: "You are adept at dealing with problems. You are good at figuring out what is wrong and resolving it.",
+    availableTendency: "act with confidence, trust your judgment, and move decisively when the map is incomplete",
+    awarenessCue: "the room has enough information and is now just looking for more reassurance",
+    coreContext: "ambiguity is high and someone still has to choose a direction",
+    coreResult: "create steadiness and movement without collapsing into doubt",
+    defaultTendency: "shared validation, external input, or collaborative calibration",
+    introAction: "trust",
+    introObject: "your own judgment in ambiguity",
+    introPayoff: "so decisions can move forward without needing endless external validation",
+    investmentMove: "trust your inner compass, but keep inviting enough reality-testing to stay accurate",
+    lowDefault: "trust your own judgment quickly without much outside confirmation",
+    lowMiss: "when a situation needs more inner certainty, steadiness, or self-trust",
+    lowRisk: "overreliance on group validation, consensus, or reassurance",
+    naturalTendency: "rely on your internal compass and move with unusual steadiness in uncertainty",
+    overuseCost1: "sounding closed or harder to influence than you intend",
+    overuseCost2: "weakening alignment or buy-in",
+    overusePattern1: "you may overtrust your own read and underweight external input",
+    overusePattern2: "you may move too independently in situations that would benefit from more shared calibration",
+    overuseTrigger1: "when inner certainty hardens faster than outside reality can keep up",
+    overuseTrigger2: "when needing no validation becomes part of your identity",
+    partnershipCue: "leaning on people who naturally bring steadiness and decision confidence in ambiguity",
+    supportBenefit: "act with more confidence without pretending certainty where none exists",
+    supportCondition: "ambiguity is unavoidable and no amount of extra input will fully remove it",
+    supportPartner: "people who naturally move with steadiness and help anchor decisions under uncertainty",
+    supportStructure: "clear decision rights, criteria, or a defined point where input ends and choice begins",
+    themePriority: "internal certainty and self-trusting judgment",
+    underuseAdvantage: "internal confidence and steadiness under ambiguity",
+    underuseCost: "slowing decisions that needed more conviction",
+    underuseMiss: "teams can overdepend on outside validation or shared reassurance before moving",
     atWork: "You are the fixer. When a project is off the rails, a process is broken, or a client relationship is strained, you dig in. You diagnose problems quickly and you do not rest until the issue is resolved.",
     atBest: "You turn crises into comebacks. You see opportunity where others see failure. Your ability to diagnose and resolve makes you the person everyone wants in the room when things go wrong.",
     leanIn: "Volunteer for the turnaround assignments. The struggling account, the broken process, the campaign that needs saving. That is where your energy comes alive. Also, apply your diagnostic skills proactively, not just in crisis mode. Audit systems and processes before they break.",
@@ -76,6 +328,34 @@ var TH = {
     blindSpots: ["Your instinct to find and solve problems can make you more engaged by what is wrong than by what is stable, successful, or already functioning well. Others may experience you as resourceful and invaluable in a crisis, or as negative, hard to satisfy, and magnetized toward flaws even when the bigger picture is actually healthy.", "You may also tie your usefulness too closely to being needed in difficult situations. If you are not careful, you can become the person who unconsciously waits for the next mess, inserts yourself into issues that are not yours to solve, or feels strangely underused when there is nothing obvious to fix."],
     actionItems: ["**Aim your diagnostic energy where it matters most.** You are exceptionally good at identifying what is off and getting underneath the problem. The more intentionally you focus that gift on issues with real impact, the more valuable your problem-solving becomes.", "**Do not let flaw-finding become your only lens.** You often see the break before anyone else does, which is useful, but not everything needs repair. Strengthen your ability to notice what is already working so your judgment feels balanced instead of perpetually corrective.", "**Solve with people, not just for them.** It is tempting to jump in, diagnose fast, and take over when something is broken. But some of your highest-leverage work comes from helping others understand the issue and build their own capacity to fix it next time.", "**Notice when crisis is becoming your comfort zone.** You are excellent under pressure, but that does not mean pressure should become your preferred climate. Build some identity around improvement, prevention, and steady-state health too, not just around heroic recovery.", "**Make space in life for things that do not need fixing.** Your mind is built to troubleshoot, and that can make rest oddly unsatisfying if nothing is asking for repair. Give yourself experiences, relationships, and routines where your value is not tied to solving a problem before you are allowed to enjoy them."] },
   activator: { n: "Activator", d: "influencing", desc: "You make things happen by turning thoughts into action. You want to do things now, not just talk about them.",
+    availableTendency: "start things, create urgency, and get a team unstuck",
+    awarenessCue: "a team is circling the same conversation without taking a first step",
+    coreContext: "a first step is needed and overdiscussion is becoming a drag",
+    coreResult: "create meaningful momentum",
+    defaultTendency: "reflection, structure, proof, or alignment",
+    introAction: "turn",
+    introObject: "ideas into motion",
+    introPayoff: "so discussion becomes action before momentum dies",
+    investmentMove: "pair your bias for action with a simple checkpoint so speed stays useful",
+    lowDefault: "move before every detail is settled",
+    lowMiss: "when a group needs more urgency, initiation, or first-step energy",
+    lowRisk: "overplanning, delay, or waiting for perfect readiness",
+    naturalTendency: "create momentum, initiate quickly, and move things out of talk and into action",
+    overuseCost1: "steamrolling nuance, preparation, or alignment",
+    overuseCost2: "energizing people into starts you do not stay around to carry",
+    overusePattern1: "you may move faster than the room is ready for",
+    overusePattern2: "you may confuse movement with progress",
+    overuseTrigger1: "when waiting starts to feel intolerable",
+    overuseTrigger2: "when starting becomes more exciting than sustaining",
+    partnershipCue: "working with people who naturally create urgency and initiate movement",
+    supportBenefit: "start faster without sacrificing your preference for thoughtfulness",
+    supportCondition: "something needs to start before it becomes overdiscussed or stuck",
+    supportPartner: "people who naturally create momentum and are comfortable moving early",
+    supportStructure: "clear deadlines, first-step plans, or external urgency",
+    themePriority: "fast initiation and action-first momentum",
+    underuseAdvantage: "decisive movement and first-step energy",
+    underuseCost: "losing momentum that only needed a push to begin",
+    underuseMiss: "teams can linger too long in discussion",
     atWork: "You turn talk into action. While others are still debating the plan, you have already taken the first step. You create momentum and you believe that clarity comes from doing, not from planning.",
     atBest: "Projects start because of you. Teams move because of you. Your bias toward action prevents the firm from getting stuck in analysis paralysis and your energy is genuinely contagious.",
     leanIn: "Be the person who says 'I will take the first step on this' at the end of every meeting. Your willingness to initiate is rare and extremely valuable. Pair yourself intentionally with people who are strong finishers so that what you start gets completed at the same quality you initiated it with.",
@@ -83,6 +363,34 @@ var TH = {
     blindSpots: ["Your bias toward action can make you impatient with deliberation, nuance, or process. What feels like healthy urgency to you can feel abrupt or steamrolling to people who need more time to think, align, or prepare.", "You may also confuse movement with progress. Starting is your gift, but not every quick start leads somewhere useful, and you can lose interest once the novelty wears off. When that happens, it is not just unfinished work, it can feel to other people like you got them energized and then left them holding the bag."],
     actionItems: ["**Take the first step on purpose.** Volunteer to initiate when a team is stuck, but define what the first step is actually meant to accomplish. Your strength is not just speed, it is your ability to convert ambiguity into momentum that other people can build on.", "**Build a handoff before you launch.** Before you start something, name who will help shape it, refine it, or carry it through. You do not need to become a finisher to be effective, but you do need a system that keeps your starts from becoming someone else's cleanup.", "**Pause long enough to bring people with you.** A short check-in before you move can save you from unnecessary resistance later. You will still move faster than most people, but you will do it with more buy-in and less friction.", "**Stay accountable for the energy you create.** If you rally people around an idea, do not disappear the second the excitement fades. Even when you are handing something off, close the loop clearly so people feel led, not abandoned.", "**Create momentum outside of work, too.** When you feel stuck personally, give yourself a tiny concrete starting point instead of waiting to feel ready. Your life gets better when you trust that movement creates clarity, but only when that movement is aimed at something that matters."] },
   command: { n: "Command", d: "influencing", desc: "You have presence. You can take control of a situation and make decisions. You are not afraid of confrontation.",
+    availableTendency: "bring firmness, direction, and clearer authority when a moment needs backbone",
+    awarenessCue: "everyone is circling the truth, but no one is naming it clearly",
+    coreContext: "a hard call needs to be made and diplomacy alone is not enough",
+    coreResult: "create clarity, direction, and decisiveness",
+    defaultTendency: "steadiness, collaboration, or reasoned influence",
+    introAction: "bring",
+    introObject: "direction and candor into a hard moment",
+    introPayoff: "so uncertainty gives way to clarity and movement",
+    investmentMove: "make sure your candor creates clarity without closing the room too early",
+    lowDefault: "take control or state the hard call early",
+    lowMiss: "when a room needs more directness, candor, or authority",
+    lowRisk: "overreliance on diplomacy, reasoning, or collaboration when firmness is needed",
+    naturalTendency: "step into difficult moments, take a stand, and say what others are hesitant to name",
+    overuseCost1: "making honesty feel like intimidation or premature conclusion",
+    overuseCost2: "making everything depend on your force instead of stronger structure",
+    overusePattern1: "you may shut people down or force the room faster than it can process",
+    overusePattern2: "you may overfunction rather than share power or build authority in others",
+    overuseTrigger1: "when directness arrives before people have fully entered the conversation",
+    overuseTrigger2: "when you start believing things will weaken unless you take control",
+    partnershipCue: "relying on people who naturally step in with directness and decisive authority",
+    supportBenefit: "say the hard thing without needing to become the constant enforcer",
+    supportCondition: "the moment genuinely requires a clear line, firmer stance, or harder call",
+    supportPartner: "people who naturally bring backbone, authority, and clear direction",
+    supportStructure: "role clarity, decision rights, or explicit permission to be direct",
+    themePriority: "forceful direction and direct authority",
+    underuseAdvantage: "firmness, backbone, and plainspoken direction",
+    underuseCost: "letting drift continue when a stronger line would help",
+    underuseMiss: "groups can stay overly vague, deferential, or indecisive",
     atWork: "You take charge. In a crisis, in a stakeholder meeting, in a moment of indecision, you step forward and say what needs to happen. You are comfortable with confrontation and you do not shy away from difficulty.",
     atBest: "You bring clarity and direction when everyone else is frozen. You name the thing nobody else will say. You make decisions when decisions need to be made, and people feel safer because someone is driving.",
     leanIn: "Step into leadership moments explicitly. When a situation needs someone to take charge, do not wait to be asked. Also, use your presence to create space for others to speak up, because your ability to hold a room is just as powerful when you use it to elevate other voices as when you use it to direct.",
@@ -90,6 +398,34 @@ var TH = {
     blindSpots: ["Your directness can create clarity, but it can also shut people down before they have fully entered the conversation. What feels to you like honesty or leadership can feel to others like force, intimidation, or a conclusion that arrived before their input had a real chance to matter.", "You may also start to believe that if you do not take control, things will drift or weaken. That can make you over-function in situations where your real growth would come from creating structure, sharing power, or letting someone else build authority instead of stepping in first."],
     actionItems: ["**Use your voice to create clarity, not fear.** You do not need to soften into vagueness to be effective, but you do need to pay attention to your impact. People are more likely to follow strong direction when they feel steadied by it rather than overpowered.", "**Decide when the room actually needs force.** Not every slow conversation is a leadership failure, and not every disagreement needs a winner. Your authority becomes more credible when people can tell you are choosing firmness deliberately, not defaulting to it automatically.", "**Create space before you close it.** Ask for input before you make the call, especially when you already know what you think. You will still move decisively, but you will gather better information and build more trust on the way there.", "**Develop other people's confidence, not just your own control.** One of the highest uses of your strength is helping less forceful people find their footing. When you use your presence to back someone else's voice, your leadership gets bigger, not smaller.", "**Notice where strength becomes armor.** Being capable and unafraid has served you, but it can also become a way to avoid uncertainty, vulnerability, or dependence. Real power includes knowing when you do not need to dominate the moment to be safe in it."] },
   communication: { n: "Communication", d: "influencing", desc: "You find it easy to put thoughts into words. You are a good conversationalist and presenter.",
+    availableTendency: "explain, frame, translate, and help a message land with other people",
+    awarenessCue: "the room understands the issue in theory but not yet in language people can carry forward",
+    coreContext: "complexity needs framing and the room needs clearer articulation",
+    coreResult: "make the message legible, persuasive, and memorable",
+    defaultTendency: "thinking, structure, judgment, or action",
+    introAction: "put",
+    introObject: "ideas into language that lands",
+    introPayoff: "so people grasp, remember, and act on the point",
+    investmentMove: "keep making your language vivid, but tether it tightly to substance and timing",
+    lowDefault: "lead with verbal expression or message-shaping",
+    lowMiss: "when a situation needs clearer framing, better storytelling, or stronger articulation",
+    lowRisk: "relying on thought, action, or structure without helping others fully understand the point",
+    naturalTendency: "shape language, tell the story, and make ideas clearer, stronger, and more memorable",
+    overuseCost1: "filling the space before quieter thinking has had a chance to surface",
+    overuseCost2: "weakening credibility when the message is slicker than the logic behind it",
+    overusePattern1: "you may mistake airtime for value or polish for depth",
+    overusePattern2: "you may focus more on how something sounds than whether it is fully sound",
+    overuseTrigger1: "when verbal fluency arrives faster than the thinking underneath it",
+    overuseTrigger2: "when style starts to outrun substance",
+    partnershipCue: "leaning on people who naturally frame, explain, and sharpen the message",
+    supportBenefit: "make your ideas easier to grasp without having to perform them constantly",
+    supportCondition: "the idea is good, but it is not landing clearly enough",
+    supportPartner: "people who naturally translate complexity into language that lands",
+    supportStructure: "prep time, talking points, or a clear message frame",
+    themePriority: "language-first clarity and expression",
+    underuseAdvantage: "clearer framing and stronger articulation",
+    underuseCost: "reducing clarity and buy-in",
+    underuseMiss: "useful ideas may stay vague, underexplained, or less persuasive than they could be",
     atWork: "You are the storyteller. You make complex ideas simple, dry material engaging, and client presentations memorable. You think in narratives and you instinctively know how to frame a message for any audience.",
     atBest: "You are the voice of the team. You bring ideas to life in a way that moves people. Your ability to frame, narrate, and present makes the firm's work shine and makes other people's good work visible.",
     leanIn: "Volunteer for the high-visibility communications moments. The client presentation, the press strategy, the internal all-hands. Also, offer your framing skills to colleagues who have strong ideas but struggle to articulate them. Your ability to make other people's work compelling is one of the most generous applications of this strength.",
@@ -97,6 +433,34 @@ var TH = {
     blindSpots: ["Because you are comfortable verbalizing ideas, you can sometimes mistake fluency for depth or airtime for value. Others may experience you as engaging and compelling, or as someone who filled the space before quieter, less polished thinking had a chance to surface.", "You may also over-focus on how something is said at the expense of whether it is structurally sound, fully thought through, or matched to the room. A strong message can carry a lot, but if style starts outrunning substance, your credibility eventually takes the hit."],
     actionItems: ["**Use your voice to clarify, not just to contribute.** Before you speak, ask what the room actually needs from you, energy, framing, translation, or direction. Your communication gets more powerful when it is intentional instead of merely fluent.", "**Leave space for less polished thinkers.** Some of the best ideas arrive slowly, awkwardly, or without your level of verbal confidence. If you are always first, fastest, or most compelling, you may accidentally train the room to defer to style instead of insight.", "**Match the message to the audience.** You naturally know how to make things engaging, but the goal is not always to impress. The more precisely you tailor your tone, examples, and level of detail to the listener, the more trust your words will carry.", "**Pressure-test the substance behind the story.** A message that sounds good is not automatically a message that is strong. Build the habit of asking whether the argument underneath your framing is as solid as the framing itself.", "**Be quiet on purpose sometimes.** Not because your voice is a problem, but because silence can sharpen your judgment. Listening a beat longer can make what you say next more grounded, more strategic, and far more memorable."] },
   competition: { n: "Competition", d: "influencing", desc: "You measure your progress against others. You strive to win first place and revel in contests.",
+    availableTendency: "raise standards, increase intensity, and respond to visible benchmarks",
+    awarenessCue: "the group is drifting because the bar is too fuzzy or too low",
+    coreContext: "the stakes are visible and there is a real standard to beat",
+    coreResult: "sharpen effort and elevate performance",
+    defaultTendency: "meaning, quality, relationships, learning, or progress",
+    introAction: "raise",
+    introObject: "the bar against a visible standard",
+    introPayoff: "so performance becomes sharper, clearer, and more energized",
+    investmentMove: "let standards drive excellence without turning every room into a scoreboard",
+    lowDefault: "orient around winning, ranking, or head-to-head comparison",
+    lowMiss: "when visible standards or benchmarking would sharpen the work",
+    lowRisk: "underusing performance pressure in situations where it would help",
+    naturalTendency: "notice the scoreboard, care where you stand, and feel energized by winning, ranking, or measurable comparison",
+    overuseCost1: "making collaboration or development feel secondary to immediate performance",
+    overuseCost2: "disengaging from worthwhile efforts that do not come with visible comparison",
+    overusePattern1: "you may dismiss work that is meaningful but not easily ranked or measured",
+    overusePattern2: "you may lose energy or underestimate the value of the work",
+    overuseTrigger1: "when the scoreboard becomes the only thing that feels worth honoring",
+    overuseTrigger2: "when there is no obvious way to know who is ahead",
+    partnershipCue: "partnering with people who naturally benchmark performance and raise intensity",
+    supportBenefit: "bring more edge into the work without making everything a contest",
+    supportCondition: "the work would benefit from a clearer benchmark, target, or scorecard",
+    supportPartner: "people who naturally raise the bar through performance intensity",
+    supportStructure: "concrete metrics, visible standards, or comparative data",
+    themePriority: "measurable comparison and winning energy",
+    underuseAdvantage: "sharper standards and healthy performance pressure",
+    underuseCost: "lowering intensity or leaving performance gains on the table",
+    underuseMiss: "teams may settle for good enough without a stronger benchmark",
     atWork: "You are aware of the scoreboard at all times. You know how your numbers compare to your peers, how your team stacks up against other firms, and where you rank. This awareness pushes you to work harder and produce more.",
     atBest: "You raise the bar for everyone. Your drive to be the best is infectious and your intensity elevates team performance. You celebrate wins and you hate losing in a way that keeps the team hungry and ambitious.",
     leanIn: "Channel your competitive energy toward external benchmarks. How does the firm stack up against competitors? How does your account's performance compare to industry standards? When you frame competition as the team versus the world rather than you versus your colleagues, everyone benefits from your intensity.",
@@ -104,6 +468,34 @@ var TH = {
     blindSpots: ["Your drive to win can raise performance, but it can also make you dismissive of anything that does not feel measurable, competitive, or first-rate. Others may experience you as motivating and sharp, or as intense, status-conscious, and overly focused on the scoreboard when collaboration or long-term development matters more than immediate rank.", "You may also struggle to stay engaged when there is no obvious way to know who is ahead. If the goal feels fuzzy or the outcome is not clearly comparable, your energy can drop fast, and you may underestimate valuable work simply because it does not come with a visible finish line."],
     actionItems: ["**Aim your edge outward, not inward.** Your competitive drive is most useful when it helps the team outperform the market, the competition, or the prior baseline, not when it turns every room into an internal ranking exercise. You are at your best when your intensity sharpens standards without making colleagues feel like collateral damage.", "**Define the right scoreboard.** Not every meaningful outcome is obvious at first glance. If you need something to measure, build a metric that reflects what actually matters rather than defaulting to the easiest or loudest signal of success.", "**Use winning to build, not just to prove.** Victory feels good to you, but the real leverage is in what higher standards make possible for the team. When you connect performance to growth, reputation, or impact, your ambition becomes easier for other people to trust.", "**Stay in the game when you are not ahead yet.** Your energy can spike when you are close to winning and dip when the path feels uncertain. Train yourself to stay engaged through the middle stretch, because that is often where real advantage is built.", "**Notice where comparison is stealing your peace.** Some comparison sharpens you, and some just keeps you restless. If you never let yourself enjoy what is already good because someone, somewhere is doing more, winning will start to feel strangely empty."] },
   maximizer: { n: "Maximizer", d: "influencing", desc: "You focus on strengths to stimulate excellence. You seek to transform something strong into something superb.",
+    availableTendency: "sharpen strengths, raise quality, and improve what is already promising",
+    awarenessCue: "the work is competent, but no one is asking how to make it exceptional",
+    coreContext: "there is strong raw material worth investing in rather than fixing everything equally",
+    coreResult: "move the work from solid to exceptional",
+    defaultTendency: "usefulness, balance, or improvement across the whole field",
+    introAction: "refine",
+    introObject: "what is already strong",
+    introPayoff: "so good becomes excellent instead of merely adequate",
+    investmentMove: "keep pushing toward excellence, but stay honest about when good enough is actually enough",
+    lowDefault: "focus first on refining strengths toward excellence",
+    lowMiss: "when the work would benefit more from sharpening what is best than from fixing what is weakest",
+    lowRisk: "overemphasis on sufficiency, practicality, or broad coverage",
+    naturalTendency: "spot what has potential for excellence and push it toward a higher ceiling",
+    overuseCost1: "making practicality or sufficiency harder to accept than it needs to be",
+    overuseCost2: "leaving important liabilities unattended",
+    overusePattern1: "you may dismiss work that is simply good enough for the moment",
+    overusePattern2: "you may underinvest in weak areas that still matter",
+    overuseTrigger1: "when excellence becomes the only standard that feels emotionally satisfying",
+    overuseTrigger2: "when your attention stays only on what is already strongest",
+    partnershipCue: "relying on people who naturally spot strength and know how to elevate it further",
+    supportBenefit: "raise quality without needing excellence to become the only thing you can tolerate",
+    supportCondition: "there is already a strong asset that deserves deeper investment",
+    supportPartner: "people who naturally notice what is best and know how to elevate it",
+    supportStructure: "quality criteria, strength-based review, or room to iterate toward excellence",
+    themePriority: "excellence through refinement of strengths",
+    underuseAdvantage: "strength-sharpening and quality elevation",
+    underuseCost: "lowering the overall ceiling of the work",
+    underuseMiss: "teams may settle for adequacy when there is clear room for excellence",
     atWork: "You take good work and make it great. You push for one more round of edits. You refine the strategy until it is sharp. You see potential in people and deliverables and you cannot rest until that potential is realized.",
     atBest: "You produce exceptional quality. You elevate everything you touch. You help people see what they are already good at and push them to develop those strengths further. You set a standard of excellence that raises the whole team.",
     leanIn: "Apply your eye for excellence to the firm's most visible work. Position yourself as the quality bar. Also, turn your Maximizer lens on people, not just deliverables. When you notice what a colleague does well and tell them, you accelerate their growth in a way that most feedback never achieves.",
@@ -116,8 +508,48 @@ var TH = {
     leanIn: "Step into the situations that others are afraid of. The ambiguous client relationship, the high-stakes negotiation, the strategy call with incomplete information. Your confidence is most valuable in the moments where everyone else feels uncertain. Also, share your reasoning out loud so others can learn from the internal compass that guides you.",
     thrive: "You thrive when you can trust your own judgment, move decisively in ambiguity, and act without needing constant external reassurance. You do your best work when confidence is useful, stakes are real, and your internal compass has room to do what it naturally does.",
     blindSpots: ["Your self-trust can make you less likely to seek input, test assumptions, or show uncertainty before you move. What feels to you like steadiness and independence can come across as dismissive, overconfident, or oddly hard to influence when other people are trying to contribute something that might actually strengthen the decision.", "You may also underestimate how differently your certainty lands on people who do not feel things as firmly or internally as you do. If you rely too heavily on instinct without making your reasoning visible, others may experience you as powerful but opaque, and confidence without explanation can start to look a lot like arrogance."],
-    actionItems: ["**Trust yourself and still pressure-test the call.** Your confidence is a real asset, especially in uncertain situations where hesitation would cost the team momentum. The more you pair conviction with a quick check for blind spots, the more credible and durable your judgment becomes.", "**Show the logic behind the instinct.** You often know what you think before other people have fully oriented to the problem. Bringing others into your reasoning does not weaken your authority, it makes your confidence easier to trust and easier for others to learn from.", "**Use certainty as a stabilizer, not a silencer.** People often feel steadier around someone who can move without panicking. Just make sure your confidence leaves room for contribution instead of ending the conversation before the best information has surfaced.", "**Notice where independence is becoming isolation.** Being internally directed has likely served you well, but it can also become a reason to carry too much alone or underuse the wisdom around you. Strength includes knowing when input will sharpen the outcome, not just when it is required.", "**Build a life where you do not always have to be the strongest presence in the room.** Confidence is one of your gifts, but it should not become the only role you know how to play. Let yourself have spaces where you can be uncertain, learning, or supported without feeling less powerful because of it."] },
+    actionItems: ["**Trust yourself and still pressure-test the call.** Your confidence is a real asset, especially in uncertain situations where hesitation would cost the team momentum. The more you pair conviction with a quick check for blind spots, the more credible and durable your judgment becomes.", "**Show the logic behind the instinct.** You often know what you think before other people have fully oriented to the problem. Bringing others into your reasoning does not weaken your authority, it makes your confidence easier to trust and easier for others to learn from.", "**Use certainty as a stabilizer, not a silencer.** People often feel steadier around someone who can move without panicking. Just make sure your confidence leaves room for contribution instead of ending the conversation before the best information has surfaced.", "**Notice where independence is becoming isolation.** Being internally directed has likely served you well, but it can also become a reason to carry too much alone or underuse the wisdom around you. Strength includes knowing when input will sharpen the outcome, not just when it is required.", "**Build a life where you do not always have to be the strongest presence in the room.** Confidence is one of your gifts, but it should not become the only role you know how to play. Let yourself have spaces where you can be uncertain, learning, or supported without feeling less powerful because of it."],
+    introAction: "trust", introObject: "your own judgment in ambiguity", introPayoff: "so decisions can move forward without needing endless external validation",
+    naturalTendency: "rely on your internal compass and move with unusual steadiness in uncertainty",
+    availableTendency: "act with confidence, trust your judgment, and move decisively when the map is incomplete",
+    coreContext: "ambiguity is high and someone still has to choose a direction",
+    coreResult: "create steadiness and movement without collapsing into doubt",
+    overuseTrigger1: "when inner certainty hardens faster than outside reality can keep up", overusePattern1: "you may overtrust your own read and underweight external input", overuseCost1: "sounding closed or harder to influence than you intend",
+    overuseTrigger2: "when needing no validation becomes part of your identity", overusePattern2: "you may move too independently in situations that would benefit from more shared calibration", overuseCost2: "weakening alignment or buy-in",
+    underuseAdvantage: "internal confidence and steadiness under ambiguity", underuseMiss: "teams can overdepend on outside validation or shared reassurance before moving", underuseCost: "slowing decisions that needed more conviction",
+    lowDefault: "trust your own judgment quickly without much outside confirmation", lowMiss: "when a situation needs more inner certainty, steadiness, or self-trust", lowRisk: "overreliance on group validation, consensus, or reassurance",
+    defaultTendency: "shared validation, external input, or collaborative calibration", themePriority: "internal certainty and self-trusting judgment",
+    supportCondition: "ambiguity is unavoidable and no amount of extra input will fully remove it", supportStructure: "clear decision rights, criteria, or a defined point where input ends and choice begins", supportPartner: "people who naturally move with steadiness and help anchor decisions under uncertainty", supportBenefit: "act with more confidence without pretending certainty where none exists",
+    investmentMove: "trust your inner compass, but keep inviting enough reality-testing to stay accurate", awarenessCue: "the room has enough information and is now just looking for more reassurance", partnershipCue: "leaning on people who naturally bring steadiness and decision confidence in ambiguity" },
   significance: { n: "Significance", d: "influencing", desc: "You want to make a big impact. You prioritize projects based on how much influence they will have.",
+    availableTendency: "raise the stakes, resist smallness, and push toward work with visible importance",
+    awarenessCue: "the work is competent, but no one is naming why it actually matters",
+    coreContext: "the work has enough consequence or potential impact to justify full ambition",
+    coreResult: "increase meaningfulness, aspiration, and standards of importance",
+    defaultTendency: "substance over visibility, pragmatism, or lower-key contribution",
+    introAction: "aim",
+    introObject: "your effort at something that matters",
+    introPayoff: "so ambition is attached to real impact instead of smallness",
+    investmentMove: "keep aiming high, but stay alert to the difference between real impact and mere visibility",
+    lowDefault: "naturally orient toward work that feels important, consequential, or high-impact",
+    lowMiss: "when the work needs more aspiration, higher stakes, or a clearer sense of why it matters",
+    lowRisk: "preferring substance, practicality, or modesty in ways that may undersell impact",
+    naturalTendency: "want your work to matter, your effort to count, and your contribution to register",
+    overuseCost1: "dismissing important work because it looks too small",
+    overuseCost2: "confusing importance with prominence",
+    overusePattern1: "you may underweight quieter forms of value",
+    overusePattern2: "you may become more attached to impact language than to the substance underneath it",
+    overuseTrigger1: "when significance starts to feel synonymous with visibility or scale",
+    overuseTrigger2: "when the need for the work to matter becomes ego-sensitive",
+    partnershipCue: "relying on people who naturally raise the stakes and push work toward greater impact",
+    supportBenefit: "increase aspiration without needing significance to be the emotional fuel behind everything",
+    supportCondition: "the work is being treated as too small when its consequences are larger",
+    supportPartner: "people who naturally raise the stakes and refuse to let important work be treated like filler",
+    supportStructure: "impact framing, clearer stakes, or a stronger articulation of why the work matters",
+    themePriority: "importance, impact, and meaningful ambition",
+    underuseAdvantage: "raised stakes and meaningful ambition",
+    underuseCost: "leaving significance and aspiration on the table",
+    underuseMiss: "the room may settle for work that is useful but underpowered in impact",
     atWork: "You want to make a visible impact. You are drawn to high-profile projects, leadership roles, and work that will be remembered. You are independent and you prioritize based on how much influence the work will have.",
     atBest: "You do transformative work. You aim higher than others and you pull the team toward ambitious goals. Your desire for impact drives you to produce work that actually moves the needle, not just fills a slot.",
     leanIn: "Seek out the projects that will define the firm's reputation. Pitch ideas that are bigger than what the client asked for. Your ambition is an asset when it is channeled toward outcomes that benefit the whole team. Also, document your impact. Build a track record that speaks for itself, because that is the legacy you are wired to create.",
@@ -125,6 +557,34 @@ var TH = {
     blindSpots: ["Your desire to matter can make ordinary work feel deadening, low-visibility roles feel undervalued, and recognition feel more important than you want to admit. What feels to you like healthy ambition and high standards can come across as image-conscious, status-driven, or dismissive of contributions that are less visible but still essential.", "You may also attach too much of your identity to being impressive, influential, or seen as exceptional. If significance becomes the lens through which you evaluate every role, project, or relationship, you can end up chasing external proof at the expense of deeper fit, sustainability, or actual fulfillment."],
     actionItems: ["**Aim your ambition at work that deserves it.** Wanting impact is not shallow, it is part of how you are wired. The more clearly you connect your drive to outcomes that genuinely matter, the more your ambition reads as leadership instead of ego.", "**Respect the infrastructure behind visible success.** Not all important work is obvious from the outside, and not every meaningful contribution comes with applause. Training yourself to value what is essential, not just what is seen, will make your judgment more balanced and your leadership stronger.", "**Define impact more carefully than praise.** Recognition feels good, but it is not the same thing as significance. Ask whether the thing you are chasing is actually influence, legacy, usefulness, or just evidence that someone noticed you.", "**Let the room be bigger than your reflection in it.** You bring intensity and aspiration, which can be catalytic in the right setting. Just make sure your presence expands the mission, the team, or the work itself rather than quietly turning every important moment into a referendum on your own standing.", "**Build a life that feels meaningful even when nobody is clapping.** Some of your healthiest growth will come from choosing what is deeply right over what is obviously impressive. You do not become less significant when your worth is no longer dependent on being constantly witnessed."] },
   woo: { n: "Woo", d: "influencing", desc: "You love the challenge of meeting new people and winning them over. You derive satisfaction from breaking the ice.",
+    availableTendency: "warm up the room, open doors, and help relationships get started",
+    awarenessCue: "the opportunity depends on warming up a new room, not just doing good work once you are inside it",
+    coreContext: "the moment requires new connection, ease with strangers, or social opening moves",
+    coreResult: "make unfamiliar spaces feel more engaged and more connected",
+    defaultTendency: "depth, familiarity, or quieter social pacing",
+    introAction: "create",
+    introObject: "connection quickly with new people",
+    introPayoff: "so doors open faster and unfamiliar spaces warm up",
+    investmentMove: "keep opening doors, but decide more intentionally which connections deserve deeper follow-through",
+    lowDefault: "lead with charm, social opening, or fast rapport-building",
+    lowMiss: "when the situation needs quicker connection, more warmth with strangers, or easier door-opening",
+    lowRisk: "preferring depth, familiarity, or caution in ways that slow access to new relationships",
+    naturalTendency: "build rapport fast, make new connections, and generate social momentum",
+    overuseCost1: "creating fast rapport that is not always matched by durable trust",
+    overuseCost2: "missing people who need more time before they engage",
+    overusePattern1: "you may keep the energy broad and social without always building depth",
+    overusePattern2: "you may undervalue quieter, slower, or less outwardly magnetic forms of connection",
+    overuseTrigger1: "when the spark of new connection becomes more energizing than deeper follow-through",
+    overuseTrigger2: "when social ease becomes the main way you measure whether a room is working",
+    partnershipCue: "working with people who naturally create quick rapport and make new spaces easier to enter **10. Closing page** -------------------- ### **Page heading** **How to Use This Report** ### **Body copy** This report is meant to help you understand the full shape of your strengths profile, not to turn every lower-ranked theme into a development project. Your top themes are where you are most likely to find the greatest return from deeper reflection, stronger application, and more intentional development. The rest of your profile still matters, but not every theme needs equal attention. Use this report to understand where you naturally lead, where you have supporting range, and where you may be more likely to rely on context, structure, or partnership. Use your Top 5 report for the deeper coaching and application work. ### **Design direction** Keep this short, restrained, and clean. This should feel like a smart closing note, not a motivational speech. **Additional implementation guardrails** ======================================== -   Keep the strengths philosophy explicit, but concise. It should > ground the report, not dominate it. -   Show all 34 themes in exact rank order, with rank numbers visible. -   Do not expand the layout just to fill pages. -   Keep pacing tight and let density be driven by usefulness, not by > the desire to make the report feel longer. -   Where an existing page or component is already strong and aligned > with this brief, preserve it and refine around it rather than > redesigning it unnecessarily. **Readability and layout guardrails** ------------------------------------- Because this is a fixed PDF, readability should take priority over density. That means: -   do not shrink text excessively to fit more content on a page -   prioritize comfortable reading size over squeezing in additional > copy -   allow pages to expand when needed rather than compressing the layout > too aggressively -   use spacing, hierarchy, and section breaks to create clarity -   keep line lengths readable -   avoid crowded pages with too many text blocks competing for > attention This report does not need to behave like a responsive screen. It is a downloadable PDF, so it should be designed for clear, comfortable reading as a document. ### **Specific guidance** -   body text should remain comfortably readable in a PDF without > zooming -   headings and subheadings should create clear visual hierarchy -   theme entries should have enough spacing around them to avoid > feeling cramped -   charts or visuals should support readability, not reduce the space > available for the text to the point that the text becomes too > small -   if a page feels crowded, reduce content density or continue onto the > next page instead of shrinking everything to fit ### **Priority order** If there is a tension between: 1.  fitting more onto one page 2.  keeping the report easy to read choose readability every time.",
+    supportBenefit: "open doors socially without needing outward ease to be your default mode",
+    supportCondition: "the room is cold, unfamiliar, or harder to enter than it needs to be",
+    supportPartner: "people who naturally create warmth and fast connection with new people",
+    supportStructure: "clear introductions, intentional networking, or social on-ramps that lower friction",
+    themePriority: "fast rapport and new-connection energy",
+    underuseAdvantage: "easier connection and faster social opening",
+    underuseCost: "losing access, warmth, or opportunities that begin with social ease",
+    underuseMiss: "new relationships can stay colder, slower, or more formal than they need to",
     atWork: "You are the relationship opener. You work a room, win over a new client on the first call, and make people feel comfortable immediately. You thrive on meeting new people and you are energized by the spark of a new connection.",
     atBest: "You open doors that others cannot. You build the firm's network, make introductions, and create warmth wherever you go. People want to work with the firm because they want to work with you.",
     leanIn: "Be the firm's front door. Volunteer for new business pitches, networking events, and client onboarding. Your gift for first impressions is one of the most commercially valuable strengths in consulting. Also, intentionally introduce people in your network to each other, because your ability to connect people creates value that compounds over time.",
@@ -132,6 +592,34 @@ var TH = {
     blindSpots: ["Your ease with new people can make depth, follow-through, or staying power less instinctive than the initial connection. What feels to you like friendliness and social agility can come across as superficial, overly polished, or all spark and no substance if people sense that the warmth drops once the novelty of the interaction is gone.", "You may also over-rely on your ability to win people over. Charm can open the door, but it cannot carry weak substance, poor boundaries, or inconsistent delivery forever, and if you lean on likability too hard, you can start to mistake access for trust."],
     actionItems: ["**Use your gift for opening, then build enough depth to keep the connection useful.** First impressions are one of your real superpowers. The more intentionally you follow spark with substance, the more your relationships become assets that last instead of just moments that land well.", "**Know when the room needs warmth and when it needs more than warmth.** You are naturally good at breaking ice, building rapport, and getting people engaged quickly. Just make sure the charm is serving the goal rather than becoming the goal itself.", "**Do not confuse being liked with being trusted.** Likability creates access, which is valuable, but trust is built through consistency, honesty, and what happens after the introduction. Your influence gets much stronger when you treat connection as the start of credibility, not proof of it.", "**Use your social range strategically.** You can move across groups, meet people quickly, and make others feel comfortable faster than most. Be intentional about where that energy goes so you are not scattering yourself across a hundred interactions that never turn into anything meaningful.", "**Protect space for relationships where you do not have to perform.** Being socially magnetic can make it easy to become the upbeat version of yourself all the time. Make sure your life also includes people and places where connection does not depend on your ability to charm the room."] },
   adaptability: { n: "Adaptability", d: "relationship_building", desc: "You prefer to go with the flow. You take things as they come and discover the future one day at a time.",
+    availableTendency: "stay flexible, calm, and responsive when plans shift",
+    awarenessCue: "the plan has changed, but the room is still acting like it has not",
+    coreContext: "the environment is changing and rigid plans no longer fit",
+    coreResult: "keep moving with reality instead of fighting it",
+    defaultTendency: "stronger direction, clear structure, or intentional control",
+    introAction: "respond to",
+    introObject: "changing reality in real time",
+    introPayoff: "so the work stays useful instead of rigid",
+    investmentMove: "keep one or two anchor priorities visible so flexibility does not become drift",
+    lowDefault: "improvise or respond fluidly as conditions change",
+    lowMiss: "when a situation calls for more flexibility, present-moment response, or calm adjustment",
+    lowRisk: "rigidity, frustration, or overattachment to plans",
+    naturalTendency: "adjust to what is actually happening and stay present in fast-moving situations",
+    overuseCost1: "letting changing demands take over your priorities",
+    overuseCost2: "losing traction on what mattered most",
+    overusePattern1: "you may become reactive rather than purposeful",
+    overusePattern2: "you may underprotect your own agenda or long-range focus",
+    overuseTrigger1: "when flexibility starts to replace intention",
+    overuseTrigger2: "when you adapt so well to what is in front of you",
+    partnershipCue: "pairing with people who stay calm, fluid, and useful when conditions shift",
+    supportBenefit: "adapt without feeling like you are losing all structure",
+    supportCondition: "the situation is shifting too quickly for rigid planning to hold",
+    supportPartner: "people who naturally stay responsive and steady amid change",
+    supportStructure: "clear priorities, a flexible plan, or permission to adjust in real time",
+    themePriority: "fluid responsiveness and in-the-moment adjustment",
+    underuseAdvantage: "real-time adjustment and responsiveness",
+    underuseCost: "wasting energy forcing structure onto a moving reality",
+    underuseMiss: "teams may hold too tightly to plans that no longer fit",
     atWork: "You do not flinch when the plan changes. You take things as they come, adjust on the fly, and stay calm when everyone else is stressed about the pivot. You live in the present and respond to what is in front of you.",
     atBest: "You are the team's shock absorber. You keep things moving when plans fall apart. You respond to client fire drills without drama. Your flexibility makes you invaluable in an environment where the only constant is change.",
     leanIn: "Position yourself as the go-to person for rapid response and evolving situations. When a new fire drill comes in, raise your hand. Also, help your less adaptable colleagues navigate change by modeling what calm flexibility looks like. Your composure during chaos is a leadership quality even when you do not have the title.",
@@ -139,6 +627,34 @@ var TH = {
     blindSpots: ["Your comfort with change can make you less motivated by long-range structure, fixed routines, or highly detailed planning. What feels to you like flexibility and realism can come across as drift, lack of discipline, or a tendency to wait for the day to reveal itself instead of shaping it more intentionally.", "You may also adapt so well to what is in front of you that you underprotect your own priorities. If you are not careful, responsiveness can turn into reactivity, and you can become the person who handles whatever comes up while slowly losing traction on the things that mattered most to you in the first place."],
     actionItems: ["**Use your flexibility where volatility is real.** You are especially valuable in fast-moving environments where plans change, new information arrives, and other people get rattled by the pivot. The more intentionally you place yourself in work that benefits from real-time responsiveness, the more your strength reads as leadership instead of looseness.", "**Add just enough structure to protect what matters.** You do not need to become rigid to be effective, but you do need a few anchors that keep your day from being entirely claimed by whatever shows up first. Light structure will make your adaptability more powerful, not less natural.", "**Distinguish responsiveness from availability.** Being able to handle the moment does not mean every interruption deserves access to you. The more clearly you decide what actually requires your flexibility, the less likely you are to become endlessly useful to everyone except yourself.", "**Say yes to the pivot without losing the plot.** One of your biggest strengths is staying calm when the plan changes. Pair that with a habit of checking whether the new direction is still serving the larger goal, so your flexibility stays connected to purpose rather than becoming pure improvisation.", "**Let the present be a place you live, not just a place you manage.** You are naturally good at meeting life as it arrives, and that can be a gift well beyond work. Make sure some of that responsiveness is serving joy, spontaneity, and actual presence too, not just other people's changing demands."] },
   connectedness: { n: "Connectedness", d: "relationship_building", desc: "You have faith in the links among all things. You believe there are few coincidences.",
+    availableTendency: "widen the frame, add perspective, and connect individual parts to a larger purpose",
+    awarenessCue: "the team knows what it is doing, but not why it matters in the larger picture",
+    coreContext: "people need more perspective and the moment cannot be understood only tactically",
+    coreResult: "help others see meaning, interdependence, and the bigger picture",
+    defaultTendency: "logic, action, structure, or pragmatism",
+    introAction: "connect",
+    introObject: "people, events, and meaning into a larger whole",
+    introPayoff: "so the work feels grounded in purpose rather than isolated tasks",
+    investmentMove: "keep translating your perspective into sharper, more concrete next steps",
+    lowDefault: "lead with larger-purpose framing or deep interconnection",
+    lowMiss: "when a situation needs more meaning, perspective, or a sense of how the parts fit together",
+    lowRisk: "staying too narrow, too tactical, or too pragmatic",
+    naturalTendency: "look for the bigger picture, hidden links, and deeper meaning underneath what is happening",
+    overuseCost1: "making people who need immediacy feel like the point is drifting",
+    overuseCost2: "underreacting when firmer intervention or clearer boundaries are needed",
+    overusePattern1: "you may sound abstract, philosophical, or frustratingly indirect",
+    overusePattern2: "you may overtrust that things are unfolding as they should",
+    overuseTrigger1: "when the larger web feels more compelling than the immediate decision",
+    overuseTrigger2: "when meaning-making softens your response to a hard problem",
+    partnershipCue: "leaning on people who naturally connect the work to larger meaning and context",
+    supportBenefit: "widen the frame without forcing yourself to live in abstraction",
+    supportCondition: "the room is so focused on the immediate task that it is losing sight of the larger picture",
+    supportPartner: "people who naturally help others see meaning, purpose, and interdependence",
+    supportStructure: "reflection space, mission framing, or explicit connection-making",
+    themePriority: "meaning-first perspective and interconnection",
+    underuseAdvantage: "perspective, meaning, and interdependence",
+    underuseCost: "making the work feel fragmented, transactional, or less connected to purpose",
+    underuseMiss: "groups can get stuck in narrow mechanics without a larger frame",
     atWork: "You see the bigger picture. You believe that events, people, and outcomes are all linked. You bring a sense of meaning and purpose to the team by helping others see how their individual work connects to something larger.",
     atBest: "You are a bridge builder. You help people from different backgrounds find common ground. You bring stability during difficult times because you have faith in a larger purpose. You give the team's work meaning beyond the deliverable.",
     leanIn: "Be the person who tells the story of why the work matters. In team meetings, in client conversations, in moments of doubt, connect the dots out loud. Your ability to see the larger web is not just philosophical, it is strategic. It helps teams make better decisions when they can see how the pieces fit together.",
@@ -146,6 +662,34 @@ var TH = {
     blindSpots: ["Your ability to see the larger web can make you sound abstract or overly philosophical to people who are focused on immediate facts, deadlines, or tactical choices. What feels to you like perspective and meaning can come across as vague, overly expansive, or frustratingly indirect when others are looking for a sharper point or a faster answer.", "You may also over-trust the idea that things are unfolding as they should, even when a situation actually requires firmer intervention, clearer boundaries, or harder judgment. If you lean too far into meaning-making, you can start to spiritualize what should be confronted more directly."],
     actionItems: ["**Use your perspective to help people locate themselves in the larger picture.** One of your gifts is reminding others that their work, choices, or struggles are part of something broader than the immediate moment. When you connect the dots clearly, you can bring steadiness and meaning to environments that would otherwise feel fragmented or transactional.", "**Make the big picture practical.** Your insight lands best when it helps people understand what to do, not just what it means. The more you can tie your perspective to concrete decisions, relationships, or next steps, the more useful and influential your strength becomes.", "**Do not let meaning replace judgment.** Seeing that everything is connected does not remove the need to make hard distinctions about what is healthy, true, or workable. Keep your perspective, but stay willing to act directly when a problem is not going to resolve itself through understanding alone.", "**Bridge people who do not naturally see each other.** You are often good at recognizing links between individuals, teams, or ideas that others treat as separate. Use that instinct intentionally, because helping people understand their connection can reduce friction and build smarter collaboration.", "**Build a life where your sense of meaning has somewhere honest to live.** You are not built for a purely mechanistic existence, and pretending otherwise will drain you. Give yourself work, relationships, and reflection that let your deeper sense of purpose stay active, not buried under logistics."] },
   developer: { n: "Developer", d: "relationship_building", desc: "You recognize and cultivate the potential in others. You spot signs of improvement and derive satisfaction from progress.",
+    availableTendency: "encourage, coach, and support progress rather than just evaluate the present",
+    awarenessCue: "someone needs more development than criticism to get better",
+    coreContext: "someone has real potential and growth matters more than immediate perfection",
+    coreResult: "help people become more capable over time",
+    defaultTendency: "outcomes, clarity, standards, or present effectiveness",
+    introAction: "invest in",
+    introObject: "someone\'s growth and emerging potential",
+    introPayoff: "so progress becomes visible over time",
+    investmentMove: "keep asking whether the growth is real or whether you are just carrying the hope for it",
+    lowDefault: "coach patiently or focus on developmental progress first",
+    lowMiss: "when someone would benefit from more encouragement, patience, or growth-oriented support",
+    lowRisk: "jumping too quickly to evaluation, standards, or immediate performance",
+    naturalTendency: "see potential in people and feel energized by helping them grow",
+    overuseCost1: "enabling people who enjoy support more than development",
+    overuseCost2: "coaching what is not actually changing",
+    overusePattern1: "you may overinvest in people who are not ready or accountable enough to grow",
+    overusePattern2: "you may avoid making hard calls about fit, limits, or performance",
+    overuseTrigger1: "when hope in someone\'s potential outruns the reality of their effort",
+    overuseTrigger2: "when development feels kinder than judgment",
+    partnershipCue: "leaning on partners who naturally coach, encourage, and cultivate potential",
+    supportBenefit: "help others grow without needing coaching to be your main instinct",
+    supportCondition: "the goal is growth, not just immediate output",
+    supportPartner: "people who naturally notice and cultivate potential",
+    supportStructure: "coaching rhythms, feedback loops, or real development plans",
+    themePriority: "long-range development and potential-building",
+    underuseAdvantage: "patient development and potential-building",
+    underuseCost: "missing growth that could have been cultivated",
+    underuseMiss: "people may be judged only on current performance rather than what they could become",
     atWork: "You are the coach. You notice when someone asks a better question in a meeting or writes a sharper memo. You invest time in people who are struggling because you can see their potential. You measure your own success partly by how much the people around you have grown.",
     atBest: "Your team members grow faster under your guidance because you see their potential before they do. You create an environment where people feel safe to learn and stretch. The firm's talent pipeline is stronger because of you.",
     leanIn: "Ask for formal mentoring relationships. Volunteer to onboard new hires. Sit in on work reviews and offer developmental feedback, not just evaluative feedback. Your ability to grow people is one of the highest-leverage things you can do for the firm, because every person you develop becomes a better contributor to every account they touch.",
@@ -153,6 +697,34 @@ var TH = {
     blindSpots: ["Your instinct to see potential can make you overinvest in people who are not ready, willing, or accountable enough to use what you are offering. What feels to you like patience and belief can become enabling if you keep pouring energy into someone who likes support more than growth.", "You may also focus so much on improvement that you avoid making hard calls about fit, performance, or limits. Not everyone needs more coaching, and sometimes the kindest, clearest move is to stop trying to develop what is not actually developing."],
     actionItems: ["**Invest where growth is real, not just possible.** Your eye for potential is powerful, but potential alone is not enough. Look for effort, ownership, and movement, because those are the signals that your investment is likely to pay off.", "**Give feedback that people can use.** Encouragement matters, but it is most effective when it is specific. The more clearly you can name what improved, what matters, and what the next step is, the more your support accelerates real development.", "**Do not confuse support with rescue.** You are naturally generous with your time and belief, but some people will gladly let you carry more than you should. Helping is valuable, but only when it strengthens the other person's capacity instead of replacing it.", "**Take pride in growth without taking ownership of everyone else's outcome.** Your strength is to cultivate, not to control. You can create conditions for people to improve, but their follow-through still belongs to them.", "**Let your eye for growth include you.** You are often so busy noticing what others could become that you underinvest in your own development. Put some of that same patience, structure, and belief toward your own next level."] },
   empathy: { n: "Empathy", d: "relationship_building", desc: "You can sense other people's feelings by imagining yourself in their lives or situations.",
+    availableTendency: "read the room, register emotional undercurrents, and respond with sensitivity",
+    awarenessCue: "the facts are clear, but the emotional reality in the room is not being addressed",
+    coreContext: "emotion is affecting the work whether people name it or not",
+    coreResult: "help people feel understood and respond in a way that actually lands",
+    defaultTendency: "clarity, logic, or efficiency",
+    introAction: "sense",
+    introObject: "what other people are feeling beneath the surface",
+    introPayoff: "so your response lands in a way that is more human and useful",
+    investmentMove: "use your empathy to inform truth-telling, not replace it",
+    lowDefault: "lead with emotional attunement or feeling the room first",
+    lowMiss: "when a situation needs more sensitivity, emotional awareness, or attunement",
+    lowRisk: "missing how something is landing with people until the room is already strained",
+    naturalTendency: "pick up emotional reality quickly and respond to it with attunement",
+    overuseCost1: "draining your energy and blurring your own perspective",
+    overuseCost2: "protecting feelings at the expense of clarity",
+    overusePattern1: "you may overidentify, absorb too much, or adjust yourself excessively",
+    overusePattern2: "you may soften necessary friction or delay difficult conversations",
+    overuseTrigger1: "when other people\'s feelings start to feel like yours to carry",
+    overuseTrigger2: "when you can feel the discomfort a hard truth will create",
+    partnershipCue: "leaning on people who naturally read emotional undercurrents and help messages land better",
+    supportBenefit: "keep your response human without making emotion your main operating system",
+    supportCondition: "emotions are shaping the room even if nobody is naming them directly",
+    supportPartner: "people who naturally register emotional reality and help name it",
+    supportStructure: "pause, reflection, feedback, or explicit check-ins",
+    themePriority: "emotional attunement and interpersonal sensitivity",
+    underuseAdvantage: "emotional attunement and better read-the-room judgment",
+    underuseCost: "making your message land more harshly or less effectively than intended",
+    underuseMiss: "tension, defensiveness, or emotional undercurrents can go unrecognized",
     atWork: "You feel the room. You pick up on the anxiety behind a calm question, the frustration behind a polite email, the excitement someone is trying to hide. You instinctively understand emotional dynamics and use that understanding to navigate relationships.",
     atBest: "You are the team's emotional intelligence. You help leaders understand how decisions will land. You defuse tension before it becomes conflict. You make people feel seen and understood, which builds the kind of loyalty that holds teams together.",
     leanIn: "Use your emotional reads strategically. Before a tough client conversation, share what you are sensing with the team lead. In stakeholder meetings, read the room and signal what you are picking up. Also, offer to be a sounding board for colleagues who are navigating a difficult relationship. Your ability to understand how someone is feeling is a form of intelligence that most people do not have.",
@@ -160,6 +732,34 @@ var TH = {
     blindSpots: ["Your sensitivity to other people's feelings can make you absorb more than is yours to carry. What feels to you like awareness and care can turn into overidentification, emotional fatigue, or a habit of adjusting yourself so much that your own perspective starts to disappear.", "You may also avoid necessary friction because you can feel the discomfort it will create before it even happens. In trying to protect people from hurt, you can soften truths that need to be said, delay hard conversations, or take responsibility for emotions that are not actually yours to manage."],
     actionItems: ["**Use what you sense to inform action.** Your read on people is valuable, but it is most powerful when it helps the team communicate better, lead better, or intervene earlier. Treat emotional insight as data you can translate into smarter decisions, not just something you quietly carry alone.", "**Tell the truth kindly, not endlessly gently.** You do not need to choose between honesty and care. In many cases, the kindest thing you can do is say the hard thing clearly enough that it actually helps rather than cushioning it so much that nothing changes.", "**Separate understanding from responsibility.** Just because you can feel what someone else is feeling does not mean you are responsible for fixing it. Protecting that boundary will make your empathy steadier, cleaner, and much less exhausting.", "**Speak your read before the room hardens.** You often sense tension, discouragement, or misalignment early. Say what you are noticing in practical terms, because your insight is far more useful when it helps the group adapt before the issue calcifies.", "**Build recovery into your life on purpose.** You are taking in more than most people realize, and probably more than you admit. Give yourself regular ways to reset so your care does not quietly turn into depletion."] },
   harmony: { n: "Harmony", d: "relationship_building", desc: "You look for consensus. You seek areas of agreement. Friction wastes time.",
+    availableTendency: "steady a room, keep conversations productive, and help groups move toward what is workable",
+    awarenessCue: "the conflict is now more draining than useful",
+    coreContext: "tension is draining energy without producing meaningful progress",
+    coreResult: "move people forward without getting stuck in conflict",
+    defaultTendency: "directness, candor, or sharper truth-telling",
+    introAction: "find",
+    introObject: "common ground and workable overlap",
+    introPayoff: "so energy goes toward progress instead of unproductive conflict",
+    investmentMove: "let harmony create movement, not premature agreement",
+    lowDefault: "smooth conflict, reduce friction, or seek agreement first",
+    lowMiss: "when a group\'s tension is wasting time or stalling progress",
+    lowRisk: "letting avoidable conflict harden or drag on longer than it should",
+    naturalTendency: "reduce unnecessary friction, look for consensus, and keep conflict from becoming the main event",
+    overuseCost1: "protecting surface calm at the expense of truth",
+    overuseCost2: "preserving peace where clarity, accountability, or principled disagreement would be healthier",
+    overusePattern1: "you may smooth over tension too quickly",
+    overusePattern2: "you may overvalue agreement in situations that need sharper distinction",
+    overuseTrigger1: "when preserving peace starts to matter more than surfacing the real issue",
+    overuseTrigger2: "when consensus starts to feel like the goal in itself",
+    partnershipCue: "leaning on people who naturally bridge divides and build workable consensus",
+    supportBenefit: "keep being candid without letting the room splinter",
+    supportCondition: "the room needs more bridge-building and less unnecessary friction",
+    supportPartner: "people who naturally build consensus and help others find overlap",
+    supportStructure: "norms or facilitation that surface disagreement productively instead of suppressing it",
+    themePriority: "common ground and agreement-building",
+    underuseAdvantage: "consensus-building and friction reduction",
+    underuseCost: "wasting time and energy that could have gone toward movement",
+    underuseMiss: "groups can stay needlessly stuck in conflict or circular tension",
     atWork: "You are the consensus builder. You find common ground between people who seem to disagree. You redirect unproductive arguments toward solutions. You believe that alignment moves things forward faster than conflict.",
     atBest: "You make teams functional. You reduce friction, bridge divides, and create environments where people can actually work together. You are the reason coalition partners stay at the table and stakeholder groups do not fall apart.",
     leanIn: "Volunteer for coalition work, multi-stakeholder processes, and any situation where people need to find common ground. That is your superpower. Also, when you find the overlap between two sides, name it explicitly and build the strategy around it. Your ability to see agreement where others see disagreement is incredibly valuable in politics and public affairs.",
@@ -167,6 +767,34 @@ var TH = {
     blindSpots: ["Your instinct to reduce friction can make you too quick to smooth over tension that actually needs to be surfaced. What feels to you like maturity and pragmatism can sometimes look like conflict avoidance, premature agreement, or a tendency to protect the peace at the expense of the truth.", "You may also overvalue consensus in situations where clarity, accountability, or principled disagreement would be healthier. Not every disagreement is wasteful, and if you rush to resolve tension too quickly, you can end up preserving surface calm while the real issue keeps operating underneath it."],
     actionItems: ["**Use common ground as a starting point, not the whole destination.** Your gift is helping people find overlap where others see only opposition. That becomes even more powerful when you use alignment to support honest progress rather than to avoid whatever is still unresolved.", "**Let necessary tension stay in the room long enough to teach something.** Some conflict is unproductive, but some of it is clarifying. The more you can tell the difference, the more credible your peacemaking becomes.", "**Say what is true before you move to what is workable.** Your instinct is often to get people back into motion, which is valuable, but only after reality is named clearly enough to build on. Otherwise you risk creating agreement around language that is too polite to be useful.", "**Do not make yourself responsible for everyone's comfort.** You are especially attuned to discord, which can tempt you to manage the room at your own expense. Let adults have their reactions without assuming you have to absorb or resolve all of them.", "**Choose peace that has integrity.** The healthiest version of your strength is not the absence of disruption, it is the presence of steadiness. In work and in life, protect the kind of peace that can hold honesty, not just the kind that keeps things quiet."] },
   includer: { n: "Includer", d: "relationship_building", desc: "You accept others. You show awareness of those who feel left out and make an effort to include them.",
+    availableTendency: "expand participation and help groups become more open and welcoming",
+    awarenessCue: "the same voices keep dominating while others stay at the edges",
+    coreContext: "people are on the edge of the room, the conversation, or the decision",
+    coreResult: "create broader belonging and fuller participation",
+    defaultTendency: "selectivity, efficiency, or fit over broad participation",
+    introAction: "widen",
+    introObject: "the circle of participation",
+    introPayoff: "so more people feel seen, welcomed, and able to engage",
+    investmentMove: "keep widening the circle, but stay clear on when belonging and fit are different questions",
+    lowDefault: "actively widen the circle or notice who is not included",
+    lowMiss: "when the room needs more openness, belonging, or participation",
+    lowRisk: "tolerating unnecessary exclusion or failing to notice whose voice is missing",
+    naturalTendency: "notice who is left out and want to bring them in",
+    overuseCost1: "making the group less effective in the name of openness",
+    overuseCost2: "weakening selectivity, standards, or focus",
+    overusePattern1: "you may widen the circle without enough attention to role clarity or readiness",
+    overusePattern2: "you may blur boundaries that were actually useful or necessary",
+    overuseTrigger1: "when inclusion starts to matter more than fit or function",
+    overuseTrigger2: "when leaving someone out feels emotionally unacceptable",
+    partnershipCue: "leaning on people who naturally expand participation and create belonging",
+    supportBenefit: "broaden engagement without losing clarity about purpose and fit",
+    supportCondition: "the group is becoming too closed, narrow, or internally self-reinforcing",
+    supportPartner: "people who naturally notice who is out and bring them in",
+    supportStructure: "intentional invitations, access points, or facilitation that makes participation easier",
+    themePriority: "inclusion and circle-widening",
+    underuseAdvantage: "wider participation and stronger belonging",
+    underuseCost: "losing perspective, buy-in, or trust",
+    underuseMiss: "people may stay excluded, sidelined, or less engaged than they need to be",
     atWork: "You notice who is missing. In a meeting, you see whose voice has not been heard. In a coalition, you think about which communities are not at the table. You actively work to pull people in.",
     atBest: "You create belonging. New team members feel welcomed because of you. Overlooked perspectives get heard because of you. The firm's work is more representative and more effective because you ensure no one is left out.",
     leanIn: "Make inclusion systematic, not just instinctive. Propose changes to processes that leave people out. Build check-in points where underrepresented voices get space. Also, help the team see inclusion not as a nice-to-have but as a strategic advantage, because broader input genuinely produces better outcomes.",
@@ -174,6 +802,34 @@ var TH = {
     blindSpots: ["Your instinct to include can make you hesitant to draw hard lines, make exclusive calls, or acknowledge that not every situation should stay fully open. What feels to you like generosity and fairness can sometimes look like vagueness, weak boundaries, or an unwillingness to make the harder call about fit, standards, or access.", "You may also focus so much on who is missing that you underweight what the group actually needs to function well. Inclusion is valuable, but if you treat every setting as if it should work for everyone in exactly the same way, you can lose clarity about purpose, roles, or what successful participation actually requires."],
     actionItems: ["**Use inclusion to strengthen the room, not just soften it.** Your gift is not merely making people feel good, it is making groups better by ensuring important perspectives are not left out. The more clearly you connect inclusion to quality, trust, and performance, the more seriously people will take the strength you naturally bring.", "**Be explicit about the difference between open and undefined.** Welcoming people in does not mean every norm, role, or expectation has to stay loose. Clear standards actually make belonging more sustainable, because people know what they are walking into and how to succeed there.", "**Notice who is consistently on the edge of the conversation.** You often see social dynamics that others miss, especially who gets heard and who quietly disappears. Use that awareness in real time, because a well-timed invitation can change the whole tone and quality of a discussion.", "**Do not let inclusion replace discernment.** Some decisions genuinely require selectivity, prioritization, or a smaller group. You do not betray your values when you acknowledge that healthy inclusion still needs boundaries, purpose, and sometimes a very clear no.", "**Build spaces where you can belong without performing.** You spend a lot of energy helping other people feel included, and that matters. Make sure your own life also has places where you do not have to manage the circle, because you deserve to be held by a community too, not just help create one."] },
   individualization: { n: "Individualization", d: "relationship_building", desc: "You are intrigued with the unique qualities of each person. You figure out how different people can work together.",
+    availableTendency: "read people more precisely and customize communication, support, or fit",
+    awarenessCue: "the issue is not the system, it is that the approach is wrong for this particular person",
+    coreContext: "one-size-fits-all thinking is missing important human detail",
+    coreResult: "improve fit, communication, and role alignment",
+    defaultTendency: "broader patterns, categories, or standardization",
+    introAction: "notice",
+    introObject: "what is distinct about each person",
+    introPayoff: "so roles, feedback, and collaboration fit the actual human in front of you",
+    investmentMove: "keep personalizing where it matters most, not everywhere equally",
+    lowDefault: "personalize quickly around individual differences",
+    lowMiss: "when better results depend on more tailored communication, support, or role fit",
+    lowRisk: "defaulting to broad categories or standardized approaches when nuance mattered",
+    naturalTendency: "pick up on individual differences and tailor your approach accordingly",
+    overuseCost1: "making simple decisions more customized than they need to be",
+    overuseCost2: "weakening comparability or consistency",
+    overusePattern1: "you may resist broader systems or categories that would be efficient enough",
+    overusePattern2: "you may overweight nuance in one individual and underweight the broader pattern",
+    overuseTrigger1: "when tailoring becomes more compelling than standardization",
+    overuseTrigger2: "when your read of a person becomes your primary decision lens",
+    partnershipCue: "leaning on people who naturally spot individuality and tailor around it",
+    supportBenefit: "improve fit without needing personalization to be your default lens",
+    supportCondition: "the human detail matters more than the generic rule",
+    supportPartner: "people who naturally read the human detail and adjust accordingly",
+    supportStructure: "feedback loops, staffing conversations, or tools that surface individual preferences and strengths",
+    themePriority: "person-specific tailoring and nuance",
+    underuseAdvantage: "sharper people-reading and better fit",
+    underuseCost: "mismatched roles, feedback, or collaboration",
+    underuseMiss: "teams may rely too heavily on generic assumptions instead of reading the actual person",
     atWork: "You see each person as a unique case. You know what motivates one colleague versus another, how one client likes to receive information versus another, and which team member will thrive in which role.",
     atBest: "You are the ultimate relationship manager. You get the best out of people because you know how each person works. You match people to roles, tailor communications, and build teams that have chemistry because you understand the individual pieces.",
     leanIn: "Share your reads with leadership. When you notice that a colleague would thrive in a different role, say so. When you know a client needs information delivered a certain way, brief the team. Your observations about individuals are strategic intelligence that most people do not have. Make them visible.",
@@ -181,6 +837,34 @@ var TH = {
     blindSpots: ["Your attunement to individual differences can make you impatient with one-size-fits-all systems, broad generalizations, or blanket rules that flatten important nuance. That instinct is valuable, but it can also make you resistant to standardization even when some consistency is necessary for scale, fairness, or clarity.", "You may also become so focused on tailoring to the person in front of you that you lose sight of the larger pattern, shared standard, or group need. Not everything can or should be customized indefinitely, and if you are not careful, your strength can turn into over-accommodation that is hard to sustain."],
     actionItems: ["**Turn your observations into usable insight.** You notice what motivates people, what shuts them down, and how they are wired in ways many others miss. Do not keep all of that in your head, because your reads become far more valuable when they help teams staff smarter, communicate better, and avoid preventable friction.", "**Tailor where it matters most.** Not every interaction needs a bespoke approach. Use your customization instinct on the decisions, relationships, and moments where nuance will materially improve trust, performance, or clarity, instead of spending that level of energy everywhere all the time.", "**Respect systems even when they feel blunt.** Standardization can be frustrating for you, especially when you can see a better individualized path. But strong systems and individualized insight do not have to be enemies, and you will often have more influence if you work inside the structure while improving it where it counts.", "**Help other people understand difference without stereotyping it.** You are often good at seeing the distinct shape of a person's strengths, needs, or communication style. When you share that insight carefully, you can help a team get more effective without reducing people to simplistic labels.", "**Use your discernment in your personal life, too.** You are not built for shallow sameness in relationships, and pretending otherwise usually drains you. Let yourself choose environments, friendships, and routines that actually fit who you are instead of assuming every healthy choice has to look the same for everyone."] },
   positivity: { n: "Positivity", d: "relationship_building", desc: "You have contagious enthusiasm. You are upbeat and can get others excited about what they are going to do.",
+    availableTendency: "reinforce momentum, help people feel lighter, and reconnect a group to possibility",
+    awarenessCue: "the work is technically moving, but the emotional energy has fallen flat",
+    coreContext: "morale, energy, or forward spirit matters as much as the literal task",
+    coreResult: "make hard work feel more livable and motivating",
+    defaultTendency: "realism, neutrality, or seriousness",
+    introAction: "lift",
+    introObject: "the emotional energy of the room",
+    introPayoff: "so people reconnect with momentum, possibility, and one another",
+    investmentMove: "keep using optimism as fuel, but do not let it become a shortcut around reality",
+    lowDefault: "naturally infuse a room with encouragement, energy, or emotional lift",
+    lowMiss: "when a team needs more lift, momentum, or emotional buoyancy",
+    lowRisk: "staying too neutral, sober, or realism-heavy",
+    naturalTendency: "bring energy, warmth, and encouragement that raises the emotional temperature",
+    overuseCost1: "making people feel cheered up before they feel understood",
+    overuseCost2: "weakening trust in the depth of the response",
+    overusePattern1: "you may unintentionally skip over pain, frustration, or realism",
+    overusePattern2: "you may pressure people toward brightness when the moment needs more honesty",
+    overuseTrigger1: "when optimism starts to feel safer than naming difficulty",
+    overuseTrigger2: "when energy itself becomes the measure of whether the room is okay",
+    partnershipCue: "pairing with people who naturally lift morale and re-energize a room",
+    supportBenefit: "restore energy without needing positivity to be your default tone",
+    supportCondition: "the work has become heavy enough that the group\'s energy is starting to collapse",
+    supportPartner: "people who naturally bring energy, optimism, and forward spirit",
+    supportStructure: "room for celebration, reinforcement, or moments that intentionally lift morale",
+    themePriority: "energy-lifting encouragement and emotional momentum",
+    underuseAdvantage: "emotional lift and momentum reinforcement",
+    underuseCost: "losing morale, resilience, or forward energy",
+    underuseMiss: "the room can become heavier, flatter, or more joyless than it needs to be",
     atWork: "You bring energy. You celebrate wins, you find the silver lining in setbacks, and you make the team environment a place where people actually want to show up. Your enthusiasm is genuine and contagious.",
     atBest: "You are the antidote to burnout. During long campaign stretches and high-stress client periods, your energy keeps the team going. You help people remember why the work matters and why they are good at it.",
     leanIn: "Be intentional about celebrations. When the team hits a milestone, make it visible. When a colleague does good work, name it. Also, your positivity is most powerful when it is specific. 'Great job' is nice. 'The way you handled that client call was exactly what they needed' is transformational.",
@@ -188,6 +872,34 @@ var TH = {
     blindSpots: ["Your ability to lift the temperature of a room can make you too quick to brighten, reframe, or move on when something heavier needs to be acknowledged first. What feels to you like resilience and encouragement can sometimes come across as minimizing, distracting, or unwilling to sit still with discomfort long enough to understand it.", "You may also end up carrying the emotional labor of keeping everyone going. If people come to rely on you as the morale source, your own frustration, sadness, or depletion can go underground until your positivity starts feeling performative even to you."],
     actionItems: ["**Use encouragement with specificity.** Your energy is most powerful when it is attached to something real, a choice someone made, a strength they showed, a win that matters. The more grounded your positivity is, the more it feels like leadership instead of atmosphere.", "**Do not rush past what hurts just because you know how to lighten it.** Your instinct to keep things moving can be helpful, but people trust optimism more when they can feel that reality has been named first. Let the hard thing exist before you try to make it easier to carry.", "**Protect yourself from becoming the team's emotional generator.** You are good at lifting a room, but it should not become your unpaid full-time job. Notice where you are being asked to manage morale in ways that cost you more than people realize.", "**Bring energy where it changes outcomes.** Morale matters, especially in long stretches of pressure, uncertainty, or repetitive work. Use your enthusiasm strategically in the moments where people need stamina, hope, or perspective, not just because silence makes you itch.", "**Make room for your full emotional range.** Being a positive person does not mean being a relentlessly upbeat one. Your life gets more honest and more sustainable when joy is something you genuinely generate, not something you feel obligated to perform."] },
   relator: { n: "Relator", d: "relationship_building", desc: "You enjoy close relationships. You find deep satisfaction in working hard with friends to achieve a goal.",
+    availableTendency: "go deeper, strengthen trust, and create durable working relationships",
+    awarenessCue: "the relationship is functional, but not yet strong enough to carry harder work",
+    coreContext: "depth, trust, and mutual respect matter more than broad reach",
+    coreResult: "create stronger collaboration through real relationship",
+    defaultTendency: "breadth, newness, or lighter-touch connection",
+    introAction: "build",
+    introObject: "deeper trust with the right people",
+    introPayoff: "so the work can rest on real connection instead of surface rapport",
+    investmentMove: "protect the value of depth, but do not let it shrink your range more than the moment requires",
+    lowDefault: "move quickly into depth, trust, and real connection with a smaller circle",
+    lowMiss: "when the work would benefit from deeper trust instead of broader but thinner connection",
+    lowRisk: "favoring range, lightness, or speed over relational depth",
+    naturalTendency: "invest deeply in a smaller set of trusted relationships and do your best work there",
+    overuseCost1: "making your network narrower than the situation requires",
+    overuseCost2: "slowing connection or collaboration with newer relationships",
+    overusePattern1: "you may underinvest in new or looser relationships that still matter",
+    overusePattern2: "you may stay reserved longer with people outside the inner circle",
+    overuseTrigger1: "when depth starts to matter more than range",
+    overuseTrigger2: "when trust becomes a prerequisite for full engagement",
+    partnershipCue: "leaning on people who naturally deepen trust and build durable relationships",
+    supportBenefit: "strengthen key relationships without needing depth to be your default social mode",
+    supportCondition: "a key relationship needs more depth, not just more contact",
+    supportPartner: "people who naturally build durable trust and deepen important relationships",
+    supportStructure: "recurring touchpoints, one-on-one trust-building, or space for more candid relationship work",
+    themePriority: "deep trust and durable relationship-building",
+    underuseAdvantage: "deeper trust and more durable relationship capital",
+    underuseCost: "weakening loyalty, trust, or depth in key relationships",
+    underuseMiss: "the work can stay more transactional than it needs to be",
     atWork: "You invest deeply in the people you work with. You prefer a few close, trusted relationships over a large network. Your working relationships feel like genuine friendships and you do your best work alongside people you trust.",
     atBest: "You build the deepest trust on the team. People confide in you. You create partnerships that endure across multiple campaigns and cycles. Your loyalty and reliability make you the person people want on their account.",
     leanIn: "Invest in the relationships that matter most strategically. Deepen your connection with the people you work with most closely, because that trust translates directly into better collaboration, better communication, and better outcomes. Also, be open about the fact that you work best with people you know well. That self-awareness helps managers put you in the right situations.",
@@ -195,6 +907,34 @@ var TH = {
     blindSpots: ["Because you value depth over breadth, you can sometimes invest too narrowly and overlook the importance of building wider networks. Others may read your selectivity as distance, cliquishness, or disinterest when really you are just unwilling to fake connection.", "You may also stay loyal to relationships or dynamics longer than is useful. Once trust is established, it can be hard for you to recalibrate when someone is no longer a strong partner, when a team dynamic has changed, or when honesty would threaten closeness. Without meaning to, you can create an inner-circle effect that makes other people feel like access has to be earned before they can fully belong."],
     actionItems: ["**Invest where trust compounds.** Put your time into the relationships that most directly shape your work, your growth, and your well-being. You are at your strongest when trust is not casual, but built deliberately with people who matter.", "**Let depth be a strength, not a boundary.** You do not need to become a natural networker, but you do need enough range to avoid becoming too dependent on a small circle. Stretch yourself to build a few more meaningful connections than your instinct might choose on its own.", "**Say the hard thing before resentment builds.** Your relationships are strongest when they can hold honesty, not just warmth. If something feels off, address it early instead of protecting the connection so carefully that the real issue goes underground.", "**Leave the gate open a little wider.** Not everyone needs to be in your inner circle, but people should not have to guess whether there is room for them. Small signals of openness can make you more collaborative without asking you to become performatively social.", "**Protect your inner circle without shrinking your world.** It is healthy that not everyone gets the same access to you. Just make sure loyalty is helping you grow, not keeping you in patterns, friendships, or routines that you have already outgrown."] },
   analytical: { n: "Analytical", d: "strategic_thinking", desc: "You search for reasons and causes. You think about all the factors that might affect a situation.",
+    availableTendency: "bring rigor, skepticism, and sharper reasoning to decisions",
+    awarenessCue: "the room is moving on weak logic or untested assumptions",
+    coreContext: "accuracy matters and assumptions need testing",
+    coreResult: "separate signal from noise and improve judgment",
+    defaultTendency: "instinct, experience, relationships, or values",
+    introAction: "test",
+    introObject: "assumptions and evidence",
+    introPayoff: "so decisions are grounded in what is actually true",
+    investmentMove: "use your rigor to sharpen decisions, not to demand impossible certainty",
+    lowDefault: "lead with evidence-testing and logic-first scrutiny",
+    lowMiss: "when a situation needs more rigor, skepticism, or sharper reasoning",
+    lowRisk: "acting on intuition, relationships, or momentum without enough examination",
+    naturalTendency: "examine claims, pressure-test ideas, and look for evidence beneath the surface",
+    overuseCost1: "slowing action while waiting for more certainty than the situation can provide",
+    overuseCost2: "shutting down contributions that needed more space, not less rigor",
+    overusePattern1: "you may dismiss emerging ideas too early or stall momentum",
+    overusePattern2: "you may sound dismissive before others have fully formed their thinking",
+    overuseTrigger1: "when standards for proof become too high for the moment",
+    overuseTrigger2: "when something feels vague, emotional, or weakly supported",
+    partnershipCue: "partnering with people who naturally interrogate assumptions and ground decisions in evidence",
+    supportBenefit: "improve decision quality without needing to live in analysis mode",
+    supportCondition: "the stakes are high enough that assumptions need to be checked",
+    supportPartner: "people who naturally bring rigor, skepticism, and precision",
+    supportStructure: "data, decision criteria, or a process that invites scrutiny",
+    themePriority: "evidence-based reasoning and logic-first pressure-testing",
+    underuseAdvantage: "disciplined reasoning and clearer evidence",
+    underuseCost: "weakening the quality of the decision",
+    underuseMiss: "teams can move forward on soft logic or untested assumptions",
     atWork: "You are the person who asks 'what is the evidence?' You challenge assumptions, dig into data, and do not accept claims at face value. You bring rigor to every strategy, recommendation, and deliverable.",
     atBest: "You protect the firm from sloppy thinking. Your insistence on evidence makes the work better. You find the flaw in the plan that everyone else missed. Client recommendations are credible because they are grounded in your analysis.",
     leanIn: "Offer to be the data backbone of your team's strategy work. Build the research brief, run the numbers, pressure-test the assumptions. Also, when you spot a flaw, frame it as a contribution rather than a criticism. 'I found something that could make this stronger' lands better than 'this is wrong,' even though you mean the same thing.",
@@ -202,6 +942,34 @@ var TH = {
     blindSpots: ["Your need for evidence can make you skeptical of anything that feels vague, emotional, or insufficiently supported. That discipline is valuable, but in practice it can make you sound dismissive when other people are still exploring, intuiting, or trying to articulate something they do not yet fully understand.", "You may also spend so much time pressure-testing an idea that momentum stalls. Not every situation offers complete information, and if you wait too long for certainty, you can become the person who improves the logic of the plan without helping the team move it forward."],
     actionItems: ["**Use your rigor to strengthen, not shut down.** When you see a flaw, frame it as a way to improve the work rather than a reason to dismiss it. People will hear your insight more clearly when it feels like partnership instead of cross-examination.", "**Name what would be enough evidence.** Do not let analysis become an endless standard that nothing can satisfy. Define what level of proof is actually needed for the decision in front of you, then help the team move once that threshold is met.", "**Do not wait for perfect certainty.** In many situations, the most logical move is to act with 70 percent of the information rather than wait for 100 percent and lose time, relevance, or momentum. Your judgment becomes more valuable, not less, when it helps a team move at the right moment.", "**Translate your thinking for the room you are in.** Your logic may be sound, but if it is delivered too clinically or too densely, people may miss the value of it. The more you can connect your analysis to business impact, risk, timing, or outcomes, the more influential it becomes.", "**Give your mind something real to solve outside of work.** You do not relax by pretending not to think. You relax by thinking about something worthwhile without pressure, whether that is strategy, a rabbit hole, a hard question, or a puzzle that lets your brain do what it naturally does best."] },
   context: { n: "Context", d: "strategic_thinking", desc: "You enjoy thinking about the past. You understand the present by researching its history.",
+    availableTendency: "bring historical grounding, precedent, and backstory into the conversation",
+    awarenessCue: "people are moving fast, but no one has asked how you got here",
+    coreContext: "history matters and people are about to act without understanding what came before",
+    coreResult: "improve present decisions with better grounding in the past",
+    defaultTendency: "the future, the immediate problem, or the next step",
+    introAction: "trace",
+    introObject: "the backstory and pattern that led here",
+    introPayoff: "so the present is understood before the next move is made",
+    investmentMove: "use history to inform the decision, not replace the decision",
+    lowDefault: "start with backstory, precedent, or historical pattern",
+    lowMiss: "when a situation needs more grounding in what came before",
+    lowRisk: "acting as if the current moment appeared out of nowhere",
+    naturalTendency: "look backward to understand how the present came to be",
+    overuseCost1: "delaying movement by overbuilding context",
+    overuseCost2: "making innovation feel more suspect than it needs to",
+    overusePattern1: "you may stay in backstory longer than the moment requires",
+    overusePattern2: "you may become slower to move on ideas that do not resemble precedent",
+    overuseTrigger1: "when explanation becomes more comfortable than decision",
+    overuseTrigger2: "when the past becomes the main standard for what is safe or legitimate",
+    partnershipCue: "leaning on people who naturally remember the backstory and surface useful precedent",
+    supportBenefit: "move forward more intelligently without needing history to be your first instinct",
+    supportCondition: "the room is about to make the same mistake because it has forgotten the backstory",
+    supportPartner: "people who naturally bring history, precedent, and backstory into the room",
+    supportStructure: "timelines, precedent reviews, or institutional memory built into the process",
+    themePriority: "historical grounding and pattern-over-time understanding",
+    underuseAdvantage: "historical perspective and pattern awareness",
+    underuseCost: "repeating avoidable mistakes or misreading the current reality",
+    underuseMiss: "people may rush forward without learning from what already happened",
     atWork: "You are the institutional memory. Before you form an opinion, you want to know what has been tried before, what the dynamics have been, and how the current situation came to be. You believe the past is instructive.",
     atBest: "You prevent the team from repeating mistakes. You bring historical perspective that makes current strategies more grounded. You are the person who remembers the backstory that changes the whole conversation.",
     leanIn: "Build and maintain a knowledge base. Document what has worked, what has not, and why. When new team members join or new campaigns launch, offer the historical briefing. Your institutional memory is one of the firm's most undervalued assets, so make it accessible rather than keeping it in your head.",
@@ -209,6 +977,34 @@ var TH = {
     blindSpots: ["Your instinct to look backward for understanding can make you slower to jump into action or more skeptical of ideas that seem detached from precedent. What feels to you like grounding and wisdom can come across as overly cautious, backward-looking, or resistant when others are eager to move faster than the history, patterns, or lessons justify.", "You may also spend so much time building context that you delay the transition from understanding to decision. Knowing how something happened is valuable, but if you are not careful, explanation can quietly become a substitute for change, and the team may feel better informed without actually being any closer to moving."],
     actionItems: ["**Use the backstory to improve the decision in front of you.** Your ability to surface relevant history is a major advantage, especially when people are about to repeat a mistake or miss a critical pattern. The more clearly you connect past lessons to present choices, the more indispensable your context becomes.", "**Distinguish relevant history from interesting history.** You often know or want more background than the room can practically absorb. Curate what matters most so your perspective sharpens the conversation instead of slowing it under the weight of every detail you could include.", "**Help people understand why before you ask them to move.** Many teams rush forward without enough grounding, and you can prevent expensive confusion by filling in the missing backstory. Just make sure the goal of that context is traction, not simply completeness.", "**Do not let precedent quietly veto possibility.** The past has a lot to teach, but it does not get the final vote on what is possible now. Respect history without letting it become an unchallenged argument against adaptation, invention, or a better path.", "**Let your own story inform you without overdefining you.** You are naturally attuned to how the past shapes the present, including your own. That awareness can be grounding, as long as it helps you understand yourself more clearly instead of convincing you that growth is less available than it really is."] },
   futuristic: { n: "Futuristic", d: "strategic_thinking", desc: "You are inspired by the future and what could be. You energize others with vivid visions of possibility.",
+    availableTendency: "widen the horizon and create energy around future possibility",
+    awarenessCue: "the room is solving today\'s problem without considering tomorrow\'s opportunity",
+    coreContext: "the room is too trapped in what already exists",
+    coreResult: "create vision, direction, and energy around what comes next",
+    defaultTendency: "present reality, tactical execution, or historical grounding",
+    introAction: "imagine",
+    introObject: "a more compelling future",
+    introPayoff: "so the work is not trapped inside the limits of the present",
+    investmentMove: "keep bringing the future into view, but tether it to an execution path",
+    lowDefault: "start with future possibility and long-range vision",
+    lowMiss: "when the room needs a stronger picture of what could exist next",
+    lowRisk: "staying too anchored in the present, the tactical, or the already-known",
+    naturalTendency: "look ahead, imagine possibilities, and energize around what could exist next",
+    overuseCost1: "sounding inspiring but underweighted on what it takes to execute",
+    overuseCost2: "underestimating the discipline needed to make it real",
+    overusePattern1: "you may lose patience with current realities and constraints",
+    overusePattern2: "you may fall in love with a future that is exciting in concept but underbuilt in practice",
+    overuseTrigger1: "when the future becomes more emotionally interesting than the present",
+    overuseTrigger2: "when the vision gets ahead of the operating plan",
+    partnershipCue: "partnering with people who naturally generate vision and future pull",
+    supportBenefit: "increase strategic aspiration without having to live in visionary mode",
+    supportCondition: "the current limits are being treated as permanent when they are not",
+    supportPartner: "people who naturally keep the horizon visible and articulate what could be built",
+    supportStructure: "strategy work, brainstorming space, or explicit future-framing",
+    themePriority: "future-oriented vision and possibility",
+    underuseAdvantage: "vision and long-range possibility",
+    underuseCost: "lowering ambition or failing to generate direction",
+    underuseMiss: "teams can get stuck in the status quo without anyone widening the horizon",
     atWork: "You are the visionary. You see what the firm could become, what a campaign could accomplish, what the movement could look like in five years. You paint pictures of the future that inspire others.",
     atBest: "You pull the team toward ambitious goals. You help people see beyond the immediate deliverable to the larger possibility. Your vision creates energy and direction, and you are the reason the firm does not get complacent.",
     leanIn: "Share your vision regularly and specifically. Do not just think about the future, articulate it to others. Write the strategy memo that describes where a client could be in three years. Pitch the new service offering. Your ability to see what does not exist yet is rare, and it only becomes powerful when you make it visible.",
@@ -216,6 +1012,34 @@ var TH = {
     blindSpots: ["Your orientation toward what could be can make the present feel dull, limiting, or beneath your full attention. Others may experience you as inspiring and visionary, or as abstract, impatient with current realities, and too ready to leap past the messy constraints that actually shape what is possible.", "You may also become attached to a future that is exciting in concept but underbuilt in execution. If you fall too in love with the vision, you can underestimate the operational discipline, repetition, and tradeoffs required to bring it into the real world."],
     actionItems: ["**Paint the future vividly enough that others can see themselves in it.** Your ideas become most powerful when they are not just exciting to you, but legible to the people who need to help build them. The clearer and more concrete your vision, the easier it is for other people to commit to it.", "**Translate possibility into milestones.** Vision alone rarely moves an organization for long. Pair your future thinking with nearer-term markers so the path feels real, not just inspiring.", "**Respect the present without getting trapped in it.** Current constraints matter, but they do not have to own the whole conversation. Your job is not to ignore reality, it is to stretch the room's sense of what reality could become.", "**Do not confuse a compelling picture with a complete plan.** Your excitement can make a future feel inevitable before the structure exists to support it. Pressure-test the path, not just the promise, so your vision gains credibility as well as energy.", "**Give your imagination somewhere healthy to go outside of work.** You are built to think beyond the immediate, and that can be a joy when it is not always tied to performance. Let yourself dream, design, and imagine in places where possibility is allowed to be nourishing, not just useful."] },
   ideation: { n: "Ideation", d: "strategic_thinking", desc: "You are fascinated by ideas. You find connections between seemingly disparate phenomena.",
+    availableTendency: "reframe a problem, produce alternatives, and find unexpected angles",
+    awarenessCue: "everyone is solving the problem inside the same tired frame",
+    coreContext: "the current thinking is too narrow, repetitive, or stuck",
+    coreResult: "create novelty, possibility, and better options",
+    defaultTendency: "structure, execution, proof, or narrowing",
+    introAction: "generate",
+    introObject: "fresh connections and unexpected possibilities",
+    introPayoff: "so the room can break out of stale or obvious thinking",
+    investmentMove: "keep giving ideas oxygen, but build a handoff into selection and execution",
+    lowDefault: "spontaneously generate alternatives, connections, or fresh angles",
+    lowMiss: "when the work needs more imagination, reframing, or option generation",
+    lowRisk: "staying too linear, too literal, or too constrained by the first workable idea",
+    naturalTendency: "connect dots quickly, spin out possibilities, and get energized by new ideas",
+    overuseCost1: "making progress harder by continually reopening the field",
+    overuseCost2: "producing inspiration without enough follow-through or prioritization",
+    overusePattern1: "you may keep generating possibilities after the room needed narrowing",
+    overusePattern2: "you may leave others chasing ideas that are interesting but underdeveloped",
+    overuseTrigger1: "when newness starts to feel more exciting than usefulness",
+    overuseTrigger2: "when the connection itself becomes the reward",
+    partnershipCue: "working with people who naturally generate options and reframe stale problems",
+    supportBenefit: "expand the field without needing to live in idea-generation mode",
+    supportCondition: "the room is trapped inside one path and needs more options",
+    supportPartner: "people who naturally generate possibilities and make surprising connections",
+    supportStructure: "ideation space followed by prioritization so the ideas can be sorted usefully",
+    themePriority: "novelty, possibility, and connection-making",
+    underuseAdvantage: "creative reframing and option generation",
+    underuseCost: "missing more inventive, strategic, or energizing possibilities",
+    underuseMiss: "teams can get trapped in obvious solutions or stale assumptions",
     atWork: "You are the idea person. You make connections others do not see, you generate creative solutions to stuck problems, and you love the moment when a new concept clicks into place.",
     atBest: "You bring innovation. You keep the firm's work fresh and original. You solve problems that linear thinkers cannot crack. You see the creative angle on a campaign or the unexpected coalition opportunity.",
     leanIn: "Create structured brainstorm moments for your team. Your ideas are most powerful when they have a container. Also, learn to quickly sort your own ideas into 'explore now' versus 'park for later,' because your volume of ideas is a feature, not a bug, as long as you help others navigate it.",
@@ -223,6 +1047,34 @@ var TH = {
     blindSpots: ["Your love of ideas can make you impatient with repetition, maintenance, or any phase of work that feels less inventive than the beginning. Others may experience you as creative and invigorating, or as scattered, hard to pin down, and too quick to chase the next interesting thought before the current one has been fully developed.", "You may also generate possibilities faster than a team can absorb them. If you do not help people distinguish between a passing thought, a promising option, and a real priority, your creativity can start to feel like cognitive clutter instead of useful innovation."],
     actionItems: ["**Give your ideas a container.** Your mind works best when it has room to roam, but other people often need more structure than you do. Create a simple way to capture, sort, and revisit ideas so your creativity becomes easier to use instead of harder to track.", "**Differentiate between interesting and important.** Not every good idea needs action right now. One of the biggest upgrades for this strength is learning to separate what is exciting in the moment from what is actually worth resources, time, or attention.", "**Help people follow your leap.** You naturally connect dots that other people do not even see on the page yet. Slow down just enough to show the bridge between those dots so your insight lands as brilliance rather than randomness.", "**Respect the value of development, not just invention.** The first spark matters, but so does what happens after. Partner well with people who like building, refining, and operationalizing ideas so your strongest thinking has a real path into the world.", "**Keep one part of your life purely generative.** You need some space where ideas are allowed to exist before they are judged, monetized, or turned into deliverables. Giving yourself that outlet will make your creativity feel more alive and less like it always has to prove itself immediately."] },
   input: { n: "Input", d: "strategic_thinking", desc: "You have a need to collect and archive. You accumulate information, ideas, and artifacts.",
+    availableTendency: "gather context, source material, and useful references that deepen the work",
+    awarenessCue: "the team is making a decision off the first available information, not the best available information",
+    coreContext: "the situation would benefit from wider information or stronger reference points",
+    coreResult: "increase preparedness, resourcefulness, and range",
+    defaultTendency: "immediate relevance, faster judgment, or narrower range",
+    introAction: "gather",
+    introObject: "useful information, examples, and material",
+    introPayoff: "so you have more to draw from when the work needs depth or range",
+    investmentMove: "keep collecting, but build clearer pathways from material to use",
+    lowDefault: "collect broadly just because something may be useful later",
+    lowMiss: "when the work needs wider input, stronger references, or more material to draw from",
+    lowRisk: "staying too immediate, too sparse, or too narrowly resourced",
+    naturalTendency: "collect information, notice what is interesting, and build a mental library over time",
+    overuseCost1: "postponing judgment through endless preparation",
+    overuseCost2: "leaving others unclear on what matters now or what is actionable",
+    overusePattern1: "you may keep gathering after you already have enough to move",
+    overusePattern2: "you may accumulate more than you actively share or apply",
+    overuseTrigger1: "when collecting starts to feel safer than deciding",
+    overuseTrigger2: "when your collection grows faster than your use of it",
+    partnershipCue: "relying on people who naturally gather and surface useful information",
+    supportBenefit: "bring in richer context without needing to become a human archive",
+    supportCondition: "the question is bigger than what is already on the table",
+    supportPartner: "people who naturally collect, retain, and surface useful material",
+    supportStructure: "collection systems, tagging, or a prompt to gather before deciding",
+    themePriority: "broad collection and material-gathering",
+    underuseAdvantage: "better context, richer material, and stronger resourcefulness",
+    underuseCost: "narrowing the range of what is possible or informed",
+    underuseMiss: "the work may rely too heavily on whatever is easiest to access or top of mind",
     atWork: "You are the collector. You read widely, bookmark constantly, and file away facts that might be useful someday. You are the person the team comes to when they need a reference, a stat, or background information.",
     atBest: "You are a walking resource library. Your breadth of knowledge makes you invaluable in strategy sessions and rapid response situations. You connect dots that others cannot because you have more dots to connect.",
     leanIn: "Make your collection accessible. Build shared reference libraries, circulate relevant articles to the team, and offer to do the background research on new accounts. Your knowledge is most valuable when it flows to others, not when it stays in your bookmarks folder.",
@@ -230,6 +1082,34 @@ var TH = {
     blindSpots: ["Your instinct to collect can make you keep gathering long after you have enough to move. What feels to you like preparation and curiosity can sometimes look like hoarding, overresearching, or postponing judgment because the next article, example, or insight might still be out there.", "You may also accumulate more than you actively use or share. If your knowledge stays trapped in your notes, bookmarks, files, or head, other people may experience you as full of information but not always clear on what matters now, what is actionable, or what the point of the collection actually is."],
     actionItems: ["**Collect with a use case in mind.** Your appetite for information is a real asset, especially in fast-moving or complex environments. The more intentionally you connect what you gather to likely decisions, audiences, or future needs, the more strategic your curiosity becomes.", "**Turn accumulation into access.** You know more than people often realize, but the value of your strength increases when others can benefit from it too. Build habits that help you surface, share, and organize what you know so your collection becomes a resource rather than a private archive.", "**Notice when gathering is replacing deciding.** Sometimes more input genuinely helps, and sometimes it delays the discomfort of closing the loop. Ask yourself whether one more source is likely to change the conclusion or just postpone the moment you have to make a call.", "**Curate, do not just accumulate.** One of the highest forms of this strength is not collecting everything, it is knowing what is most relevant, timely, and useful. Your judgment becomes more powerful when you help people see the signal inside all the material you naturally absorb.", "**Let curiosity be restorative, not just productive.** You do not need every interest to justify itself. Some of the healthiest expression of this strength comes from letting yourself read, explore, or gather simply because it keeps your mind alive."] },
   intellection: { n: "Intellection", d: "strategic_thinking", desc: "You are characterized by intellectual activity. You are introspective and appreciate time for musing and reflection.",
+    availableTendency: "slow down, think more fully, and generate better insight through reflection",
+    awarenessCue: "the conversation is moving fast, but the thinking is staying shallow",
+    coreContext: "the issue is complex enough that quick processing will miss something important",
+    coreResult: "produce deeper, more considered thinking",
+    defaultTendency: "speed, discussion, or external processing",
+    introAction: "think through",
+    introObject: "a question, idea, or tension deeply",
+    introPayoff: "so the insight is real, not rushed",
+    investmentMove: "keep protecting reflection, but create clearer bridges back into shared decision-making",
+    lowDefault: "slow down to think something through deeply before acting or speaking",
+    lowMiss: "when a problem needs more reflection, interior processing, or conceptual depth",
+    lowRisk: "overreliance on quick external processing or immediate conclusions",
+    naturalTendency: "process inwardly, reflect deeply, and follow ideas beyond the obvious first answer",
+    overuseCost1: "making others unsure whether progress is happening",
+    overuseCost2: "leaving others without enough access to what you are seeing",
+    overusePattern1: "you may stay in inner processing longer than the moment allows",
+    overusePattern2: "you may become harder to read or slower to externalize useful thinking",
+    overuseTrigger1: "when reflection becomes more comfortable than action",
+    overuseTrigger2: "when you assume depth requires distance from the room",
+    partnershipCue: "leaning on people who naturally process deeply and bring slower insight to the room",
+    supportBenefit: "increase depth without forcing yourself to live in internal processing mode",
+    supportCondition: "the issue is important enough that the first answer is probably too shallow",
+    supportPartner: "people who naturally think deeply and help surface slower insight",
+    supportStructure: "think time, writing space, or quieter processing before discussion",
+    themePriority: "deep reflection and inward processing",
+    underuseAdvantage: "reflective depth and better-formed insight",
+    underuseCost: "lowering the quality of insight",
+    underuseMiss: "important questions may get answered too quickly or too shallowly",
     atWork: "You are the deep thinker. You need time alone to process, reflect, and arrive at your conclusions. Your best ideas do not come in the meeting. They come later, after you have had time to turn the problem over in your mind.",
     atBest: "When you speak, it is considered and insightful. You see angles others miss because you have spent more time thinking about the problem than anyone else. Your depth compensates for speed and often produces the breakthrough.",
     leanIn: "Ask for what you need. Request agendas in advance. Block thinking time on your calendar. And when you arrive at an insight after a meeting, share it. Send the follow-up email, drop the Slack message, schedule the five-minute check-in. Your thinking is too valuable to stay in your head.",
@@ -237,6 +1117,34 @@ var TH = {
     blindSpots: ["Your depth can make you slower to externalize your thinking, especially when the idea is still forming. Others may experience you as thoughtful and perceptive, or as hard to access, overly private, and absent from the conversation until after the moment when your insight would have been most useful.", "You may also stay in your head so long that reflection starts to substitute for movement. Thinking is one of your strengths, but if you are not careful, it can become a protected internal world where ideas feel more complete than they actually are once they meet other people, deadlines, or reality."],
     actionItems: ["**Claim thinking time before the day takes it from you.** Your best work rarely comes from constant interruption and instant reaction. Protecting time to process is not indulgent for you, it is one of the main ways your strongest insight gets produced.", "**Externalize earlier than is comfortable.** You do not need to wait until the thought is perfect before sharing it. Letting other people into your thinking sooner gives them something to build with and keeps your best ideas from arriving after the decision has already passed.", "**Translate depth into usefulness.** You can go further inward than many people can follow on their own. The more clearly you connect your reflection to practical implications, options, or decisions, the more influence your inner work will have in the outer world.", "**Do not let privacy become unnecessary distance.** It is natural for you to keep a lot of your process inside, but that can make collaboration harder than it needs to be. Small windows into what you are considering can build trust without asking you to become performatively open.", "**Give your mind somewhere honest to wander.** You need more than productivity to feel mentally alive. Whether it is writing, reading, long walks, or turning over ideas without a deadline attached, make sure part of your life still gives thought room to breathe."] },
   learner: { n: "Learner", d: "strategic_thinking", desc: "You have a great desire to learn and continuously improve. The process of learning excites you more than the outcome.",
+    availableTendency: "stay curious, keep developing, and help the work keep growing rather than plateauing",
+    awarenessCue: "the work is repeating itself and capability is no longer expanding",
+    coreContext: "growth, novelty, and increasing capability matter more than simply repeating the known",
+    coreResult: "expand competence and keep the work evolving",
+    defaultTendency: "practicality, application, or relevance over exploration",
+    introAction: "stretch into",
+    introObject: "something new",
+    introPayoff: "so growth itself becomes part of the energy of the work",
+    investmentMove: "keep honoring growth, but make sure learning keeps turning into useful capability",
+    lowDefault: "learn continuously for the sake of growth itself",
+    lowMiss: "when the work needs more curiosity, capability-building, or openness to learning",
+    lowRisk: "preferring immediate relevance or application over broader development",
+    naturalTendency: "build capability continuously and feel energized by learning as a process",
+    overuseCost1: "delaying use or mastery because the next thing is more energizing",
+    overuseCost2: "chasing learning while neglecting consolidation",
+    overusePattern1: "you may stay in growth mode even after enough capability is already in place",
+    overusePattern2: "you may undervalue depth, repetition, or maintenance work",
+    overuseTrigger1: "when learning becomes the reward more than application",
+    overuseTrigger2: "when progress is defined only by newness",
+    partnershipCue: "leaning on people who naturally keep learning, growth, and development active",
+    supportBenefit: "keep the work developing without needing learning to be its own reward",
+    supportCondition: "the role or project is starting to stagnate because no one is stretching",
+    supportPartner: "people who naturally keep curiosity and growth alive",
+    supportStructure: "learning goals, development plans, or explicit space to build new skill",
+    themePriority: "active learning and capability-building",
+    underuseAdvantage: "ongoing growth and curiosity",
+    underuseCost: "missing capability gains that would have strengthened performance",
+    underuseMiss: "the work can become static, overfamiliar, or underdeveloped",
     atWork: "You are energized by the process of learning itself. You actively seek out new skills, new subjects, and new tools. You are one of the first to adopt a new platform or explore a new approach.",
     atBest: "You are the team's growth engine. Your curiosity drives continuous improvement. You bring new approaches and fresh perspectives because you are always learning, and you model what it looks like to stay relevant in a changing field.",
     leanIn: "Teach what you learn. When you pick up a new skill or approach, share it with the team. Offer to lead a lunch-and-learn, write a brief, or build a template. Your learning becomes exponentially more valuable when it spreads beyond you.",
@@ -244,6 +1152,34 @@ var TH = {
     blindSpots: ["Your love of learning can make you more excited by the beginning of mastery than the long middle of application. What feels to you like healthy curiosity can sometimes look like restlessness, constant tool-switching, or an appetite for novelty that outruns the discipline required to turn knowledge into repeatable value.", "You may also overinvest in learning for its own sake without being clear on what it is serving. Not every course, framework, article, or new skill needs to become part of your life, and if you are not careful, perpetual growth can become a way to feel productive without actually consolidating what you already know."],
     actionItems: ["**Tie learning to real leverage.** Your growth mindset is powerful, especially in environments that change quickly. The more intentionally you connect what you are learning to business needs, career direction, or a current challenge, the more your curiosity compounds instead of scattering.", "**Finish the learning cycle with application.** New knowledge lights you up, but the real return comes when you use it, teach it, or build something with it. Make it a habit to ask how this learning will show up in your work before you move on to the next fascinating thing.", "**Respect repetition as part of mastery.** The most exciting part for you may be the moment when something is new, but your real advantage grows when you stay with it long enough to internalize it. Depth often arrives after the novelty wears off.", "**Share what you pick up.** You are often early to tools, ideas, frameworks, or shifts that other people have not absorbed yet. When you turn your learning outward through teaching, synthesizing, or creating shortcuts for others, your strength becomes far more scalable and influential.", "**Let growth support your life, not quietly dominate it.** You do not need to optimize every corner of yourself all the time. Some seasons of life are for expansion, and some are for integration, and knowing the difference will make your curiosity feel a lot less frantic."] },
   strategic: { n: "Strategic", d: "strategic_thinking", desc: "You create alternative ways to proceed. Faced with any scenario, you quickly spot the relevant patterns and issues.",
+    availableTendency: "sort complexity, find options, and help others move toward the most useful route",
+    awarenessCue: "there are several possible routes, but the room is treating the first one as the only one",
+    coreContext: "the situation is complex and there are multiple possible paths",
+    coreResult: "create direction by seeing which path is most viable",
+    defaultTendency: "action, structure, or direct execution over pathfinding",
+    introAction: "spot",
+    introObject: "the most useful path through complexity",
+    introPayoff: "so people can move with more intelligence and less wandering",
+    investmentMove: "keep finding the path, but make your thinking more legible so others can move with you",
+    lowDefault: "instinctively see patterns and identify the best route through complexity",
+    lowMiss: "when the work needs more pathfinding, pattern recognition, or option-sorting",
+    lowRisk: "overreliance on direct execution or local problem-solving without enough landscape view",
+    naturalTendency: "read the landscape quickly, see patterns, and identify workable paths forward",
+    overuseCost1: "making the strategy sharper than the follow-through",
+    overuseCost2: "leaving others impressed by the answer but unsure how you got there",
+    overusePattern1: "you may stay at the level of pathways and pattern-reading without enough execution ownership",
+    overusePattern2: "you may skip over explanation or patience",
+    overuseTrigger1: "when seeing options becomes easier than committing to one",
+    overuseTrigger2: "when you move so quickly to the likely path that others have not caught up",
+    partnershipCue: "leaning on people who naturally read the landscape and see better paths through it",
+    supportBenefit: "make better directional choices without needing strategy to be your first reflex",
+    supportCondition: "the room is moving, but no one is really reading the full landscape",
+    supportPartner: "people who naturally sort complexity and identify useful pathways",
+    supportStructure: "decision maps, scenario planning, or time to compare options before committing",
+    themePriority: "strategic pattern-reading and route selection",
+    underuseAdvantage: "faster pathfinding and clearer pattern-reading",
+    underuseCost: "choosing a path that is more obvious than effective",
+    underuseMiss: "the group can move without enough sense of the landscape or the available routes",
     atWork: "You are the chess player. You see the whole board, think multiple moves ahead, and quickly identify the path with the best odds. You sort through clutter, discard dead ends, and find the route others would not have seen.",
     atBest: "You make the firm smarter. Your ability to see patterns, anticipate reactions, and evaluate options makes every strategy you touch sharper. You save the team time by identifying the best path faster than a committee could.",
     leanIn: "Make your strategic thinking visible. When you see the path, walk others through your reasoning so they can follow your logic and learn from it. Also, offer to do the strategic review on accounts that feel stuck. Your ability to quickly generate and evaluate options is exactly what those situations need.",
@@ -1412,6 +2348,8 @@ function printReport(type, ranked, name, insights) {
     ".f34-thrive{font-size:10pt;color:#333;font-style:italic;line-height:1.6;margin-bottom:10px}",
     ".f34-desc{font-size:9.5pt;color:#555;line-height:1.6;margin-bottom:10px}",
     ".f34-bs{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #ddd;margin:6px 0;font-size:9pt;color:#666;line-height:1.55}",
+    ".f34-copy{font-size:10pt;color:#444;line-height:1.65;margin-bottom:6px}",
+    ".f34-label{font-size:7.5pt;font-weight:700;color:#888;letter-spacing:2px;text-transform:uppercase;margin:12px 0 6px;padding-top:8px;border-top:1px solid #f0eff5}",
     // Domain balance
     ".domain-block{padding:16px 20px;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;gap:16px}",
     ".domain-bar{height:8px;border-radius:4px;flex:1}",
@@ -1651,103 +2589,351 @@ function printReport(type, ranked, name, insights) {
     // --- 1. COVER PAGE ---
     html += "<div class='cover'><div class='cover-inner'>";
     html += "<div class='cover-label'>Strengths Discovery</div>";
-    html += "<div class='cover-title'>"+(name||"Your")+"&rsquo;s<br/>Full 34 Report</div>";
-    html += "<div class='cover-sub'>Your complete ranking of all 34 strength themes. A map of natural tendencies, not a corrective action plan.</div>";
+    html += "<div class='cover-title'>Full 34<br/>Strengths Report</div>";
+    html += "<div class='cover-sub'>A complete view of your strengths profile</div>";
+    html += "<div style='margin-top:44px;font-size:16pt;font-weight:600;color:rgba(255,255,255,0.85)'>"+(name||"")+"</div>";
+    html += "<div style='margin-top:6px;font-size:10pt;color:rgba(255,255,255,0.35)'>"+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</div>";
     html += "</div></div>";
 
-    // --- 2. INTRO PAGE ---
+    // --- 2. INTRO PAGE: How to Read This Report ---
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+"</span></div>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:16px'>Understanding Your Full 34</h2>";
-    html += "<p class='sec-body' style='margin-bottom:16px'>This report shows all 34 strength themes ranked in order of how naturally and consistently they show up for you. Your highest themes are the patterns that define your most instinctive way of working, thinking, and contributing.</p>";
-    html += "<p class='sec-body' style='margin-bottom:16px'>Your lower-ranked themes are not weaknesses to fix. They are simply less dominant patterns in your profile. The goal is not to become equally strong in all 34 themes, but to understand where you naturally lead and use those strengths with more intention.</p>";
-    html += "<p class='sec-body' style='margin-bottom:16px'>This report is meant to expand self-understanding, not create pressure. It is a map of natural tendencies&mdash;descriptive and orienting, not prescriptive.</p>";
+    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px'>How to Read This Report</h2>";
+    html += "<p class='sec-body' style='margin-bottom:14px'>This report shows all 34 strengths themes in rank order, from most dominant to least dominant. The themes at the top of your profile are the clearest patterns in how you naturally think, work, and contribute. As you move down the ranking, the themes become less instinctive and less central, but they do not become flaws.</p>";
+    html += "<p class='sec-body' style='margin-bottom:14px'>Your lower-ranked themes are not weaknesses to fix. They are simply less dominant patterns in your profile. The goal is not to become equally strong in all 34 themes, but to understand where you naturally lead and use those strengths with more intention.</p>";
+    html += "<p class='sec-body' style='margin-bottom:14px'>This report is designed to give you a complete view of your profile. It is meant to help you recognize which strengths are most natural to you, which ones support you in the right context, and which ones are less likely to be part of your default style. The most valuable development work usually comes from strengthening the healthiest expression of your top themes, not from trying to force equal growth across all 34.</p>";
+    html += "<p class='sec-body'>Use this report as a map, not a mandate. It is here to help you understand the full shape of your strengths, not to turn every lower-ranked theme into a problem to solve.</p>";
     html += "</div>";
 
     // --- 3. FULL RANKING OVERVIEW ---
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Full Ranking</span></div>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px'>Complete Ranking</h2>";
+    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px'>Your Full Ranking</h2>";
 
     var maxScore = ranked[0] ? ranked[0].score : 1;
     var bands = [
-      {name:"Lead With",desc:"Your most defining strengths. These show up most naturally.",s:0,e:5,color:"#6D28D9"},
-      {name:"Lean Into",desc:"Strong supporting themes. Valuable when used intentionally.",s:5,e:10,color:"#2563EB"},
-      {name:"Situational",desc:"Present but less instinctive. They show up in specific contexts.",s:10,e:20,color:"#059669"},
-      {name:"Less Dominant",desc:"Less central in your profile. Not defects, just less automatic.",s:20,e:34,color:"#999"}
+      {name:"The Top 5",sub:"Dominant",desc:"Your most defining strengths.",s:0,e:5,color:"#6D28D9"},
+      {name:"6\u201310",sub:"Supporting",desc:"Strong supporting themes that add meaningful range.",s:5,e:10,color:"#2563EB"},
+      {name:"11\u201317",sub:"Available",desc:"Present and available, but not primary lead patterns.",s:10,e:17,color:"#0891B2"},
+      {name:"18\u201326",sub:"Situational",desc:"Less instinctive. Not weaknesses, just less likely to lead with.",s:17,e:26,color:"#059669"},
+      {name:"27\u201334",sub:"Least Dominant",desc:"Less central to how you naturally operate.",s:26,e:34,color:"#9CA3AF"}
     ];
     bands.forEach(function(band){
-      html += "<div class='band-label' style='color:"+band.color+"'>"+band.name+"</div>";
-      html += "<div class='band-desc'>"+band.desc+"</div>";
+      html += "<div style='margin-top:16px;margin-bottom:4px;display:flex;align-items:baseline;gap:10px'>";
+      html += "<span style='font-size:11pt;font-weight:800;color:"+band.color+"'>"+band.name+"</span>";
+      html += "<span style='font-size:8pt;font-weight:600;color:"+band.color+";letter-spacing:1.5px;text-transform:uppercase;opacity:0.7'>"+band.sub+"</span>";
+      html += "</div>";
+      html += "<div style='font-size:8.5pt;color:#999;margin-bottom:6px'>"+band.desc+"</div>";
       for(var i=band.s;i<Math.min(band.e,ranked.length);i++){
         var t=ranked[i]; var th=TH[t.id]; var col=dc(t.id); var isT5=i<5;
-        var barW = Math.max(3, Math.round((t.score/maxScore)*180));
-        html += "<div class='rank-row' style='"+(isT5?"background:#f8f7fc;border-radius:6px;padding:6px 8px;":"")+"'>";
-        html += "<div class='rank-num' style='"+(isT5?"color:"+col+";font-weight:800":"")+"'>"+(i+1)+"</div>";
-        html += "<div class='rank-bar' style='width:"+barW+"px;background:"+col+"'></div>";
-        html += "<div class='rank-name' style='"+(isT5?"font-weight:800":"")+"'>"+th.n+"</div>";
+        var barW = Math.max(3, Math.round((t.score/maxScore)*160));
+        html += "<div class='rank-row' style='"+(isT5?"background:#f8f7fc;border-radius:6px;padding:5px 8px;":"")+"'>";
+        html += "<div class='rank-num' style='color:"+(isT5?col:"#ccc")+";font-weight:"+(isT5?"800":"600")+"'>"+(i+1)+"</div>";
+        html += "<div class='rank-bar' style='width:"+barW+"px;background:"+col+";opacity:"+(isT5?"1":"0.6")+"'></div>";
+        html += "<div class='rank-name' style='font-weight:"+(isT5?"800":"600")+"'>"+th.n+"</div>";
         html += "<div class='rank-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div>";
       }
     });
     html += "</div>";
 
-    // --- 4. BIG PICTURE INTERPRETATION ---
-    if (insights && (insights.fullProfile || insights.dominantDomain)) {
+    // --- 4. BIG PICTURE: What Stands Out ---
+    html += "<div class='page page-break'>";
+    html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Big Picture</span></div>";
+    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>What Stands Out in Your Profile</h2>";
+    html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>A synthesis of your full 34 ranking.</p>";
+
+    // AI interpretation
+    if (insights && insights.full34Interpretation) {
+      html += "<div style='margin-bottom:24px'><p class='sec-body'>"+insights.full34Interpretation+"</p></div>";
+    } else if (insights && insights.fullProfile) {
+      html += "<div style='margin-bottom:24px'><p class='sec-body'>"+insights.fullProfile+"</p></div>";
+    }
+
+    // Domain distribution
+    var domainCounts = {executing:0,influencing:0,relationship_building:0,strategic_thinking:0};
+    var domainTop10 = {executing:0,influencing:0,relationship_building:0,strategic_thinking:0};
+    ranked.forEach(function(t,i){
+      domainCounts[TH[t.id].d]++;
+      if(i<10) domainTop10[TH[t.id].d]++;
+    });
+    html += "<div style='margin-top:20px'>";
+    html += "<div class='sec-label' style='color:#6D28D9;margin-bottom:12px'>Domain Distribution</div>";
+    var domOrder = ["strategic_thinking","executing","influencing","relationship_building"];
+    domOrder.forEach(function(did){
+      var dname = DOMAINS[did].name;
+      var dcol = domainColors[did];
+      var total = domainCounts[did];
+      var inTop = domainTop10[did];
+      var barPct = Math.round((total/34)*100);
+      html += "<div style='display:flex;align-items:center;gap:12px;margin-bottom:8px'>";
+      html += "<div style='width:130px;font-size:9pt;font-weight:600;color:#333'>"+dname+"</div>";
+      html += "<div style='flex:1;height:8px;background:#f0eff5;border-radius:4px;overflow:hidden'><div style='height:100%;width:"+barPct+"%;background:"+dcol+";border-radius:4px'></div></div>";
+      html += "<div style='width:80px;text-align:right;font-size:8.5pt;color:#888'>"+total+" total";
+      if(inTop>0) html += " <span style='color:"+dcol+";font-weight:700'>("+inTop+" in top 10)</span>";
+      html += "</div></div>";
+    });
+    html += "</div>";
+
+    // AI domain interpretation
+    if (insights && insights.full34DomainMix) {
+      html += "<div style='margin-top:16px'><p class='sec-body'>"+insights.full34DomainMix+"</p></div>";
+    } else if (insights && insights.dominantDomain) {
+      html += "<div style='margin-top:16px'><p class='sec-body'>"+insights.dominantDomain+"</p></div>";
+    }
+    html += "</div>";
+
+    // --- SECTIONS 5-9: THEME ENTRIES BY BUCKET ---
+    // Helper: generate rank-specific intro text
+    function rankIntro(ri, th) {
+      var n = th.n;
+      var intA = th.introAction||"use"; var intO = th.introObject||"this strength"; var intP = th.introPayoff||"so the work benefits";
+      // Top 5 rank-specific intros
+      if (ri===0) return n+" is your top strength. This is likely the clearest and most consistent pattern in how you naturally think, work, and contribute.";
+      if (ri===1) return n+" is one of the strongest forces in your profile. It likely shapes how you operate across a wide range of situations, even when you are not consciously relying on it.";
+      if (ri===2) return n+" sits firmly in the core of your profile. This is still one of the most natural and defining ways you tend to work and contribute.";
+      if (ri===3) return n+" is a clear lead strength for you. Even if it is not the strongest single theme in your profile, it is still one of the most consistent ways you are likely to show up at your best.";
+      if (ri===4) return n+" rounds out your top five and belongs to the most defining part of your profile. This is still a true signature strength, not just a helpful extra.";
+      // 6-10
+      if (ri===5) return n+" sits just outside your top five. It may not define you as strongly as your most dominant themes, but it likely plays a meaningful supporting role in how you operate.";
+      if (ri===6) return n+" is a strong supporting strength in your profile. It may not be one of the first patterns people notice, but it likely adds real range and usefulness to how you work.";
+      if (ri===7) return n+" is still clearly above the middle of your profile. It may not sit at the center of how you lead, but it likely shows up often enough to matter.";
+      if (ri===8) return n+" remains one of the stronger themes in your profile. This is not a primary defining strength, but it is still likely to influence how you think, work, or relate in noticeable ways.";
+      if (ri===9) return n+" closes out your top ten. It is still a meaningful part of your profile, even if it sits just outside the strongest inner circle of your themes.";
+      // 11-17
+      if (ri===10) return n+" is present in a noticeable way, but it is no longer part of the strongest tier of your profile. You may draw on it regularly without it feeling especially central.";
+      if (ri===11) return n+" sits in the upper-middle of your profile. It is available to you, even if it is not one of the themes that most clearly defines your natural style.";
+      if (ri===12) return n+" is a real part of your profile, but not a dominant one. You may notice it more in the right environment than as a constant default.";
+      if (ri===13) return n+" is present, though not especially central. It may support you in certain kinds of situations without being one of the patterns you lead with most often.";
+      if (ri===14) return n+" falls in the upper-middle of your ranking. This suggests it is available to you, even if it is not one of the clearest drivers of how you naturally operate.";
+      if (ri===15) return n+" appears to be more available than defining in your profile. You may be able to access it when needed without it feeling especially instinctive or identity-level.";
+      if (ri===16) return n+" sits near the midpoint of your profile. It is part of how you can operate, but not one of the strongest or most natural ways you tend to lead.";
+      // 18-26
+      if (ri===17) return n+" begins the more situational part of your profile. This does not make it a weakness, but it does suggest it is less instinctive and less central than the themes above it.";
+      if (ri===18) return n+" is a less instinctive theme for you. It may still matter in the right setting, but it is not likely to be one of your first or strongest defaults.";
+      if (ri===19) return n+" appears to be more situational than natural in your profile. You may use it when the context calls for it without relying on it as a regular lead pattern.";
+      if (ri===20) return n+" sits in the lower half of your ranking. That suggests it is available in certain moments, but less likely to show up as one of your instinctive ways of operating.";
+      if (ri===21) return n+" is less central to your profile than the themes ranked above it. It may still have value, but it is probably not one of the first energies you naturally reach for.";
+      if (ri===22) return n+" ranks lower in your profile and is likely to be more context-dependent than instinctive. You may draw on it when needed without strongly identifying with it.";
+      if (ri===23) return n+" is one of the less natural themes in your ranking. This does not mean it is absent, only that it is less likely to shape how you operate on its own.";
+      if (ri===24) return n+" appears lower in your profile and is probably not a strength you lead with often. It may be more visible under certain demands than as part of your default style.";
+      if (ri===25) return n+" is a lower-ranked theme for you. It may still have uses in the right setting, but it is not one of the patterns that comes most naturally or consistently.";
+      // 27-34
+      if (ri===26) return n+" sits near the bottom of your profile. This suggests it is not a pattern you instinctively reach for in most situations.";
+      if (ri===27) return n+" is one of the less instinctive themes in your ranking. It may still appear when needed, but it is not a place you naturally lead from very often.";
+      if (ri===28) return n+" falls in the lowest stretch of your profile. That does not make it a flaw, only a theme that is less dominant and less natural for you than the ones ranked above it.";
+      if (ri===29) return n+" is one of the least central themes in your profile. You may value what it offers without naturally using it as a primary way of working or contributing.";
+      if (ri===30) return n+" sits very near the bottom of your ranking. It is likely less intuitive for you and less likely to show up without specific context or support.";
+      if (ri===31) return n+" is among your least dominant themes. This suggests it is not a strength you naturally lean on, even if it may still matter in certain settings.";
+      if (ri===32) return n+" is one of the very lowest themes in your profile. It is not missing, but it is unlikely to be one of the ways you most naturally think, work, or relate.";
+      if (ri===33) return n+" is your lowest-ranked theme in this report. That does not make it a weakness to fix, but it does suggest this is not a natural lead pattern for you and is less central to how you typically operate.";
+      return n+" is part of your profile.";
+    }
+
+    // Helper: context line (thrive/available/low)
+    function contextLine(ri, th) {
+      var intA = th.introAction||"use"; var intO = th.introObject||"this strength"; var intP = th.introPayoff||"";
+      if (ri<5) {
+        var starters = ["You thrive when you can ","You are at your best when you can ","This strength comes alive when you can ","You tend to excel when you can ","This strength is especially active when you can "];
+        return starters[ri]+intA+" "+intO+(intP?", "+intP:"")+".";
+      }
+      if (ri<10) {
+        var s6 = ["This strength tends to help when you can ","You are likely to benefit from this theme when you can ","This strength often becomes useful when you can ","You may draw on this most when you can ","This strength is often helpful when you can "];
+        return s6[ri-5]+intA+" "+intO+(intP?", "+intP:"")+".";
+      }
+      if (ri<17) {
+        var s7 = ["This theme tends to help when you need to ","You may be most likely to use this strength when you need to ","This theme is likely to be useful when you need to ","You can likely draw on it when you need to ","This strength tends to become useful when you need to ","You may lean on this theme when you need to ","This theme can still be useful when you need to "];
+        return s7[ri-10]+intA+" "+intO+(intP?", "+intP:"")+".";
+      }
+      if (ri<26) {
+        var s8 = ["This theme may still be useful when you need to ","You may still benefit from this theme when you need to ","This strength may help in moments where you need to ","This theme may matter when you need to ","You may still find this strength useful when you need to ","This theme may still help when you need to ","This theme may be useful when you need to ","Even so, this theme can help when you need to ","This theme may still matter when you need to "];
+        return s8[ri-17]+intA+" "+intO+(intP?", "+intP:"")+".";
+      }
+      // 27-34
+      var s9 = ["This is less natural for you, but it can still help when you need to ","While this is not a default strength, it may still be useful when you need to ","This is not a strength you are likely to lead with, but it can still matter when you need to ","Even at this rank, it can still be helpful when you need to ","This is not likely to be a natural instinct, but it can still help when you need to ","This may not be your first instinct, but it can still add value when you need to ","This is a pattern you are not likely to lead with, though it can still matter when you need to ","This is the least instinctive theme in your profile, though it can still help when you need to "];
+      var idx = Math.min(ri-26, s9.length-1);
+      return s9[idx]+intA+" "+intO+(intP?", "+intP:"")+".";
+    }
+
+    // Helper: core line
+    function coreLine(ri, th) {
+      var nt = th.naturalTendency||""; var at = th.availableTendency||""; var cc = th.coreContext||""; var cr = th.coreResult||"";
+      if (ri<5) {
+        var labels = ["At your best","Core pattern","Signature tendency","At your strongest","Natural style"];
+        return "<strong>"+labels[ri]+":</strong> You naturally "+nt+". This is most powerful when "+cc+", helping you "+cr+".";
+      }
+      if (ri<10) {
+        var lb6 = ["Strong support","In practice","Supporting pattern","Usual contribution","Reliable support"];
+        return "<strong>"+lb6[ri-5]+":</strong> You often "+(at||nt)+". This becomes especially useful when "+cc+", helping you "+cr+".";
+      }
+      if (ri<17) {
+        var lb7 = ["Available tool","Situational asset","Available range","In practice","Situational pattern","Useful, not central","On the bench, not off the field"];
+        return "<strong>"+lb7[ri-10]+":</strong> You can draw on this when you need to "+(at||nt)+". It tends to help most when "+cc+", so you can "+cr+".";
+      }
+      if (ri<26) {
+        var ld = th.lowDefault||""; var lm = th.lowMiss||""; var lr = th.lowRisk||"";
+        var lb8 = ["Less natural tendency","Situational use","Available on purpose","Less automatic","Deliberate access","Situational lane","Not your default","Pulled forward by context","Less instinctive lane"];
+        var idx = ri-17;
+        return "<strong>"+lb8[idx]+":</strong> You are less likely to "+ld+". Because of that, "+lm+", which can "+lr+".";
+      }
+      // 27-34
+      var dt = th.defaultTendency||""; var tp = th.themePriority||""; var ld2 = th.lowDefault||""; var lm2 = th.lowMiss||""; var lr2 = th.lowRisk||"";
+      var lb9 = ["Secondary choice","Not a first move","Infrequent instinct","Quiet preference","Weak reflex under pressure","Unreliable reflex","Quiet blind spot","True blind spot"];
+      var idx2 = Math.min(ri-26, lb9.length-1);
+      return "<strong>"+lb9[idx2]+":</strong> Because you may naturally prioritize "+dt+" over "+tp+", you are less likely to "+ld2+". That means "+lm2+", which can "+lr2+".";
+    }
+
+    // Helper: special section (blind spots / watch for / underused advantage / works best when / support strategy)
+    function specialSection(ri, th) {
+      if (ri<5) {
+        // BLIND SPOTS
+        var s = "<div class='f34-label'>BLIND SPOTS</div>";
+        s += "<p class='f34-copy'>Because this strength is so immediate for you, "+th.overuseTrigger1+", "+th.overusePattern1+", "+th.overuseCost1+".</p>";
+        s += "<p class='f34-copy'>"+["You may also find that ","There may also be moments when ","You can also run into situations where ","There are also times when ","You may also notice that "][ri]+th.overuseTrigger2+", "+th.overusePattern2+", "+th.overuseCost2+".</p>";
+        return s;
+      }
+      if (ri<10) {
+        // WATCH FOR
+        var s = "<div class='f34-label'>WATCH FOR</div>";
+        var openers = ["In the wrong setting, ","When you rely on it too quickly, ","One thing to watch is that ","Sometimes ","Under pressure, "];
+        s += "<p class='f34-copy'>"+openers[ri-5]+th.overuseTrigger1+", "+th.overusePattern1+", "+th.overuseCost1+".</p>";
+        s += "<p class='f34-copy'>You may also find that "+th.overuseTrigger2+", "+th.overusePattern2+", "+th.overuseCost2+".</p>";
+        return s;
+      }
+      if (ri<17) {
+        // UNDERUSED ADVANTAGE
+        var s = "<div class='f34-label'>UNDERUSED ADVANTAGE</div>";
+        var ua = th.underuseAdvantage||""; var um = th.underuseMiss||""; var uc = th.underuseCost||"";
+        var ac = th.awarenessCue||"";
+        var openers7 = [
+          "Because this is not a constant default, you may not always notice when leaning into "+ua+" would help. Left alone, "+um+", which can "+uc+".",
+          "The challenge here is usually not overuse, but under-leveraging. You may not always recognize when "+ua+" would give you an edge, and "+um+", which can "+uc+".",
+          "Because this theme is more situational than automatic, you may overlook moments when "+ua+" would serve you. As a result, "+um+", which can "+uc+".",
+          "This strength may create more value for you than you naturally remember to access. When you do not reach for it, "+um+", which can "+uc+".",
+          "Since this is not one of your strongest defaults, you may not always spot when "+ua+" would be worth using. That can mean "+um+", which may "+uc+".",
+          "Because this theme is more available than automatic, you may not consistently remember to use it. When that happens, "+um+", which can "+uc+".",
+          "At this rank, the risk is usually inconsistency rather than excess. You may not always notice when "+ua+" would help, and "+um+", which can "+uc+"."
+        ];
+        s += "<p class='f34-copy'>"+openers7[ri-10]+"</p>";
+        s += "<p class='f34-copy' style='font-weight:600'>Use this more intentionally when: "+ac+"</p>";
+        return s;
+      }
+      if (ri<26) {
+        // WORKS BEST WHEN
+        var sc = th.supportCondition||""; var ss = th.supportStructure||""; var sb = th.supportBenefit||""; var ac = th.awarenessCue||"";
+        var s = "<div class='f34-label'>WORKS BEST WHEN</div>";
+        s += "<p class='f34-copy'>This theme becomes easier to access when "+sc+". It is usually more effective when "+ss+", helping you "+sb+".</p>";
+        s += "<p class='f34-copy' style='font-weight:600'>Use this intentionally when: "+ac+"</p>";
+        return s;
+      }
+      // 27-34: SUPPORT STRATEGY
+      var sc = th.supportCondition||""; var sp = th.supportPartner||""; var ss = th.supportStructure||""; var sb = th.supportBenefit||""; var pc = th.partnershipCue||"";
+      var s = "<div class='f34-label'>SUPPORT STRATEGY</div>";
+      s += "<p class='f34-copy'>This theme becomes easier to access when "+sc+". It usually works best when "+sp+", supported by "+ss+", so you can "+sb+".</p>";
+      s += "<p class='f34-copy' style='font-weight:600'>Cover this lane best by: "+pc+".</p>";
+      return s;
+    }
+
+    // Helper: closing line
+    function closingLine(ri, th) {
+      var im = th.investmentMove||"";
+      if (ri<5) {
+        var v = ["To deepen this strength","To sharpen this strength","To invest in this strength","To keep this strength sharp","To develop this strength further"];
+        return v[ri]+": "+im+".";
+      }
+      if (ri<10) {
+        var v6 = ["To get more out of this strength","To use this strength more deliberately","To strengthen this support theme","To refine this strength","To make this strength more intentional"];
+        return v6[ri-5]+": "+im+".";
+      }
+      return ""; // lower sections use awareness cue instead
+    }
+
+    // Section definitions
+    var sections = [
+      {name:"The Top 5",sub:"Dominant",s:0,e:5,color:"#6D28D9",
+       intro:"These are your most dominant strengths, the clearest patterns in how you naturally work, think, and contribute. This is where the greatest developmental value usually lives.",
+       perPage:1},
+      {name:"6\u201310",sub:"Supporting",s:5,e:10,color:"#2563EB",
+       intro:"These are strong supporting strengths. They may not define you as clearly as your top five, but they show up often and add meaningful range to how you operate.",
+       perPage:2},
+      {name:"11\u201317",sub:"Available",s:10,e:17,color:"#0891B2",
+       intro:"These strengths are present and available, but they are not primary lead patterns. You may draw on them in the right context, even if they are not your strongest defaults.",
+       perPage:2},
+      {name:"18\u201326",sub:"Situational",s:17,e:26,color:"#059669",
+       intro:"These are less instinctive strengths. They are not weaknesses, just themes you are less likely to lead with naturally. You may still use them situationally or appreciate them more when others bring them into the room.",
+       perPage:2},
+      {name:"27\u201334",sub:"Least Dominant",s:26,e:34,color:"#9CA3AF",
+       intro:"These are your least dominant themes. They are not flaws to fix. They are simply less central to how you naturally operate and are more likely to be supported through context, structure, or partnership than through instinct alone.",
+       perPage:3}
+    ];
+
+    sections.forEach(function(sec) {
+      // Section intro page
       html += "<div class='page page-break'>";
-      html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>Big Picture</span></div>";
-      html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>The Big Picture</h2>";
-      html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>What stands out across your full profile.</p>";
-      if (insights.summary) {
-        html += "<div class='quote-box'><div class='quote-text'>&ldquo;"+insights.summary+"&rdquo;</div></div>";
-      }
-      if (insights.fullProfile) {
-        html += "<div style='margin:20px 0'><div class='sec-label' style='color:#6D28D9'>Your Profile at a Glance</div><p class='sec-body'>"+insights.fullProfile+"</p></div>";
-      }
-      if (insights.dominantDomain) {
-        html += "<div style='margin:20px 0'><div class='sec-label' style='color:#6D28D9'>Domain Patterns</div><p class='sec-body'>"+insights.dominantDomain+"</p></div>";
-      }
-      html += "</div>";
-    }
+      html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; "+sec.sub+"</span></div>";
+      html += "<div style='display:flex;flex-direction:column;justify-content:center;min-height:60vh'>";
+      html += "<div style='max-width:480px'>";
+      html += "<div style='font-size:9pt;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:"+sec.color+";margin-bottom:8px'>Section</div>";
+      html += "<h2 style='font-size:28pt;font-weight:800;margin-bottom:12px;color:#1a1a2e'>"+sec.name+" <span style='font-weight:400;color:"+sec.color+"'>"+sec.sub+"</span></h2>";
+      html += "<p class='sec-body' style='font-size:11pt;line-height:1.7;color:#555'>"+sec.intro+"</p>";
+      html += "</div></div></div>";
 
-    // --- 5. THEME DIRECTORY FOR ALL 34 ---
-    // 2 themes per page roughly
-    for (var ti = 0; ti < ranked.length; ti++) {
-      var t = ranked[ti]; var th = TH[t.id]; var col = dc(t.id);
-      // Start a new page every 2 themes, or for the first one
-      if (ti % 2 === 0) {
-        if (ti > 0) html += "</div>"; // close previous page
-        html += "<div class='page page-break'>";
-        html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>Theme Directory</span></div>";
-      }
+      // Theme entries
+      var count = 0;
+      for (var ti = sec.s; ti < Math.min(sec.e, ranked.length); ti++) {
+        var t = ranked[ti]; var th = TH[t.id]; var col = dc(t.id);
+        var isTop5 = ti < 5;
 
-      html += "<div class='f34-theme'>";
-      // Header
-      html += "<div class='f34-hdr'>";
-      html += "<div class='f34-rank' style='color:"+col+"'>"+(ti+1)+"</div>";
-      html += "<div><div class='f34-name'>"+th.n+"</div><div class='f34-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div></div>";
-      // Thrive
-      if (th.thrive) html += "<div class='f34-thrive'>"+th.thrive+"</div>";
-      // Desc
-      html += "<div class='f34-desc'>"+th.desc+"</div>";
-      // Blind spots
-      if (th.blindSpots && th.blindSpots.length > 0) {
-        html += "<div style='margin-top:8px'><div style='font-size:7.5pt;font-weight:700;color:#999;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px'>Blind Spots</div>";
-        th.blindSpots.forEach(function(bs) {
-          html += "<div class='f34-bs'>"+bs+"</div>";
-        });
-        html += "</div>";
-      }
-      html += "</div>"; // end f34-theme
-    }
-    html += "</div>"; // close last page
+        // Page breaks: 1 per page for Top 5, 2 for middle, 2-3 for lower
+        if (count % sec.perPage === 0) {
+          if (count > 0) html += "</div>";
+          html += "<div class='page page-break'>";
+          html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; "+sec.sub+"</span></div>";
+        }
 
-    // --- 6. CLOSING PAGE ---
+        html += "<div class='f34-theme'>";
+        // Theme header: rank + name + domain
+        html += "<div class='f34-hdr'>";
+        html += "<div class='f34-rank' style='color:"+col+";font-size:"+(isTop5?"24pt":"20pt")+"'>"+(ti+1)+"</div>";
+        html += "<div><div class='f34-name' style='font-size:"+(isTop5?"16pt":"14pt")+"'>"+th.n+"</div>";
+        html += "<div class='f34-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div></div>";
+
+        // Subtle domain color bar
+        html += "<hr class='theme-bar' style='background:"+col+";opacity:0.3'>";
+
+        // Intro paragraph (rank-specific)
+        html += "<p class='f34-copy' style='margin-bottom:8px'>"+rankIntro(ti, th)+"</p>";
+
+        // Context line (thrive / available / low)
+        html += "<p class='f34-copy' style='margin-bottom:10px;font-style:italic;color:#555'>"+contextLine(ti, th)+"</p>";
+
+        // Core line
+        html += "<p class='f34-copy' style='margin-bottom:12px'>"+coreLine(ti, th)+"</p>";
+
+        // Special section (blind spots / watch for / underused advantage / works best when / support strategy)
+        if (th.overuseTrigger1 || th.underuseAdvantage || th.supportCondition) {
+          html += specialSection(ti, th);
+        }
+
+        // Closing line (Top 5 and Supporting only)
+        var cl = closingLine(ti, th);
+        if (cl) {
+          html += "<p class='f34-copy' style='font-style:italic;color:#666;margin-top:8px'>"+cl+"</p>";
+        }
+
+        html += "</div>"; // end f34-theme
+        count++;
+      }
+      html += "</div>"; // close last page of section
+    });
+
+    // --- 10. CLOSING PAGE ---
     html += "<div class='page page-break' style='display:flex;flex-direction:column;justify-content:center;min-height:100vh'>";
-    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:16px;text-align:center'>Using Your Full 34</h2>";
-    html += "<div style='max-width:480px;margin:0 auto'>";
-    html += "<p class='sec-body' style='margin-bottom:16px;text-align:center'>This ranking is a map of natural tendencies. Your top themes are where development has the highest return. Your lower themes are areas more likely to be supported through partnership, structure, or collaboration than through raw self-development.</p>";
-    html += "<p class='sec-body' style='margin-bottom:16px;text-align:center'>Use this alongside your Top 5 report for the deepest view of how you work.</p>";
-    html += "<div style='text-align:center;margin-top:24px'>";
+    html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:20px;text-align:center'>How to Use This Report</h2>";
+    html += "<div style='max-width:500px;margin:0 auto'>";
+    html += "<p class='sec-body' style='margin-bottom:14px;text-align:center'>This report is meant to help you understand the full shape of your strengths profile, not to turn every lower-ranked theme into a development project.</p>";
+    html += "<p class='sec-body' style='margin-bottom:14px;text-align:center'>Your top themes are where you are most likely to find the greatest return from deeper reflection, stronger application, and more intentional development. The rest of your profile still matters, but not every theme needs equal attention.</p>";
+    html += "<p class='sec-body' style='margin-bottom:14px;text-align:center'>Use this report to understand where you naturally lead, where you have supporting range, and where you may be more likely to rely on context, structure, or partnership. Use your Top 5 report for the deeper coaching and application work.</p>";
+    html += "<div style='text-align:center;margin-top:32px'>";
     html += "<p style='font-size:10pt;color:#bbb'>Strengths Discovery &middot; "+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</p>";
     html += "</div></div></div>";
   }
@@ -2036,14 +3222,17 @@ async function generateInsights(ranked, name) {
     '  "summary": "One sentence that captures this person\'s entire operating style based on all 5. Direct, memorable, no fluff. Like a brand statement.",\n' +
     '  "fullProfile": "A 3-4 sentence paragraph painting a vivid picture of who this person is at their best. Reference their specific top 5 by name. Write in third person using their name.",\n' +
     '  "blindSpotProfile": "2-3 sentences about their overall blind spot pattern based on the COMBINATION of their top 5 and bottom 5. What situations might drain them? Write in second person.",\n' +
-    '  "dominantDomain": "2-3 sentences about what their domain mix means for how they contribute to teams. Reference the specific domain names and what the clustering suggests."\n' +
+    '  "dominantDomain": "2-3 sentences about what their domain mix means for how they contribute to teams. Reference the specific domain names and what the clustering suggests.",\n' +
+    '  "full34Interpretation": "A 4-6 sentence paragraph synthesizing the OVERALL shape of the full 34 profile. Go beyond the top 5. Comment on: where the strongest concentration patterns are, any notable contrasts or tensions across the full profile (e.g. top themes are all Relationship Building but bottom themes are all Executing), what stands out about the overall wiring. Be direct, insightful, work-focused, and specific. Do not repeat the top themes one by one. Write in second person.",\n' +
+    '  "full34DomainMix": "2-3 sentences specifically about the domain distribution across all 34 themes. Comment on whether one or two domains dominate, whether the profile is balanced, whether the top clusters differently from the full 34, and what that suggests about how this person approaches work, decision-making, and collaboration. Be specific and use the actual domain counts."\n' +
     "}\n\n" +
     "INSTRUCTIONS:\n" +
     "1. Theme keys for top 5 only: " + top5.map(function(t) { return t.id; }).join(", ") + "\n" +
     "2. Generate all 10 pairwise blend combinations of the top 5.\n" +
     "3. Every insight must reference their SPECIFIC combination. No generic descriptions.\n" +
     "4. Tone: direct, insightful, work-focused, warm but not cheesy. Like an elite coach who knows them.\n" +
-    "5. ONLY output valid JSON. No backticks, no explanation.";
+    "5. ONLY output valid JSON. No backticks, no explanation.\n" +
+    "6. Full 34 ranking (for full34Interpretation and full34DomainMix): " + ranked.map(function(t,i) { return (i+1)+"."+TH[t.id].n+"("+DOMAINS[TH[t.id].d].name+")"; }).join(", ");
 
   try {
     var response = await fetch("/.netlify/functions/generate-insights", {
