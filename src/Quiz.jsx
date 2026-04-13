@@ -1676,18 +1676,38 @@ function printReport(type, ranked, name, insights) {
         return s;
       }
       if (ri<26) {
-        // WORKS BEST WHEN
-        var sc = th.supportCondition||""; var ss = th.supportStructure||""; var sb = th.supportBenefit||""; var ac = th.awarenessCue||"";
-        var s = "<div class='f34-label'>WORKS BEST WHEN</div>";
-        s += "<p class='f34-copy'>This theme becomes easier to access when "+sc+". It is usually more effective when "+ss+", helping you "+sb+".</p>";
-        s += "<p class='f34-copy' style='font-weight:600'>Use this intentionally when: "+ac+"</p>";
+        // WHAT THIS LOOKS LIKE
+        var ld = th.lowDefault||""; var lm = th.lowMiss||""; var ac = th.awarenessCue||"";
+        var s = "<div class='f34-label'>WHAT THIS LOOKS LIKE</div>";
+        var openers8 = [
+          "In practice, this means you are less inclined to "+ld+". You may notice this most when "+ac+".",
+          "Because this is not a go-to pattern, you may not always "+ld+". That tends to show up when "+ac+".",
+          "Day to day, this means you are unlikely to naturally "+ld+". This becomes more noticeable when "+ac+".",
+          "You are probably not someone who instinctively leans toward this. That tends to matter most when "+ac+".",
+          "This is not a pattern you are likely to reach for on your own. You may feel this most when "+ac+".",
+          "In most situations, you are less likely to "+ld+". This tends to surface when "+ac+".",
+          "This is simply not a lane you lead from naturally. You may notice it when "+ac+".",
+          "You are unlikely to default to this without thinking about it. It matters most when "+ac+".",
+          "This is a pattern that just does not come as naturally to you. It tends to show up when "+ac+"."
+        ];
+        s += "<p class='f34-copy'>"+openers8[ri-17]+"</p>";
         return s;
       }
-      // 27-34: SUPPORT STRATEGY
-      var sc = th.supportCondition||""; var sp = th.supportPartner||""; var ss = th.supportStructure||""; var sb = th.supportBenefit||""; var pc = th.partnershipCue||"";
-      var s = "<div class='f34-label'>SUPPORT STRATEGY</div>";
-      s += "<p class='f34-copy'>This theme becomes easier to access when "+sc+". It usually works best when "+sp+", supported by "+ss+", so you can "+sb+".</p>";
-      s += "<p class='f34-copy' style='font-weight:600'>Cover this lane best by: "+pc+".</p>";
+      // 27-34: WHAT THIS MEANS
+      var ld2 = th.lowDefault||""; var lm2 = th.lowMiss||""; var ac2 = th.awarenessCue||"";
+      var s = "<div class='f34-label'>WHAT THIS MEANS</div>";
+      var openers9 = [
+        "This is not a flaw. It simply means you are less likely to "+ld2+" on your own. You may feel this most when "+ac2+".",
+        "In practice, you are unlikely to naturally "+ld2+". This is not something to fix. It is just part of how you are wired. It tends to matter when "+ac2+".",
+        "You are probably not drawn to "+ld2+" unless something specific demands it. This is just how your strengths are arranged. You may notice it when "+ac2+".",
+        "This is one of the clearest places where your energy simply goes elsewhere. You are less inclined to "+ld2+", especially when "+ac2+".",
+        "Because this is not where your strengths concentrate, you may not naturally "+ld2+". This is not a gap to fill. It shows up most when "+ac2+".",
+        "This is not a pattern you lead with, and that is fine. You are less likely to "+ld2+", which tends to matter when "+ac2+".",
+        "Your profile suggests this is just not where you naturally invest your energy. You are less inclined to "+ld2+", which becomes visible when "+ac2+".",
+        "This is your least instinctive territory. You are unlikely to "+ld2+" unless the situation specifically requires it. You may notice this when "+ac2+"."
+      ];
+      var idx3 = Math.min(ri-26, openers9.length-1);
+      s += "<p class='f34-copy'>"+openers9[idx3]+"</p>";
       return s;
     }
 
@@ -1716,7 +1736,7 @@ function printReport(type, ranked, name, insights) {
       {name:"18\u201326",sub:"Situational",s:17,e:26,color:"#059669",
        intro:"These are less instinctive strengths. They are not weaknesses, just themes you are less likely to lead with naturally. You may still use them situationally or appreciate them more when others bring them into the room."},
       {name:"27\u201334",sub:"Least Dominant",s:26,e:34,color:"#9CA3AF",
-       intro:"These are your least dominant themes. They are not flaws to fix. They are simply less central to how you naturally operate and are more likely to be supported through context, structure, or partnership than through instinct alone."}
+       intro:"These are your least dominant themes. They are not flaws to fix and they are not development projects. They are simply less central to how you naturally operate. Understanding them helps you see the full shape of your profile, not fill in gaps."}
     ];
 
     sections.forEach(function(sec) {
@@ -1848,9 +1868,10 @@ function printReport(type, ranked, name, insights) {
     dlBtn.textContent = "Generating...";
     dlBtn.style.opacity = "0.6";
 
-    // Create hidden container for html2pdf
+    // Create container for html2pdf — must be visible and on-screen for html2canvas
+    // Position it behind the overlay (z-index 99999) so user can't see it
     var container = document.createElement("div");
-    container.style.cssText = "position:absolute;left:-9999px;top:0;width:8.5in";
+    container.style.cssText = "position:fixed;left:0;top:0;width:816px;z-index:1;pointer-events:none;overflow:hidden";
     container.innerHTML = html;
     var styleEl = document.createElement("style");
     styleEl.textContent = css;
