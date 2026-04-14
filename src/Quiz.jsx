@@ -457,7 +457,7 @@ function generatePin() {
 }
 
 /* ---- SUPABASE SUBMISSION ---- */
-async function submitToSupabase(email, name, ranked) {
+async function submitToSupabase(email, name, ranked, rawAnswers) {
   if (!supabase) return null;
   try {
     var pin = generatePin();
@@ -477,6 +477,7 @@ async function submitToSupabase(email, name, ranked) {
       rankings: ranked.map(function(t) { return { id: t.id, score: t.score }; }),
       domain_scores: domainScores,
       pin: pin,
+      raw_answers: rawAnswers || null,
     });
     return pin;
   } catch (e) { console.error("Failed to submit results:", e); return null; }
@@ -2247,7 +2248,7 @@ export default function Quiz() {
       if (nb.length === 0 || na.length >= 200) {
         setRanked(sc);
         saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName });
-        submitToSupabase(userEmail, userName, sc).then(function(pin) { if (pin) setUserPin(pin); });
+        submitToSupabase(userEmail, userName, sc, na).then(function(pin) { if (pin) setUserPin(pin); });
         goToReveal(sc, userName);
       } else {
         setPhase("adaptive"); var nq = queue.concat(nb); setQueue(nq); setQi(queue.length);
