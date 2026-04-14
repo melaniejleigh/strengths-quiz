@@ -86,44 +86,44 @@ var Q = [
   [1,"My friends ask me to tell stories.","My friends ask my advice.",["communication"],["individualization"],"c"],
   [2,"I am a perfectionist.","I am a person who gets things done.",["maximizer"],["achiever"],"c"],
   [3,"I like spending time with futurists.","I like spending time with historians.",["futuristic"],["context"],"c"],
-  [4,"I strive to win first place.","I enjoy playing the game.",["competition"],["harmony"],"c"],
-  [5,"I have always worked hard.","I am a slow, but steady performer.",["achiever"],["deliberative"],"c"],
+  [4,"I strive to win first place.","I enjoy playing the game.",["competition"],["positivity"],"c"],
+  [5,"I have always worked hard.","I am a slow, but steady performer.",["achiever"],["consistency"],"c"],
   [6,"I think about what I do well.","I think about what I must improve.",["maximizer"],["restorative"],"c"],
   [7,"I am a sensitive person.","I am a logical person.",["empathy"],["analytical"],"c"],
   [8,"I can pick out just the right gift.","I give gifts that anyone would like.",["individualization"],["consistency"],"c"],
   [9,"Starting conversations is an effort for me.","I get a rush from striking up a conversation with a stranger.",["relator"],["woo"],"c"],
   [10,"I feel great about life.","I feel I am a competent person.",["positivity"],["self_assurance"],"c"],
   [11,"I am patient when someone struggles.","I think people do better when someone pushes them.",["developer"],["command"],"c"],
-  [12,"I can make people feel important to me.","I can make people feel successful.",["relator"],["significance"],"c"],
+  [12,"I can make people feel important to me.","I can make people feel successful.",["relator"],["developer"],"c"],
   [13,"My view of humanity guides my life.","My ambition guides my life.",["belief"],["significance"],"c"],
   [14,"I find it satisfying when people confide in me.","I want to be a leader of others.",["relator"],["command"],"c"],
-  [15,"I like to follow steps.","I love looking at things from different angles.",["discipline"],["ideation","strategic"],"c"],
-  [16,"I am happiest when things are running smoothly.","I am happiest when I have a problem to solve.",["discipline"],["restorative"],"c"],
-  [17,"Following proven methods keeps me from mistakes others have made.","I am good at reorganizing things to be more efficient.",["consistency"],["arranger"],"c"],
-  [18,"Everyday I talk about my visions for the future.","I set aside planning times to think about the future.",["ideation"],["focus"],"c"],
-  [19,"I can get other people excited.","I can calm others down.",["activator"],["deliberative"],"c"],
+  [15,"I like to follow steps.","I love looking at things from different angles.",["discipline"],["ideation"],"c"],
+  [16,"I am happiest when things are running smoothly.","I am happiest when I have a problem to solve.",["harmony"],["restorative"],"c"],
+  [17,"Following proven methods keeps me from mistakes others have made.","I am good at reorganizing things to be more efficient.",["deliberative"],["arranger"],"c"],
+  [18,"Everyday I talk about my visions for the future.","I set aside planning times to think about the future.",["futuristic"],["strategic"],"c"],
+  [19,"I can get other people excited.","I can calm others down.",["positivity"],["harmony"],"c"],
   [20,"Once I have made a decision, I have to act.","I need to be sure I am right before I take action.",["activator"],["deliberative"],"c"],
   [21,"I concentrate harder than most people on what I want to get done.","I go with the flow and keep an overview of issues.",["focus"],["adaptability"],"c"],
-  [22,"Everything happens for a reason.","Coincidences are random and have no special meaning.",["connectedness"],["analytical","strategic"],"c"],
+  [22,"Everything happens for a reason.","Coincidences are random and have no special meaning.",["connectedness"],["analytical"],"c"],
   [23,"I am a good conversationalist.","I am a good listener.",["communication"],["relator"],"c"],
   [24,"It is natural for me to accept everybody.","I tend to carefully select the people I spend time with.",["includer"],["relator"],"c"],
   [25,"I always find new things that capture my interest.","My friends have seldom disappointed me.",["learner","input"],["relator"],"c"],
-  [26,"I rely on experts to help me find the right answers.","I am a creative, strategic thinker and patterns naturally emerge for me.",["analytical"],["strategic","ideation"],"c"],
+  [26,"I rely on experts to help me find the right answers.","I am a creative, strategic thinker and patterns naturally emerge for me.",["input"],["strategic"],"c"],
   [27,"I am fully alive, full of joy and delight.","I am aware of all the factors affecting the situation.",["positivity"],["analytical"],"c"],
   [28,"I want to lead a large group of people.","I help people see how they are connected.",["command"],["connectedness"],"c"],
   [29,"I sometimes intimidate others.","Well-known leaders intimidate me.",["command"],["self_assurance"],"c"],
   [30,"I can put myself into someone's life and understand what they are going through.","I have an ability to love all people.",["empathy"],["connectedness"],"c"],
-  [31,"I push others to succeed.","I make other people happy.",["command","activator"],["developer","harmony"],"c"],
-  [32,"I am a carefree person.","I am more mature than my associates and friends.",["adaptability"],["self_assurance"],"c"],
+  [31,"I push others to succeed.","I make other people happy.",["command"],["positivity"],"c"],
+  [32,"I am a carefree person.","I am more mature than my associates and friends.",["adaptability"],["responsibility"],"c"],
   [33,"I act on every opportunity.","I am careful to avoid making mistakes.",["activator"],["deliberative"],"c"],
   [34,"By studying history I can figure out the future.","My future will be independent of my past.",["context"],["futuristic"],"c"],
   [35,"I am part of something larger than myself.","I am a realistic person.",["connectedness"],["analytical"],"c"],
-  [36,"I want work to be a way of life for me.","Work is just a way to earn a living.",["belief"],["achiever"],"c"],
+  [36,"I want work to be a way of life for me.","Work is just a way to earn a living.",["achiever"],["achiever"],"c"],
   [37,"I feel sad when someone doesn't like me.","I feel guilty when I do anything that I don't think is right.",["empathy"],["responsibility"],"c"],
   [38,"I organize.","I analyze.",["arranger"],["analytical"],"c"],
   [39,"I am spontaneous.","I am practical.",["adaptability"],["deliberative"],"c"],
   [40,"I seek out philosophical people.","I like to associate with hardworking, achieving people.",["intellection"],["achiever"],"c"],
-  [41,"I enjoy making others feel worthwhile.","I enjoy making others feel successful.",["developer"],["significance"],"c"],
+  [41,"I enjoy making others feel worthwhile.","I enjoy making others feel successful.",["developer"],["positivity"],"c"],
   [42,"I use instinct to solve problems.","I use exact, well-researched information.",["strategic"],["analytical"],"c"],
   [43,"I have a healthy skepticism about life.","I believe I am connected with all of humankind.",["analytical"],["connectedness"],"c"],
   [44,"I like to take things apart.","If it's not broken, don't fix it.",["restorative"],["consistency"],"c"],
@@ -133,7 +133,7 @@ var Q = [
   [48,"I am a very tidy person.","I am very stubborn.",["discipline"],["command"],"c"],
   [49,"People often share their feelings with me.","I tend to have an objective outlook.",["empathy"],["analytical"],"c"],
   [50,"I follow a written plan for my future.","I discover the future one day at a time.",["focus"],["adaptability"],"c"],
-  [51,"I focus on what I can achieve in the future.","I imagine how I will respond to whatever happens.",["focus"],["strategic"],"c"],
+  [51,"I focus on what I can achieve in the future.","I imagine how I will respond to whatever happens.",["futuristic"],["adaptability"],"c"],
   [52,"I stay connected to my long-term friends.","I am continually expanding my network of friends.",["relator"],["woo"],"c"],
   [53,"I include everybody so I don't hurt anyone's feelings.","I select my friends carefully.",["includer"],["relator"],"c"],
   [54,"My ego is not so large that I need to be recognized.","It is very important to me to be recognized as credible and successful.",["significance"],["significance"],"c"],
@@ -144,56 +144,56 @@ var Q = [
   [59,"I find different ways to get things done.","I prefer routine ways for getting things done.",["arranger"],["discipline"],"c"],
   [60,"I feel bad when other people are left out.","My favorite times are when I am with good friends.",["includer"],["relator"],"c"],
   [61,"I judge people based on their character.","I welcome everyone.",["individualization"],["includer"],"c"],
-  [62,"I think most people will steal if the conditions are right.","I believe that people who steal should be punished.",["significance"],["belief"],"c"],
-  [63,"What happens today is the result of history.","We invent the future one day at a time.",["context"],["adaptability"],"c"],
+  [62,"I think most people will steal if the conditions are right.","I believe that people who steal should be punished.",["analytical"],["responsibility"],"c"],
+  [63,"What happens today is the result of history.","We invent the future one day at a time.",["context"],["futuristic"],"c"],
   [64,"I love it when things are working perfectly.","I love the process of fixing things.",["maximizer"],["restorative"],"c"],
-  [65,"I rely on experts to help me find the right answers.","Answers and issues naturally emerge for me to see.",["analytical"],["strategic"],"c"],
+  [65,"I rely on experts to help me find the right answers.","Answers and issues naturally emerge for me to see.",["input"],["strategic"],"c"],
   [66,"I am very generous in giving praise.","I am selective in giving praise.",["developer"],["maximizer"],"c"],
   [67,"I am never fully satisfied unless I am number one.","I am happy to be among the top group.",["competition"],["competition"],"c"],
   [68,"I am good at figuring out how different people can work together.","I am good at treating everyone equally.",["arranger"],["consistency"],"c"],
   [69,"I try to stay within my comfort zone.","I am a thrill-seeker.",["deliberative"],["activator"],"c"],
-  [70,"I can sense other people's feelings.","I enjoy discussing big ideas.",["empathy"],["ideation","intellection"],"c"],
+  [70,"I can sense other people's feelings.","I enjoy discussing big ideas.",["empathy"],["intellection"],"c"],
   [71,"I am always thinking about how to be more efficient.","I follow a regular routine.",["arranger"],["discipline"],"c"],
-  [72,"I trust my heart for important decisions.","I use my head for important decisions.",["empathy","belief"],["analytical"],"c"],
+  [72,"I trust my heart for important decisions.","I use my head for important decisions.",["empathy"],["analytical"],"c"],
   [73,"I respond to things as they occur.","I prioritize things, then act.",["adaptability"],["focus"],"c"],
   [74,"I like everybody.","I want everybody to like me.",["includer"],["woo"],"c"],
   [75,"I am driven by my goals.","I am driven by my mission.",["focus"],["belief"],"c"],
   [76,"I set performance objectives each week.","My work is determined by the demands of the day.",["discipline"],["adaptability"],"c"],
   [77,"I like to take care of the present.","I live for the future.",["adaptability"],["futuristic"],"c"],
-  [78,"I have to force myself to study.","I can concentrate on the things in which I am interested.",["discipline"],["learner"],"c"],
+  [78,"I have to force myself to study.","I can concentrate on the things in which I am interested.",["focus"],["learner"],"c"],
   [79,"Being trustworthy is important.","Being successful is important.",["responsibility"],["significance"],"c"],
   [80,"I accept what life gives me.","I like to get perspective by seeing patterns emerge.",["adaptability"],["strategic"],"c"],
   [81,"I study what motivates other people.","I am introspective.",["individualization"],["intellection"],"c"],
   [82,"I follow a routine.","I am zestful.",["discipline"],["positivity"],"c"],
-  [83,"I read about social issues in my free time.","I watch sports or entertainment to unwind.",["belief"],["adaptability"],"c"],
+  [83,"I read about social issues in my free time.","I watch sports or entertainment to unwind.",["learner"],["positivity"],"c"],
   [84,"I like to be heard.","I like to listen.",["communication"],["relator"],"c"],
   [85,"It is always best to be careful.","I am an open-minded person.",["deliberative"],["adaptability"],"c"],
-  [86,"I am satisfied with my progress in life.","I worry about my future.",["achiever"],["futuristic"],"c"],
+  [86,"I am satisfied with my progress in life.","I worry about my future.",["self_assurance"],["analytical"],"c"],
   [87,"I like to talk.","I like to think.",["communication"],["intellection"],"c"],
   [88,"I pay close attention to people's feelings.","I pay close attention to details.",["empathy"],["discipline"],"c"],
-  [89,"I am a very down to earth thinker.","I am a creative, strategic thinker.",["analytical"],["strategic"],"c"],
-  [90,"I seek out people who will be honest about my weaknesses.","I choose to associate with people who appreciate my strengths.",["self_assurance"],["individualization"],"c"],
+  [89,"I am a very down to earth thinker.","I am a creative, strategic thinker.",["input"],["strategic"],"c"],
+  [90,"I seek out people who will be honest about my weaknesses.","I choose to associate with people who appreciate my strengths.",["analytical"],["significance"],"c"],
   [91,"I have to take care of myself first.","I feel a need to sacrifice for others.",["self_assurance"],["responsibility"],"r"],
-  [92,"I am extremely social.","I like to work hard with friends.",["woo"],["achiever"],"r"],
+  [92,"I am extremely social.","I like to work hard with friends.",["woo"],["relator"],"r"],
   [93,"I am never at a loss for words.","It is hard for me to talk about myself.",["communication"],["intellection"],"r"],
   [94,"I am a carefree person.","I am a serious person.",["adaptability"],["deliberative"],"r"],
   [95,"I love to study.","I live to go out.",["learner"],["woo"],"r"],
   [96,"I am often forgetful.","My nature is to check as often as necessary to be sure everything is in order.",["adaptability"],["discipline"],"r"],
   [97,"I am a keen observer of the differences between people.","I treat all people equally.",["individualization"],["consistency"],"r"],
   [98,"Overcoming weaknesses is my way for achieving.","Building on my talents is my way for achieving.",["restorative"],["maximizer"],"r"],
-  [99,"When something goes wrong, I see an opportunity.","Problems cause me a lot of stress.",["activator","strategic"],["deliberative"],"r"],
+  [99,"When something goes wrong, I see an opportunity.","Problems cause me a lot of stress.",["restorative"],["deliberative"],"r"],
   [100,"I am outgoing.","I can be outgoing when I need to be.",["woo"],["relator"],"r"],
   [101,"I want as many friends as possible.","I want a few deep friendships that are very important to me.",["woo"],["relator"],"r"],
-  [102,"It is sometimes justifiable to bend the truth.","It is never justifiable to tell a lie.",["strategic"],["responsibility","belief"],"r"],
+  [102,"It is sometimes justifiable to bend the truth.","It is never justifiable to tell a lie.",["adaptability"],["belief"],"r"],
   [103,"I want a few friends that I know a lot about.","I am always building new friendships.",["relator"],["woo"],"r"],
   [104,"I have been known for my neatness.","I have been known for my sense of humor.",["discipline"],["positivity"],"r"],
-  [105,"I am creating my future.","I study what the future holds for me.",["activator"],["context"],"r"],
+  [105,"I am creating my future.","I study what the future holds for me.",["activator"],["futuristic"],"r"],
   [106,"I like to challenge people.","I like to encourage people.",["command"],["developer"],"r"],
-  [107,"I am a very private person.","My life is an open book.",["intellection","relator"],["communication"],"r"],
+  [107,"I am a very private person.","My life is an open book.",["relator"],["communication"],"r"],
   [108,"I am generous.","I am a thrifty person.",["developer"],["discipline"],"r"],
   [109,"I am a leader.","I am a high achiever.",["command"],["achiever"],"r"],
   [110,"I sometimes flatter others.","I am conscientious.",["woo"],["responsibility"],"r"],
-  [111,"I can study for as long as it takes.","I have a really short attention span.",["learner"],["focus"],"r"],
+  [111,"I can study for as long as it takes.","I have a really short attention span.",["focus"],["focus"],"r"],
   [112,"I am careful not to give out too much praise, so when I do it really means something.","I am generous with my praise and recognition.",["maximizer"],["developer"],"r"],
   [113,"I like large gatherings where everyone is welcomed.","I like small gatherings with close friends.",["includer"],["relator"],"r"],
   [114,"I have a purpose for my life.","My life is very enjoyable.",["belief"],["positivity"],"r"],
@@ -203,29 +203,29 @@ var Q = [
   [118,"It is easy for me to admit the truth about myself.","I struggle to be honest with myself.",["self_assurance"],["intellection"],"r"],
   [119,"I am not afraid to talk about who I am.","I am very careful in talking about my private life.",["communication"],["intellection"],"r"],
   [120,"As a child, I was quite aggressive and independent.","As a child, I fit in well and caused no problems.",["command"],["harmony"],"r"],
-  [121,"I'd rather plan the party.","I'd rather go to the party.",["communication"],["woo"],"r"],
+  [121,"I'd rather plan the party.","I'd rather go to the party.",["arranger"],["woo"],"r"],
   [122,"My actions are guided by my values.","I am always open to new experiences.",["belief"],["adaptability"],"r"],
-  [123,"I encourage others to think things through.","I encourage others to take action.",["intellection"],["activator"],"r"],
-  [124,"I seek the guidance of others.","No matter the situation, I naturally know the right thing to do.",["individualization"],["self_assurance"],"r"],
-  [125,"People who have not figured out their goals irritate me.","I don't like to be around people who can't relax.",["focus"],["discipline"],"r"],
+  [123,"I encourage others to think things through.","I encourage others to take action.",["analytical"],["activator"],"r"],
+  [124,"I seek the guidance of others.","No matter the situation, I naturally know the right thing to do.",["input"],["self_assurance"],"r"],
+  [125,"People who have not figured out their goals irritate me.","I don't like to be around people who can't relax.",["focus"],["positivity"],"r"],
   [126,"I choose easy courses.","I choose challenging courses.",["learner"],["learner"],"r"],
   [127,"I dislike deadlines.","My responsibility keeps me going.",["adaptability"],["responsibility"],"r"],
   [128,"I encourage people.","I strengthen people.",["developer"],["maximizer"],"r"],
-  [129,"I am too trusting of others.","I am too ambitious.",["empathy"],["significance"],"r"],
+  [129,"I am too trusting of others.","I am too ambitious.",["includer"],["competition"],"r"],
   [130,"What has happened in the past inspires me.","What can be achieved in the future inspires me.",["context"],["futuristic"],"r"],
-  [131,"Last minute pressure focuses my mind.","My thinking is clearer when I get things done ahead of time.",["adaptability"],["discipline"],"r"],
+  [131,"Last minute pressure focuses my mind.","My thinking is clearer when I get things done ahead of time.",["activator"],["deliberative"],"r"],
   [132,"I think most people will steal if the conditions are right.","I believe that people who steal should be punished.",["analytical"],["belief"],"r"],
-  [133,"I need to feel excited about my work.","Acceptance is my greatest need.",["activator"],["includer"],"r"],
+  [133,"I need to feel excited about my work.","Acceptance is my greatest need.",["activator"],["significance"],"r"],
   [134,"I am a reasonable person.","I am a responsible person.",["analytical"],["responsibility"],"r"],
   [135,"Most of my thoughts are with the here and now.","I try to learn as much as I can by studying the past.",["adaptability"],["context"],"r"],
   [136,"I am satisfied when I do the best I can.","I am driven to make a difference in the world.",["achiever"],["significance"],"r"],
-  [137,"I have a great desire to learn.","I need to be known and understood.",["learner"],["significance"],"r"],
+  [137,"I have a great desire to learn.","I need to be known and understood.",["learner"],["relator"],"r"],
   [138,"I think a lot about cause and effect.","I take things as they come.",["analytical"],["adaptability"],"r"],
   [139,"Figuring out why I failed.","Enjoying present successes.",["analytical"],["positivity"],"r"],
   [140,"Helping others fills me with purpose.","People should be free to live the life they choose.",["connectedness"],["individualization"],"r"],
   [141,"I seek responsibility.","I strive for promotions.",["responsibility"],["significance"],"r"],
   [142,"I am agreeable with people.","I take risks.",["harmony"],["activator"],"r"],
-  [143,"I spend 25% of my time thinking about the future.","I spend 70% of my time thinking about the future.",["strategic"],["strategic"],"r"],
+  [143,"I spend 25% of my time thinking about the future.","I spend 70% of my time thinking about the future.",["futuristic"],["futuristic"],"r"],
   [144,"I inspire friends to make things happen.","I bring harmony to people who are working together.",["activator"],["harmony"],"r"],
   [145,"I like things that are predictable.","I find change exciting.",["consistency"],["adaptability"],"r"],
   [146,"My typical working week is 35-50 hours.","My typical working week is in excess of 60 hours.",["achiever"],["achiever"],"r"],
@@ -239,38 +239,38 @@ var Q = [
   [154,"I can outsmart other people.","Many people intimidate me.",["strategic"],["self_assurance"],"r"],
   [155,"I am at my best managing multiple workstreams at once.","I am at my best going deep on one thing at a time.",["arranger"],["focus"],"r"],
   [156,"I make it a point to try to be healthy.","I seek out new experiences.",["discipline"],["adaptability"],"r"],
-  [157,"I am a good initiator.","I always follow through.",["activator"],["discipline"],"r"],
+  [157,"I am a good initiator.","I always follow through.",["activator"],["responsibility"],"r"],
   [158,"I am the one who builds the team.","I am the one who comes up with the idea.",["developer"],["ideation"],"r"],
-  [159,"I think in numbers and data.","I think in stories and images.",["analytical"],["communication"],"r"],
-  [160,"I prefer intellectual discussions.","I prefer to talk about sports or entertainment.",["intellection"],["woo","significance"],"r"],
-  [161,"The words I use are intellectually stimulating.","My vocabulary consists of practical words.",["intellection"],["learner"],"r"],
+  [159,"I think in numbers and data.","I think in stories and images.",["analytical"],["ideation"],"r"],
+  [160,"I prefer intellectual discussions.","I prefer to talk about sports or entertainment.",["intellection"],["positivity"],"r"],
+  [161,"The words I use are intellectually stimulating.","My vocabulary consists of practical words.",["intellection"],["analytical"],"r"],
   [162,"My language consists of short, simple words.","I tend to use many abstract, complex words.",["communication"],["intellection"],"r"],
   [163,"It is easy for me to put my thoughts into words.","At times, I have trouble expressing my best ideas.",["communication"],["analytical"],"r"],
-  [164,"I love to read.","I like to figure out how things work.",["learner"],["strategic"],"r"],
-  [165,"My mind is always going.","I need to be physically active.",["activator"],["discipline"],"r"],
-  [166,"I like lectures.","I like discussion groups.",["learner"],["woo","relator"],"r"],
-  [167,"I like to study.","I get a thrill from discovering a pattern in data.",["intellection"],["analytical"],"r"],
-  [168,"I have a craving to know more.","I have a craving to be rich.",["learner"],["significance"],"r"],
+  [164,"I love to read.","I like to figure out how things work.",["input"],["analytical"],"r"],
+  [165,"My mind is always going.","I need to be physically active.",["intellection"],["activator"],"r"],
+  [166,"I like lectures.","I like discussion groups.",["learner"],["woo"],"r"],
+  [167,"I like to study.","I get a thrill from discovering a pattern in data.",["learner"],["analytical"],"r"],
+  [168,"I have a craving to know more.","I have a craving to be rich.",["input"],["significance"],"r"],
   [169,"I always make deadlines.","I follow through and do what I said I would do.",["discipline"],["responsibility"],"r"],
   [170,"A new idea makes my day.","Completing the tasks expected of me makes my day.",["ideation"],["achiever"],"r"],
-  [171,"Whenever I am in a group, I seem to have more ideas than the others.","Whenever I am in a group, I seem to be the best prepared.",["ideation"],["learner","focus"],"r"],
-  [172,"I never stop absorbing information.","I have a gift for simplifying complexities.",["intellection"],["strategic"],"r"],
-  [173,"Winning is everything.","Doing it right is everything.",["competition"],["consistency","belief"],"r"],
+  [171,"Whenever I am in a group, I seem to have more ideas than the others.","Whenever I am in a group, I seem to be the best prepared.",["ideation"],["focus"],"r"],
+  [172,"I never stop absorbing information.","I have a gift for simplifying complexities.",["input"],["strategic"],"r"],
+  [173,"Winning is everything.","Doing it right is everything.",["competition"],["responsibility"],"r"],
   [174,"My philosophy guides my life.","My life is guided by me.",["belief"],["self_assurance"],"r"],
   [175,"I spend at least five hours alone thinking each week.","I like to be with people.",["intellection"],["relator"],"r"],
   [176,"I know my strengths better than my weaknesses.","I know my weaknesses better than my strengths.",["maximizer"],["restorative"],"r"],
   [177,"An interruption can be a worthwhile surprise.","My priorities are always clear.",["adaptability"],["discipline"],"r"],
   [178,"Understanding the past is vital to confidence in the future.","I focus on today.",["context"],["focus"],"r"],
   [179,"In life, there are no coincidences.","Not everything has special meaning.",["connectedness"],["analytical"],"r"],
-  [180,"If I get a bonus, I would prefer $1,000 now.","If I get a bonus, I would prefer $100 per month for one year.",["focus","discipline"],["adaptability"],"r"],
+  [180,"If I get a bonus, I would prefer $1,000 now.","If I get a bonus, I would prefer $100 per month for one year.",["activator"],["deliberative"],"r"],
   [181,"I like to figure out why I failed.","I enjoy my successes.",["analytical"],["positivity"],"r"],
   [182,"Meeting new people gives me energy.","I regularly spend time with close friends.",["woo"],["relator"],"r"],
   [183,"My life is like a book I keep writing exciting chapters for.","Sometimes I feel like life is moving too fast.",["futuristic"],["adaptability"],"r"],
-  [184,"I have a clear set of guidelines that I live by.","The world is full of interesting things, and I want to try them all.",["consistency"],["learner"],"r"],
+  [184,"I have a clear set of guidelines that I live by.","The world is full of interesting things, and I want to try them all.",["adaptability"],["input"],"r"],
   [185,"I like to focus on what I do best.","It is important to be well-rounded.",["maximizer"],["individualization"],"r"],
-  [186,"I like to repair things.","I find troubleshooting exhausting.",["restorative"],["strategic"],"r"],
+  [186,"I like to repair things.","I find troubleshooting exhausting.",["restorative"],["adaptability"],"r"],
   [187,"I am always thinking one step ahead.","My feelings guide my decisions.",["strategic"],["empathy"],"r"],
-  [188,"When I make plans, I think about different possible outcomes.","It is hard to predict the future.",["strategic"],["analytical"],"r"],
+  [188,"When I make plans, I think about different possible outcomes.","It is hard to predict the future.",["strategic"],["adaptability"],"r"],
   [189,"I tend to be cautious.","Calculated risks make life more exciting.",["deliberative"],["activator"],"r"],
   [190,"Living in the past is a waste of time.","Those who do not learn from history are doomed to repeat it.",["adaptability"],["context"],"r"],
   [191,"We should live our lives as examples for others.","The purpose of life is to be happy.",["connectedness"],["positivity"],"r"],
@@ -279,15 +279,15 @@ var Q = [
   [194,"Making decisions too quickly is reckless.","I don't like to wait for things to happen.",["deliberative"],["activator"],"r"],
   [195,"I love routines.","I am spontaneous.",["discipline"],["adaptability"],"r"],
   [196,"Overcoming weaknesses is how I succeed.","Developing my talents is how I succeed.",["restorative"],["maximizer"],"r"],
-  [197,"If I get a surprise bill, I would prefer to pay $1,000 now.","If I get a surprise bill, I would prefer to pay $100 per month for one year.",["focus"],["adaptability"],"r"],
-  [198,"I do my best work under pressure.","I do my best work with time to prepare.",["activator"],["discipline"],"r"],
+  [197,"If I get a surprise bill, I would prefer to pay $1,000 now.","If I get a surprise bill, I would prefer to pay $100 per month for one year.",["activator"],["deliberative"],"r"],
+  [198,"I do my best work under pressure.","I do my best work with time to prepare.",["discipline"],["adaptability"],"r"],
   [199,"I think people should be more logical.","It is very easy for me to understand a person's feelings.",["analytical"],["empathy"],"r"],
   [200,"I thrive at big events with lots of new faces.","I thrive in small groups with people I know well.",["woo"],["relator"],"r"],
 ];
 
-/* Intensity check questions: both sides = same theme. Right side is HIGH except Q67 where Left is HIGH */
-var INTENSITY_HIGH_RIGHT = [46, 54, 126, 143, 146];
-var INTENSITY_HIGH_LEFT = [67];
+/* Intensity check questions: both sides = same theme. Right side is HIGH except where noted */
+var INTENSITY_HIGH_RIGHT = [36, 46, 54, 126, 143, 146];
+var INTENSITY_HIGH_LEFT = [67, 111];
 
 /* ---- SCORING: Gallup-style +2/+1/0/+1/+2 accumulation ---- */
 function calcScores(answers) {
@@ -341,9 +341,32 @@ function calcScores(answers) {
     }
   });
 
-  /* Rank by raw score */
+  /* Count how many questions each theme appeared in (for normalization) */
+  var qCounts = {};
+  ALL_T.forEach(function(t) { qCounts[t] = 0; });
+  Q.forEach(function(q) {
+    var seen = {};
+    q[3].forEach(function(t) { if (!seen[t]) { qCounts[t] = (qCounts[t]||0) + 1; seen[t] = true; } });
+    q[4].forEach(function(t) { if (!seen[t]) { qCounts[t] = (qCounts[t]||0) + 1; seen[t] = true; } });
+  });
+
+  /* Normalize: divide raw score by question count, then scale to 0-100 centered at 50 */
+  var normed = {};
+  ALL_T.forEach(function(id) {
+    var count = qCounts[id] || 1;
+    normed[id] = bins[id] / count; // raw average per question
+  });
+
+  /* Find min and max of normalized scores to scale to 0-100 */
+  var vals = ALL_T.map(function(id) { return normed[id]; });
+  var minV = Math.min.apply(null, vals);
+  var maxV = Math.max.apply(null, vals);
+  var range = maxV - minV || 1;
+
+  /* Scale to 0-100 centered at 50 */
   return ALL_T.map(function(id) {
-    return { id: id, score: Math.round(bins[id] * 10) / 10, n: 0 };
+    var scaled = ((normed[id] - minV) / range) * 100;
+    return { id: id, score: Math.round(scaled * 10) / 10 };
   }).sort(function(a, b) { return b.score - a.score; });
 }
 
@@ -353,7 +376,7 @@ function getNextBatch(answers, ranked) {
   for (var i = 0; i < ranked.length - 1; i++) {
     var gap = ranked[i].score - ranked[i + 1].score;
     var near = (i >= 3 && i <= 6) || (i >= 8 && i <= 11);
-    if (gap < (near ? 2 : 1)) { fuzzy.push(ranked[i].id); fuzzy.push(ranked[i + 1].id); }
+    if (gap < (near ? 5 : 3)) { fuzzy.push(ranked[i].id); fuzzy.push(ranked[i + 1].id); }
   }
   var fuzzySet = new Set(fuzzy);
   if (fuzzySet.size === 0) return [];
@@ -1541,188 +1564,70 @@ function printReport(type, ranked, name, insights) {
     html += "</div>";
 
     // --- SECTIONS 5-9: THEME ENTRIES BY BUCKET ---
-    // Helper: generate rank-specific intro text
+    // Helper: one intro per tier (not 34 unique versions)
     function rankIntro(ri, th) {
       var n = th.n;
-      var intA = th.introAction||"use"; var intO = th.introObject||"this strength"; var intP = th.introPayoff||"so the work benefits";
-      // Top 5 rank-specific intros
-      if (ri===0) return n+" is your top strength. This is likely the clearest and most consistent pattern in how you naturally think, work, and contribute.";
-      if (ri===1) return n+" is one of the strongest forces in your profile. It likely shapes how you operate across a wide range of situations, even when you are not consciously relying on it.";
-      if (ri===2) return n+" sits firmly in the core of your profile. This is still one of the most natural and defining ways you tend to work and contribute.";
-      if (ri===3) return n+" is a clear lead strength for you. Even if it is not the strongest single theme in your profile, it is still one of the most consistent ways you are likely to show up at your best.";
-      if (ri===4) return n+" rounds out your top five and belongs to the most defining part of your profile. This is still a true signature strength, not just a helpful extra.";
-      // 6-10
-      if (ri===5) return n+" sits just outside your top five. It may not define you as strongly as your most dominant themes, but it likely plays a meaningful supporting role in how you operate.";
-      if (ri===6) return n+" is a strong supporting strength in your profile. It may not be one of the first patterns people notice, but it likely adds real range and usefulness to how you work.";
-      if (ri===7) return n+" is still clearly above the middle of your profile. It may not sit at the center of how you lead, but it likely shows up often enough to matter.";
-      if (ri===8) return n+" remains one of the stronger themes in your profile. This is not a primary defining strength, but it is still likely to influence how you think, work, or relate in noticeable ways.";
-      if (ri===9) return n+" closes out your top ten. It is still a meaningful part of your profile, even if it sits just outside the strongest inner circle of your themes.";
-      // 11-17
-      if (ri===10) return n+" is present in a noticeable way, but it is no longer part of the strongest tier of your profile. You may draw on it regularly without it feeling especially central.";
-      if (ri===11) return n+" sits in the upper-middle of your profile. It is available to you, even if it is not one of the themes that most clearly defines your natural style.";
-      if (ri===12) return n+" is a real part of your profile, but not a dominant one. You may notice it more in the right environment than as a constant default.";
-      if (ri===13) return n+" is present, though not especially central. It may support you in certain kinds of situations without being one of the patterns you lead with most often.";
-      if (ri===14) return n+" falls in the upper-middle of your ranking. This suggests it is available to you, even if it is not one of the clearest drivers of how you naturally operate.";
-      if (ri===15) return n+" appears to be more available than defining in your profile. You may be able to access it when needed without it feeling especially instinctive or identity-level.";
-      if (ri===16) return n+" sits near the midpoint of your profile. It is part of how you can operate, but not one of the strongest or most natural ways you tend to lead.";
-      // 18-26
-      if (ri===17) return n+" begins the more situational part of your profile. This does not make it a weakness, but it does suggest it is less instinctive and less central than the themes above it.";
-      if (ri===18) return n+" is a less instinctive theme for you. It may still matter in the right setting, but it is not likely to be one of your first or strongest defaults.";
-      if (ri===19) return n+" appears to be more situational than natural in your profile. You may use it when the context calls for it without relying on it as a regular lead pattern.";
-      if (ri===20) return n+" sits in the lower half of your ranking. That suggests it is available in certain moments, but less likely to show up as one of your instinctive ways of operating.";
-      if (ri===21) return n+" is less central to your profile than the themes ranked above it. It may still have value, but it is probably not one of the first energies you naturally reach for.";
-      if (ri===22) return n+" ranks lower in your profile and is likely to be more context-dependent than instinctive. You may draw on it when needed without strongly identifying with it.";
-      if (ri===23) return n+" is one of the less natural themes in your ranking. This does not mean it is absent, only that it is less likely to shape how you operate on its own.";
-      if (ri===24) return n+" appears lower in your profile and is probably not a strength you lead with often. It may be more visible under certain demands than as part of your default style.";
-      if (ri===25) return n+" is a lower-ranked theme for you. It may still have uses in the right setting, but it is not one of the patterns that comes most naturally or consistently.";
-      // 27-34
-      if (ri===26) return n+" sits near the bottom of your profile. This suggests it is not a pattern you instinctively reach for in most situations.";
-      if (ri===27) return n+" is one of the less instinctive themes in your ranking. It may still appear when needed, but it is not a place you naturally lead from very often.";
-      if (ri===28) return n+" falls in the lowest stretch of your profile. That does not make it a flaw, only a theme that is less dominant and less natural for you than the ones ranked above it.";
-      if (ri===29) return n+" is one of the least central themes in your profile. You may value what it offers without naturally using it as a primary way of working or contributing.";
-      if (ri===30) return n+" sits very near the bottom of your ranking. It is likely less intuitive for you and less likely to show up without specific context or support.";
-      if (ri===31) return n+" is among your least dominant themes. This suggests it is not a strength you naturally lean on, even if it may still matter in certain settings.";
-      if (ri===32) return n+" is one of the very lowest themes in your profile. It is not missing, but it is unlikely to be one of the ways you most naturally think, work, or relate.";
-      if (ri===33) return n+" is your lowest-ranked theme in this report. That does not make it a weakness to fix, but it does suggest this is not a natural lead pattern for you and is less central to how you typically operate.";
-      return n+" is part of your profile.";
-    }
-
-    // Helper: context line (thrive/available/low)
-    function contextLine(ri, th) {
       var intA = th.introAction||"use"; var intO = th.introObject||"this strength"; var intP = th.introPayoff||"";
-      if (ri<5) {
-        var starters = ["You thrive when you can ","You are at your best when you can ","This strength comes alive when you can ","You tend to excel when you can ","This strength is especially active when you can "];
-        return starters[ri]+intA+" "+intO+(intP?", "+intP:"")+".";
-      }
-      if (ri<10) {
-        var s6 = ["This strength tends to help when you can ","You are likely to benefit from this theme when you can ","This strength often becomes useful when you can ","You may draw on this most when you can ","This strength is often helpful when you can "];
-        return s6[ri-5]+intA+" "+intO+(intP?", "+intP:"")+".";
-      }
-      if (ri<17) {
-        var s7 = ["This theme tends to help when you need to ","You may be most likely to use this strength when you need to ","This theme is likely to be useful when you need to ","You can likely draw on it when you need to ","This strength tends to become useful when you need to ","You may lean on this theme when you need to ","This theme can still be useful when you need to "];
-        return s7[ri-10]+intA+" "+intO+(intP?", "+intP:"")+".";
-      }
-      if (ri<26) {
-        var s8 = ["This theme may still be useful when you need to ","You may still benefit from this theme when you need to ","This strength may help in moments where you need to ","This theme may matter when you need to ","You may still find this strength useful when you need to ","This theme may still help when you need to ","This theme may be useful when you need to ","Even so, this theme can help when you need to ","This theme may still matter when you need to "];
-        return s8[ri-17]+intA+" "+intO+(intP?", "+intP:"")+".";
-      }
-      // 27-34
-      var s9 = ["This is less natural for you, but it can still help when you need to ","While this is not a default strength, it may still be useful when you need to ","This is not a strength you are likely to lead with, but it can still matter when you need to ","Even at this rank, it can still be helpful when you need to ","This is not likely to be a natural instinct, but it can still help when you need to ","This may not be your first instinct, but it can still add value when you need to ","This is a pattern you are not likely to lead with, though it can still matter when you need to ","This is the least instinctive theme in your profile, though it can still help when you need to "];
-      var idx = Math.min(ri-26, s9.length-1);
-      return s9[idx]+intA+" "+intO+(intP?", "+intP:"")+".";
+      if (ri<5) return n+" is one of your dominant strengths. This is one of the clearest and most consistent patterns in how you naturally think, work, and contribute. You thrive when you can "+intA+" "+intO+(intP?", "+intP:"")+".";
+      if (ri<10) return n+" is a strong supporting strength in your profile. It may not define you as sharply as your top five, but it plays a meaningful role in how you operate. It tends to show up when you can "+intA+" "+intO+(intP?", "+intP:"")+".";
+      if (ri<17) return n+" is present and available in your profile, but it is not one of your primary lead patterns. You may draw on it in the right context without it feeling especially central or automatic.";
+      if (ri<26) return n+" is a less instinctive theme for you. This is not a weakness \u2014 it is simply not one of the patterns you naturally lead with. Someone strong in this theme would "+intA+" "+intO+" instinctively, but that is not where your energy tends to go.";
+      return n+" is one of your least dominant themes. This is not a flaw to fix or a gap to fill. It just means this is not where your strengths naturally concentrate, and that is fine \u2014 your energy goes to other places that serve you well.";
     }
 
-    // Helper: core line
+    // Helper: one content paragraph per tier
     function coreLine(ri, th) {
       var nt = th.naturalTendency||""; var at = th.availableTendency||""; var cc = th.coreContext||""; var cr = th.coreResult||"";
-      if (ri<5) {
-        var labels = ["At your best","Core pattern","Signature tendency","At your strongest","Natural style"];
-        return "<strong>"+labels[ri]+":</strong> You naturally "+nt+". This is most powerful when "+cc+", helping you "+cr+".";
-      }
-      if (ri<10) {
-        var lb6 = ["Strong support","In practice","Supporting pattern","Usual contribution","Reliable support"];
-        return "<strong>"+lb6[ri-5]+":</strong> You often "+(at||nt)+". This becomes especially useful when "+cc+", helping you "+cr+".";
-      }
-      if (ri<17) {
-        var lb7 = ["Available tool","Situational asset","Available range","In practice","Situational pattern","Useful, not central","On the bench, not off the field"];
-        return "<strong>"+lb7[ri-10]+":</strong> You can draw on this when you need to "+(at||nt)+". It tends to help most when "+cc+", so you can "+cr+".";
-      }
-      if (ri<26) {
-        var ld = th.lowDefault||""; var lm = th.lowMiss||""; var lr = th.lowRisk||"";
-        var lb8 = ["Less natural tendency","Situational use","Available on purpose","Less automatic","Deliberate access","Situational lane","Not your default","Pulled forward by context","Less instinctive lane"];
-        var idx = ri-17;
-        return "<strong>"+lb8[idx]+":</strong> You are less likely to "+ld+". Because of that, "+lm+", which can "+lr+".";
-      }
-      // 27-34
+      if (ri<5) return "You naturally "+nt+". This is most powerful when "+cc+", helping you "+cr+".";
+      if (ri<10) return "You often "+(at||nt)+". This becomes especially useful when "+cc+", helping you "+cr+".";
+      if (ri<17) return "You can draw on this when you need to "+(at||nt)+". It tends to help most when "+cc+", so you can "+cr+".";
+      // 18-26: describe the tendency they're less likely to have
+      var ld = th.lowDefault||""; var lm = th.lowMiss||""; var lr = th.lowRisk||"";
+      if (ri<26) return "You are less likely to "+ld+". Because of that, "+lm+", which can "+lr+".";
+      // 27-34: frame around where their energy goes instead
       var dt = th.defaultTendency||""; var tp = th.themePriority||""; var ld2 = th.lowDefault||""; var lm2 = th.lowMiss||""; var lr2 = th.lowRisk||"";
-      var lb9 = ["Secondary choice","Not a first move","Infrequent instinct","Quiet preference","Weak reflex under pressure","Unreliable reflex","Quiet blind spot","True blind spot"];
-      var idx2 = Math.min(ri-26, lb9.length-1);
-      return "<strong>"+lb9[idx2]+":</strong> Because you may naturally prioritize "+dt+" over "+tp+", you are less likely to "+ld2+". That means "+lm2+", which can "+lr2+".";
+      return "Because you naturally prioritize "+dt+" over "+tp+", you are less likely to "+ld2+". That means "+lm2+", which can "+lr2+".";
     }
 
-    // Helper: special section (blind spots / watch for / underused advantage / works best when / support strategy)
+    // Helper: one labeled section per tier
     function specialSection(ri, th) {
       if (ri<5) {
-        // BLIND SPOTS
-        var s = "<div class='f34-label'>BLIND SPOTS</div>";
-        s += "<p class='f34-copy'>Because this strength is so immediate for you, "+th.overuseTrigger1+", "+th.overusePattern1+", "+th.overuseCost1+".</p>";
-        s += "<p class='f34-copy'>"+["You may also find that ","There may also be moments when ","You can also run into situations where ","There are also times when ","You may also notice that "][ri]+th.overuseTrigger2+", "+th.overusePattern2+", "+th.overuseCost2+".</p>";
+        var s = "<div class='f34-label'>WATCH FOR</div>";
+        s += "<p class='f34-copy'>Because this strength is so immediate for you, "+th.overuseTrigger1+", "+th.overusePattern1+", "+th.overuseCost1+". You may also find that "+th.overuseTrigger2+", "+th.overusePattern2+", "+th.overuseCost2+".</p>";
         return s;
       }
       if (ri<10) {
-        // WATCH FOR
         var s = "<div class='f34-label'>WATCH FOR</div>";
-        var openers = ["In the wrong setting, ","When you rely on it too quickly, ","One thing to watch is that ","Sometimes ","Under pressure, "];
-        s += "<p class='f34-copy'>"+openers[ri-5]+th.overuseTrigger1+", "+th.overusePattern1+", "+th.overuseCost1+".</p>";
-        s += "<p class='f34-copy'>You may also find that "+th.overuseTrigger2+", "+th.overusePattern2+", "+th.overuseCost2+".</p>";
+        s += "<p class='f34-copy'>When you rely on this too quickly, "+th.overuseTrigger1+", "+th.overusePattern1+", "+th.overuseCost1+". You may also find that "+th.overuseTrigger2+", "+th.overusePattern2+", "+th.overuseCost2+".</p>";
         return s;
       }
       if (ri<17) {
-        // UNDERUSED ADVANTAGE
-        var s = "<div class='f34-label'>UNDERUSED ADVANTAGE</div>";
         var ua = th.underuseAdvantage||""; var um = th.underuseMiss||""; var uc = th.underuseCost||"";
         var ac = th.awarenessCue||"";
-        var openers7 = [
-          "Because this is not a constant default, you may not always notice when leaning into "+ua+" would help. Left alone, "+um+", which can "+uc+".",
-          "The challenge here is usually not overuse, but under-leveraging. You may not always recognize when "+ua+" would give you an edge, and "+um+", which can "+uc+".",
-          "Because this theme is more situational than automatic, you may overlook moments when "+ua+" would serve you. As a result, "+um+", which can "+uc+".",
-          "This strength may create more value for you than you naturally remember to access. When you do not reach for it, "+um+", which can "+uc+".",
-          "Since this is not one of your strongest defaults, you may not always spot when "+ua+" would be worth using. That can mean "+um+", which may "+uc+".",
-          "Because this theme is more available than automatic, you may not consistently remember to use it. When that happens, "+um+", which can "+uc+".",
-          "At this rank, the risk is usually inconsistency rather than excess. You may not always notice when "+ua+" would help, and "+um+", which can "+uc+"."
-        ];
-        s += "<p class='f34-copy'>"+openers7[ri-10]+"</p>";
-        s += "<p class='f34-copy' style='font-weight:600'>Use this more intentionally when: "+ac+"</p>";
+        var s = "<div class='f34-label'>UNDERUSED ADVANTAGE</div>";
+        s += "<p class='f34-copy'>Because this is not a constant default, you may not always notice when leaning into "+ua+" would help. When you do not reach for it, "+um+", which can "+uc+". Use this more intentionally when "+ac+".</p>";
         return s;
       }
       if (ri<26) {
-        // WHAT THIS LOOKS LIKE
-        var ld = th.lowDefault||""; var lm = th.lowMiss||""; var ac = th.awarenessCue||"";
+        var ld = th.lowDefault||""; var ac = th.awarenessCue||"";
         var s = "<div class='f34-label'>WHAT THIS LOOKS LIKE</div>";
-        var openers8 = [
-          "In practice, this means you are less inclined to "+ld+". You may notice this most when "+ac+".",
-          "Because this is not a go-to pattern, you may not always "+ld+". That tends to show up when "+ac+".",
-          "Day to day, this means you are unlikely to naturally "+ld+". This becomes more noticeable when "+ac+".",
-          "You are probably not someone who instinctively leans toward this. That tends to matter most when "+ac+".",
-          "This is not a pattern you are likely to reach for on your own. You may feel this most when "+ac+".",
-          "In most situations, you are less likely to "+ld+". This tends to surface when "+ac+".",
-          "This is simply not a lane you lead from naturally. You may notice it when "+ac+".",
-          "You are unlikely to default to this without thinking about it. It matters most when "+ac+".",
-          "This is a pattern that just does not come as naturally to you. It tends to show up when "+ac+"."
-        ];
-        s += "<p class='f34-copy'>"+openers8[ri-17]+"</p>";
+        s += "<p class='f34-copy'>In practice, you are less inclined to "+ld+". You may notice this most when "+ac+". People who lead with this theme naturally bring these tendencies into the room \u2014 so when you are working alongside someone who has this as a strength, you will likely benefit from what they bring.</p>";
         return s;
       }
-      // 27-34: WHAT THIS MEANS
-      var ld2 = th.lowDefault||""; var lm2 = th.lowMiss||""; var ac2 = th.awarenessCue||"";
+      // 27-34
+      var ld2 = th.lowDefault||""; var ac2 = th.awarenessCue||"";
       var s = "<div class='f34-label'>WHAT THIS MEANS</div>";
-      var openers9 = [
-        "This is not a flaw. It simply means you are less likely to "+ld2+" on your own. You may feel this most when "+ac2+".",
-        "In practice, you are unlikely to naturally "+ld2+". This is not something to fix. It is just part of how you are wired. It tends to matter when "+ac2+".",
-        "You are probably not drawn to "+ld2+" unless something specific demands it. This is just how your strengths are arranged. You may notice it when "+ac2+".",
-        "This is one of the clearest places where your energy simply goes elsewhere. You are less inclined to "+ld2+", especially when "+ac2+".",
-        "Because this is not where your strengths concentrate, you may not naturally "+ld2+". This is not a gap to fill. It shows up most when "+ac2+".",
-        "This is not a pattern you lead with, and that is fine. You are less likely to "+ld2+", which tends to matter when "+ac2+".",
-        "Your profile suggests this is just not where you naturally invest your energy. You are less inclined to "+ld2+", which becomes visible when "+ac2+".",
-        "This is your least instinctive territory. You are unlikely to "+ld2+" unless the situation specifically requires it. You may notice this when "+ac2+"."
-      ];
-      var idx3 = Math.min(ri-26, openers9.length-1);
-      s += "<p class='f34-copy'>"+openers9[idx3]+"</p>";
+      s += "<p class='f34-copy'>You are less likely to "+ld2+" on your own, and you may feel this most when "+ac2+". This is not something to fix. Your energy naturally goes to your stronger themes, and that is where you will do your best work. When this area matters, look for others who lead with it.</p>";
       return s;
     }
 
-    // Helper: closing line
+    // Helper: closing line (Top 10 only)
     function closingLine(ri, th) {
       var im = th.investmentMove||"";
-      if (ri<5) {
-        var v = ["To deepen this strength","To sharpen this strength","To invest in this strength","To keep this strength sharp","To develop this strength further"];
-        return v[ri]+": "+im+".";
-      }
-      if (ri<10) {
-        var v6 = ["To get more out of this strength","To use this strength more deliberately","To strengthen this support theme","To refine this strength","To make this strength more intentional"];
-        return v6[ri-5]+": "+im+".";
-      }
-      return ""; // lower sections use awareness cue instead
+      if (!im) return "";
+      if (ri<5) return "To deepen this strength: "+im+".";
+      if (ri<10) return "To get more from this strength: "+im+".";
+      return "";
     }
 
     // Section definitions - inline dividers, not full splash pages
@@ -1758,21 +1663,18 @@ function printReport(type, ranked, name, insights) {
         html += "<div><div class='f34-name'>"+th.n+"</div>";
         html += "<div class='f34-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div></div>";
 
-        // Intro paragraph (rank-specific)
+        // Intro paragraph (one per tier)
         html += "<p class='f34-copy'>"+rankIntro(ti, th)+"</p>";
 
-        // Context line (thrive / available / low)
-        html += "<p class='f34-copy' style='font-style:italic;color:#555'>"+contextLine(ti, th)+"</p>";
-
-        // Core line
+        // Core content line (one per tier)
         html += "<p class='f34-copy'>"+coreLine(ti, th)+"</p>";
 
-        // Special section (blind spots / watch for / underused advantage / works best when / support strategy)
-        if (th.overuseTrigger1 || th.underuseAdvantage || th.supportCondition) {
+        // Labeled section (watch for / underused advantage / what this looks like / what this means)
+        if (th.overuseTrigger1 || th.underuseAdvantage || th.lowDefault) {
           html += specialSection(ti, th);
         }
 
-        // Closing line (Top 5 and Supporting only)
+        // Closing line (Top 10 only)
         var cl = closingLine(ti, th);
         if (cl) {
           html += "<p class='f34-copy' style='font-style:italic;color:#666;margin-top:4px'>"+cl+"</p>";
@@ -1868,39 +1770,46 @@ function printReport(type, ranked, name, insights) {
     dlBtn.textContent = "Generating...";
     dlBtn.style.opacity = "0.6";
 
-    // Create container for html2pdf — must be visible and on-screen for html2canvas
-    // Position it behind the overlay (z-index 99999) so user can't see it
+    // html2canvas requires fully visible, on-screen content with real dimensions.
+    // We use a new window/iframe approach: render into a visible iframe, then capture from it.
+    // Create a full-screen container that sits BEHIND the overlay (z-index 99998 vs overlay 99999).
+    // It must have real width, height, visibility, and opacity for html2canvas to work.
     var container = document.createElement("div");
-    container.style.cssText = "position:fixed;left:0;top:0;width:816px;z-index:1;pointer-events:none;overflow:hidden";
-    container.innerHTML = html;
+    container.style.cssText = "position:fixed;left:0;top:0;width:816px;height:100vh;z-index:99998;overflow:auto;background:#fff";
     var styleEl = document.createElement("style");
     styleEl.textContent = css;
-    container.insertBefore(styleEl, container.firstChild);
+    container.appendChild(styleEl);
+    var content = document.createElement("div");
+    content.innerHTML = html;
+    container.appendChild(content);
     document.body.appendChild(container);
 
     var fileName = (name || "Strengths") + " - " + (type === "top5" ? "Top 5 Report" : "Full 34 Report") + ".pdf";
 
-    html2pdf().set({
-      margin: 0,
-      filename: fileName,
-      image: { type: "jpeg", quality: 0.95 },
-      html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-      pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
-    }).from(container).save().then(function() {
-      document.body.removeChild(container);
-      dlBtn.disabled = false;
-      dlBtn.textContent = "\u2713 Downloaded!";
-      dlBtn.style.opacity = "1";
-      setTimeout(function() { dlBtn.textContent = "\u2B07 Download PDF"; }, 2000);
-    }).catch(function(err) {
-      console.error("PDF generation failed:", err);
-      document.body.removeChild(container);
-      dlBtn.disabled = false;
-      dlBtn.textContent = "\u2B07 Download PDF";
-      dlBtn.style.opacity = "1";
-      alert("PDF generation failed. Please try again.");
-    });
+    // Give the browser a frame to paint before capturing
+    setTimeout(function() {
+      html2pdf().set({
+        margin: 0,
+        filename: fileName,
+        image: { type: "jpeg", quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false, scrollX: 0, scrollY: 0, windowWidth: 816 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
+      }).from(content).save().then(function() {
+        document.body.removeChild(container);
+        dlBtn.disabled = false;
+        dlBtn.textContent = "\u2713 Downloaded!";
+        dlBtn.style.opacity = "1";
+        setTimeout(function() { dlBtn.textContent = "\u2B07 Download PDF"; }, 2000);
+      }).catch(function(err) {
+        console.error("PDF generation failed:", err);
+        if (container.parentElement) document.body.removeChild(container);
+        dlBtn.disabled = false;
+        dlBtn.textContent = "\u2B07 Download PDF";
+        dlBtn.style.opacity = "1";
+        alert("PDF generation failed. Please try again.");
+      });
+    }, 100);
   };
 
   // Close
