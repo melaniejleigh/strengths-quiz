@@ -2090,11 +2090,11 @@ async function generateInsights(ranked, name) {
   var bottom5 = ranked.slice(-5);
   var b5names = bottom5.map(function(t) { return TH[t.id].n; });
 
-  var prompt = "You are an elite strengths coach writing personalized insights for a strengths assessment. The person's name is " + (name || "this person") + ".\n\n" +
-    "Their top 5 strengths in order: " + t5names.join(", ") + "\n" +
-    "Their domains: " + t5domains.join(", ") + "\n" +
-    "Their top 10: " + t10names.join(", ") + "\n" +
-    "Their bottom 5 (least dominant): " + b5names.join(", ") + "\n\n" +
+  var prompt = "You are an elite strengths coach writing personalized insights directly to the person taking the assessment. Always write in second person (you/your). Never use their name or third person (they/their).\n\n" +
+    "Top 5 strengths in order: " + t5names.join(", ") + "\n" +
+    "Domains: " + t5domains.join(", ") + "\n" +
+    "Top 10: " + t10names.join(", ") + "\n" +
+    "Bottom 5 (least dominant): " + b5names.join(", ") + "\n\n" +
     "Generate a JSON object with NO other text, no markdown backticks, no preamble. Just raw JSON.\n\n" +
     "The JSON should have this structure:\n" +
     "{\n" +
@@ -2106,18 +2106,18 @@ async function generateInsights(ranked, name) {
     '  "blends": [\n' +
     '    { "a": "<theme1_key>", "b": "<theme2_key>", "text": "One punchy sentence about how these two strengths interact.", "detail": "2-3 sentences expanding on this combination." }\n' +
     "  ],\n" +
-    '  "summary": "One sentence that captures this person\'s entire operating style based on all 5. Direct, memorable, no fluff. Like a brand statement.",\n' +
-    '  "fullProfile": "A 3-4 sentence paragraph painting a vivid picture of who this person is at their best. Reference their specific top 5 by name. Write in third person using their name.",\n' +
-    '  "blindSpotProfile": "2-3 sentences about their overall blind spot pattern based on the COMBINATION of their top 5 and bottom 5. What situations might drain them? Write in second person.",\n' +
-    '  "dominantDomain": "2-3 sentences about what their domain mix means for how they contribute to teams. Reference the specific domain names and what the clustering suggests.",\n' +
+    '  "summary": "One sentence that captures your entire operating style based on all 5. Direct, memorable, no fluff. Like a brand statement. Write in second person (you).",\n' +
+    '  "fullProfile": "A 3-4 sentence paragraph painting a vivid picture of who you are at your best. Reference the specific top 5 by name. Write in second person (you/your).",\n' +
+    '  "blindSpotProfile": "2-3 sentences about your overall blind spot pattern based on the COMBINATION of your top 5 and bottom 5. What situations might drain you? Write in second person (you/your).",\n' +
+    '  "dominantDomain": "2-3 sentences about what your domain mix means for how you contribute to teams. Reference the specific domain names and what the clustering suggests. Write in second person (you/your).",\n' +
     '  "full34Interpretation": "A 4-6 sentence paragraph synthesizing the OVERALL shape of the full 34 profile. Go beyond the top 5. Comment on: where the strongest concentration patterns are, any notable contrasts or tensions across the full profile (e.g. top themes are all Relationship Building but bottom themes are all Executing), what stands out about the overall wiring. Be direct, insightful, work-focused, and specific. Do not repeat the top themes one by one. Write in second person.",\n' +
-    '  "full34DomainMix": "2-3 sentences specifically about the domain distribution across all 34 themes. Comment on whether one or two domains dominate, whether the profile is balanced, whether the top clusters differently from the full 34, and what that suggests about how this person approaches work, decision-making, and collaboration. Be specific and use the actual domain counts."\n' +
+    '  "full34DomainMix": "2-3 sentences specifically about the domain distribution across all 34 themes. Comment on whether one or two domains dominate, whether the profile is balanced, whether the top clusters differently from the full 34, and what that suggests about how you approach work, decision-making, and collaboration. Be specific and use the actual domain counts. Write in second person (you/your)."\n' +
     "}\n\n" +
     "INSTRUCTIONS:\n" +
     "1. Theme keys for top 5 only: " + top5.map(function(t) { return t.id; }).join(", ") + "\n" +
     "2. Generate all 10 pairwise blend combinations of the top 5.\n" +
-    "3. Every insight must reference their SPECIFIC combination. No generic descriptions.\n" +
-    "4. Tone: direct, insightful, work-focused, warm but not cheesy. Like an elite coach who knows them.\n" +
+    "3. Every insight must reference the SPECIFIC combination. No generic descriptions.\n" +
+    "4. Tone: direct, insightful, work-focused, warm but not cheesy. Like an elite coach speaking directly to the person. Always use second person (you/your), never third person (they/their/name).\n" +
     "5. ONLY output valid JSON. No backticks, no explanation.\n" +
     "6. Full 34 ranking (for full34Interpretation and full34DomainMix): " + ranked.map(function(t,i) { return (i+1)+"."+TH[t.id].n+"("+DOMAINS[TH[t.id].d].name+")"; }).join(", ");
 
