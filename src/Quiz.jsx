@@ -1931,7 +1931,7 @@ function ResultsScreen(props) {
     var dc = DOMAINS[th.d].color;
     var rk = ranked.indexOf(t) + 1;
     var isE = expTheme === t.id;
-    var barWidth = maxScore > 0 ? Math.max((t.score / maxScore) * 100, 2) : 2;
+    var barWidth = Math.max(((34 - rk + 1) / 34) * 100, 3);
     return (
       <div onClick={function() { setExpTheme(isE ? null : t.id); }} style={{ padding: "12px 14px", marginBottom: 5, borderRadius: 10, background: "#f8f7fc", border: "1px solid #e8e6f0", cursor: "pointer" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -1942,7 +1942,6 @@ function ResultsScreen(props) {
               <div style={{ height: "100%", width: barWidth + "%", background: dc, borderRadius: 2 }} />
             </div>
           </div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: dc, flexShrink: 0 }}>{t.score}</div>
         </div>
         {isE && <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #e8e6f0", fontSize: 13, lineHeight: 1.6, color: "#555570" }}>{th.desc}</div>}
       </div>
@@ -1994,25 +1993,6 @@ function ResultsScreen(props) {
             <span style={{ fontSize: 18 }}>{"\u2B07"}</span> Full 34 Report
           </button>
         </div>
-      </div>
-
-      {/* ---- Quick Glance: Top 5 list ---- */}
-      <div style={{ marginBottom: 24 }}>
-        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#6D28D9", marginBottom: 12, fontWeight: 600, textAlign: "center" }}>Your Top 5 at a Glance</div>
-        {top5.map(function(t, i) {
-          var th = TH[t.id];
-          var dc = DOMAINS[th.d].color;
-          return (
-            <div key={t.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", marginBottom: 6, borderRadius: 10, background: "#f8f7fc", border: "1px solid #e8e6f0" }}>
-              <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, background: dc, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 700 }}>{i + 1}</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e" }}>{th.n}</div>
-                <div style={{ fontSize: 11, color: dc, fontWeight: 500 }}>{DOMAINS[th.d].name}</div>
-              </div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: dc }}>{t.score}</div>
-            </div>
-          );
-        })}
       </div>
 
       {/* ---- Explore Section ---- */}
