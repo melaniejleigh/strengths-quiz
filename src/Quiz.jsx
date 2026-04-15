@@ -350,22 +350,38 @@ function calcScores(answers) {
     q[4].forEach(function(t) { if (!seen[t]) { qCounts[t] = (qCounts[t]||0) + 1; seen[t] = true; } });
   });
 
-  /* Normalize: divide raw score by question count, then scale to 0-100 centered at 50 */
+  /* Normalize: divide raw score by question count */
   var normed = {};
   ALL_T.forEach(function(id) {
     var count = qCounts[id] || 1;
     normed[id] = bins[id] / count; // raw average per question
   });
 
-  /* Find min and max of normalized scores to scale to 0-100 */
-  var vals = ALL_T.map(function(id) { return normed[id]; });
+  /* Apply rarity weighting using Gallup prevalence data (REVEAL_DATA.pct).
+     Formula: intensity * sqrt(median_pct / theme_pct)
+     This gives rare themes (low pct) a moderate boost (~1.5-2x)
+     and common themes (high pct) a moderate reduction (~0.6x),
+     without letting rarity completely dominate. */
+  var pcts = ALL_T.map(function(id) { return (REVEAL_DATA[id] && REVEAL_DATA[id].pct) || 11; });
+  var sortedPcts = pcts.slice().sort(function(a, b) { return a - b; });
+  var medianPct = sortedPcts[Math.floor(sortedPcts.length / 2)];
+
+  var weighted = {};
+  ALL_T.forEach(function(id) {
+    var pct = (REVEAL_DATA[id] && REVEAL_DATA[id].pct) || medianPct;
+    var rarityBoost = Math.sqrt(medianPct / pct);
+    weighted[id] = normed[id] * rarityBoost;
+  });
+
+  /* Find min and max of weighted scores to scale to 0-100 */
+  var vals = ALL_T.map(function(id) { return weighted[id]; });
   var minV = Math.min.apply(null, vals);
   var maxV = Math.max.apply(null, vals);
   var range = maxV - minV || 1;
 
-  /* Scale to 0-100 centered at 50 */
+  /* Scale to 0-100 */
   return ALL_T.map(function(id) {
-    var scaled = ((normed[id] - minV) / range) * 100;
+    var scaled = ((weighted[id] - minV) / range) * 100;
     return { id: id, score: Math.round(scaled * 10) / 10 };
   }).sort(function(a, b) { return b.score - a.score; });
 }
