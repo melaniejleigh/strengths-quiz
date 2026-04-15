@@ -1189,7 +1189,7 @@ function printReport(type, ranked, name, insights) {
   // Fixed 8.5x11 letter page (612x792pt) - width set for html2pdf at 8.5in
   var css = [
     "*{box-sizing:border-box;margin:0;padding:0}",
-    "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:9pt;line-height:1.5;width:8.5in}",
+    "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:11pt;line-height:1.5;width:8.5in}",
     ".page{padding:36px 48px;position:relative}",
     ".page-break{page-break-before:always;break-before:page}",
     // Header
@@ -1209,7 +1209,7 @@ function printReport(type, ranked, name, insights) {
     ".cover-tdomain{font-size:7pt;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:0.5}",
     // Section styles
     ".sec-label{font-size:7pt;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px}",
-    ".sec-body{font-size:9pt;color:#444;line-height:1.55}",
+    ".sec-body{font-size:11pt;color:#444;line-height:1.6}",
     ".callout{padding:16px 20px;border-radius:10px;margin:10px 0;line-height:1.55}",
     ".quote-box{text-align:center;padding:20px;border-radius:10px;background:linear-gradient(135deg,#f5f0ff,#eff6ff);border:1px solid #e8e6f0;margin:14px 0}",
     ".quote-text{font-size:12pt;font-weight:700;color:#1a1a2e;line-height:1.4}",
@@ -1222,48 +1222,48 @@ function printReport(type, ranked, name, insights) {
     ".theme-thrive{font-size:9.5pt;color:#333;line-height:1.55;font-style:italic;margin-bottom:10px}",
     ".theme-section{margin-top:12px}",
     ".theme-section h3{font-size:9.5pt;font-weight:700;color:#1a1a2e;margin-bottom:4px}",
-    ".theme-section p{font-size:8.5pt;color:#555;line-height:1.55;margin-bottom:5px}",
+    ".theme-section p{font-size:10.5pt;color:#555;line-height:1.55;margin-bottom:5px}",
     // Blind spots
-    ".bs-box{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #999;margin:5px 0;font-size:8.5pt;color:#555;line-height:1.5}",
+    ".bs-box{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #999;margin:5px 0;font-size:10.5pt;color:#555;line-height:1.5}",
     // Action items
     ".ai-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0eff5}",
     ".ai-num{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7pt;font-weight:800;color:#fff;flex-shrink:0;margin-top:2px}",
-    ".ai-text{font-size:8.5pt;color:#444;line-height:1.5}",
+    ".ai-text{font-size:10.5pt;color:#444;line-height:1.55}",
     // Blend cards
     ".blend-card{margin-bottom:8px;border-radius:8px;overflow:hidden;border:1px solid #e8e6f0}",
     ".blend-hdr{padding:7px 12px;display:flex;align-items:center;gap:6px}",
-    ".blend-title{font-weight:700;font-size:9pt;color:#fff}",
-    ".blend-plus{font-size:10pt;font-weight:300;color:rgba(255,255,255,0.5)}",
-    ".blend-body{padding:8px 12px;font-size:8.5pt;line-height:1.5;color:#444}",
+    ".blend-title{font-weight:700;font-size:11pt;color:#fff}",
+    ".blend-plus{font-size:11pt;font-weight:300;color:rgba(255,255,255,0.5)}",
+    ".blend-body{padding:8px 12px;font-size:10.5pt;line-height:1.55;color:#444}",
     ".blend-tag{font-weight:700;color:#1a1a2e;margin-bottom:2px}",
     // Full 34 ranking overview
     ".rank-row{display:flex;align-items:center;gap:8px;padding:3px 2px;border-bottom:1px solid #f5f4fa}",
-    ".rank-num{width:22px;font-weight:700;font-size:9pt;text-align:right;color:#ccc}",
+    ".rank-num{width:22px;font-weight:700;font-size:10pt;text-align:right;color:#ccc}",
     ".rank-bar{height:4px;border-radius:3px;min-width:3px}",
-    ".rank-name{font-weight:600;font-size:9pt;flex:1}",
+    ".rank-name{font-weight:600;font-size:10pt;flex:1}",
     ".rank-domain{font-size:7pt;font-weight:600;letter-spacing:1px;text-transform:uppercase}",
-    ".band-label{font-size:10pt;font-weight:800;margin:14px 0 2px}",
-    ".band-desc{font-size:8pt;color:#999;margin-bottom:6px}",
+    ".band-label{font-size:12pt;font-weight:800;margin:14px 0 2px}",
+    ".band-desc{font-size:10pt;color:#999;margin-bottom:6px}",
     // Full 34 theme entries - compact flowing layout
     ".f34-theme{page-break-inside:avoid;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eeecf5}",
     ".f34-hdr{display:flex;align-items:center;gap:10px;margin-bottom:4px}",
     ".f34-rank{font-size:16pt;font-weight:900;width:28px;text-align:right}",
     ".f34-name{font-size:12pt;font-weight:800}",
     ".f34-domain{font-size:6.5pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}",
-    ".f34-copy{font-size:8.5pt;color:#444;line-height:1.5;margin-bottom:4px}",
+    ".f34-copy{font-size:10.5pt;color:#444;line-height:1.55;margin-bottom:4px}",
     ".f34-label{font-size:6.5pt;font-weight:700;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 3px;padding-top:5px;border-top:1px solid #f0eff5}",
     // Section dividers (inline, not full-page)
     ".sec-divider{page-break-before:always;padding:24px 0 12px;margin-bottom:8px;border-bottom:2px solid #e8e6f0}",
     ".sec-divider-title{font-size:14pt;font-weight:800;color:#1a1a2e;margin-bottom:3px}",
-    ".sec-divider-sub{font-size:7.5pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}",
-    ".sec-divider-desc{font-size:8.5pt;color:#666;line-height:1.5}",
+    ".sec-divider-sub{font-size:9pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}",
+    ".sec-divider-desc{font-size:10.5pt;color:#666;line-height:1.55}",
     // Domain balance
     ".domain-block{padding:10px 14px;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;gap:12px}",
     ".domain-bar{height:6px;border-radius:3px;flex:1}",
-    ".domain-name{font-size:9pt;font-weight:700;width:130px}",
-    ".domain-count{font-size:9pt;font-weight:700;width:30px;text-align:right}",
+    ".domain-name{font-size:11pt;font-weight:700;width:130px}",
+    ".domain-count{font-size:11pt;font-weight:700;width:30px;text-align:right}",
     // Summary / pill
-    ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:9pt;margin:0 3px 6px}"
+    ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:10pt;margin:0 3px 6px}"
   ].join("\n");
 
   var html = "";
@@ -1289,7 +1289,7 @@ function printReport(type, ranked, name, insights) {
     html += "<p class='sec-body' style='margin-bottom:16px'>This report focuses on your five most defining strengths. These are not personality labels or fixed categories. They are patterns of thinking, feeling, and behaving that show up most naturally and consistently in how you work, lead, and contribute.</p>";
     html += "<p class='sec-body' style='margin-bottom:16px'>The goal is not to put you in a box. It is to help you see more clearly what you already do well, where those strengths help the most, where they can create friction, and how to apply them with more intention.</p>";
     html += "<p class='sec-body' style='margin-bottom:16px'>The best development work usually comes from making your strongest patterns healthier, more mature, and better aimed&mdash;not from trying to fix everything that is less natural. Where you are less strong, the better solution is often partnership, structure, or collaboration rather than forcing a personality rewrite.</p>";
-    html += "<p class='sec-body' style='color:#999;font-size:9pt'>Read slowly. Mark what resonates. Bring it to a conversation with someone who knows your work.</p>";
+    html += "<p class='sec-body' style='color:#999'>Read slowly. Mark what resonates. Bring it to a conversation with someone who knows your work.</p>";
     html += "</div>";
 
     // --- 3. TOP 5 OVERVIEW SPREAD ---
@@ -1302,12 +1302,12 @@ function printReport(type, ranked, name, insights) {
       html += "<div style='font-size:32pt;font-weight:900;color:"+col+";width:48px;text-align:right;line-height:1'>"+(i+1)+"</div>";
       html += "<div style='flex:1'>";
       html += "<div style='font-size:16pt;font-weight:800;color:#1a1a2e'>"+th.n+"</div>";
-      html += "<div style='font-size:8pt;font-weight:700;color:"+col+";letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px'>"+dn(t.id)+"</div>";
+      html += "<div style='font-size:10pt;font-weight:700;color:"+col+";letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px'>"+dn(t.id)+"</div>";
       html += "<div style='font-size:9.5pt;color:#666;line-height:1.5'>"+th.thrive+"</div>";
       html += "</div>";
       if (rd.pct) {
         var rarity = rd.pct<=8?"Rare":rd.pct<=15?"Uncommon":"Common";
-        html += "<div style='text-align:right;flex-shrink:0'><div style='font-size:9pt;font-weight:700;color:"+col+"'>"+rd.pct+"%</div><div style='font-size:7.5pt;color:#aaa'>have in top 5</div></div>";
+        html += "<div style='text-align:right;flex-shrink:0'><div style='font-size:11pt;font-weight:700;color:"+col+"'>"+rd.pct+"%</div><div style='font-size:9pt;color:#aaa'>have in top 5</div></div>";
       }
       html += "</div>";
     });
@@ -1321,7 +1321,7 @@ function printReport(type, ranked, name, insights) {
       html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>Your strengths do not operate independently. Here is how they combine into a distinct working style.</p>";
       if (insights.summary) {
         html += "<div class='quote-box'>";
-        html += "<div style='font-size:7.5pt;font-weight:700;color:#6D28D9;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px'>Your Operating Style</div>";
+        html += "<div style='font-size:9pt;font-weight:700;color:#6D28D9;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px'>Your Operating Style</div>";
         html += "<div class='quote-text'>&ldquo;"+insights.summary+"&rdquo;</div>";
         html += "</div>";
       }
@@ -1456,7 +1456,7 @@ function printReport(type, ranked, name, insights) {
       html += "<div class='domain-count' style='color:"+col+"'>"+count+"</div>";
       html += "</div>";
       if (count > 0) {
-        html += "<p style='font-size:9pt;color:#888;margin:-4px 0 12px 156px;line-height:1.5'>"+domDescs[d]+"</p>";
+        html += "<p style='font-size:10.5pt;color:#888;margin:-4px 0 12px 156px;line-height:1.5'>"+domDescs[d]+"</p>";
       }
     });
     html += "</div>";
@@ -1522,9 +1522,9 @@ function printReport(type, ranked, name, insights) {
     bands.forEach(function(band){
       html += "<div style='margin-top:16px;margin-bottom:4px;display:flex;align-items:baseline;gap:10px'>";
       html += "<span style='font-size:11pt;font-weight:800;color:"+band.color+"'>"+band.name+"</span>";
-      html += "<span style='font-size:8pt;font-weight:600;color:"+band.color+";letter-spacing:1.5px;text-transform:uppercase;opacity:0.7'>"+band.sub+"</span>";
+      html += "<span style='font-size:10pt;font-weight:600;color:"+band.color+";letter-spacing:1.5px;text-transform:uppercase;opacity:0.7'>"+band.sub+"</span>";
       html += "</div>";
-      html += "<div style='font-size:8.5pt;color:#999;margin-bottom:6px'>"+band.desc+"</div>";
+      html += "<div style='font-size:10pt;color:#999;margin-bottom:6px'>"+band.desc+"</div>";
       for(var i=band.s;i<Math.min(band.e,ranked.length);i++){
         var t=ranked[i]; var th=TH[t.id]; var col=dc(t.id); var isT5=i<5;
         var barW = Math.max(3, Math.round((t.score/maxScore)*160));
@@ -1541,7 +1541,7 @@ function printReport(type, ranked, name, insights) {
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Big Picture</span></div>";
     html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:4px'>What Stands Out in Your Profile</h2>";
-    html += "<p style='font-size:8.5pt;color:#999;margin-bottom:14px'>A synthesis of your full 34 ranking.</p>";
+    html += "<p style='font-size:10.5pt;color:#999;margin-bottom:14px'>A synthesis of your full 34 ranking.</p>";
 
     // AI interpretation
     if (insights && insights.full34Interpretation) {
@@ -1567,9 +1567,9 @@ function printReport(type, ranked, name, insights) {
       var inTop = domainTop10[did];
       var barPct = Math.round((total/34)*100);
       html += "<div style='display:flex;align-items:center;gap:10px;margin-bottom:5px'>";
-      html += "<div style='width:120px;font-size:8.5pt;font-weight:600;color:#333'>"+dname+"</div>";
+      html += "<div style='width:120px;font-size:10.5pt;font-weight:600;color:#333'>"+dname+"</div>";
       html += "<div style='flex:1;height:6px;background:#f0eff5;border-radius:3px;overflow:hidden'><div style='height:100%;width:"+barPct+"%;background:"+dcol+";border-radius:3px'></div></div>";
-      html += "<div style='width:80px;text-align:right;font-size:8pt;color:#888'>"+total+" total";
+      html += "<div style='width:80px;text-align:right;font-size:10pt;color:#888'>"+total+" total";
       if(inTop>0) html += " <span style='color:"+dcol+";font-weight:600'>("+inTop+" in top 10)</span>";
       html += "</div></div>";
     });
