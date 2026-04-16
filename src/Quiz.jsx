@@ -2261,51 +2261,38 @@ export default function Quiz() {
         if (s.rowId) setRowId(s.rowId);
         if (s.pin) setUserPin(s.pin);
 
-        /* Filter out any answers with invalid question indices (from old adaptive phase) */
-        var validAnswers = s.answers.filter(function(a) { return a.qi >= 0 && a.qi < Q.length; });
-        if (validAnswers.length !== s.answers.length) {
-          s.answers = validAnswers;
-          setAnswers(validAnswers);
-        }
+        /* Filter out any answers with invalid question indices */
+        var validAnswers = s.answers.filter(function(a) { return a && typeof a.qi === "number" && a.qi >= 0 && a.qi < Q.length && typeof a.val === "number"; });
+        setAnswers(validAnswers);
 
-        /* Score answers if we have enough but no ranked yet */
-        var sc = s.ranked;
-        if (!sc && validAnswers.length >= Q.length) {
-          try { sc = calcScores(validAnswers); } catch(e) { console.error("Scoring failed:", e); sc = null; }
-        }
+        /* If enough answers to score, do it now */
+        if (validAnswers.length >= Q.length || s.completed) {
+          var sc;
+          try { sc = calcScores(validAnswers); } catch(e) { sc = s.ranked; }
+          if (sc) {
+            setRanked(sc);
+            /* Sync to Supabase in background */
+            var rawAns = validAnswers.map(function(a) { return { qi: a.qi, val: a.val }; });
+            var doSubmit = function(rid) {
+              submitToSupabase(rid, email, name, sc, rawAns, s.pin || "0000");
+              saveData(email, { answers: validAnswers, ranked: sc, completed: true, name: s.name || name, rowId: rid, pin: s.pin, insights: s.insights });
+            };
+            if (!s.rowId) {
+              createQuizRow(email, name).then(function(newId) { setRowId(newId); doSubmit(newId); });
+            } else { doSubmit(s.rowId); }
 
-        /* If we have scores (completed or just scored), handle results */
-        if (sc) {
-          setRanked(sc);
-
-          /* Ensure Supabase has this data */
-          if (!s.rowId && s.pin) {
-            var rawAns = s.answers.map(function(a) { return { qi: a.qi, val: a.val }; });
-            createQuizRow(email, name).then(function(newId) {
-              setRowId(newId);
-              submitToSupabase(newId, email, name, sc, rawAns, s.pin);
-              saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: newId, pin: s.pin, insights: s.insights });
-            });
-          }
-
-          /* If no PIN yet, prompt for one */
-          if (!s.pin) {
-            saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId });
-            setPendingAction("complete");
-            setScreen("create-pin");
-            return;
-          }
-
-          /* Show results */
-          if (s.insights) { setInsights(s.insights); setScreen("results"); }
-          else {
+            /* If no PIN, ask for one */
+            if (!s.pin) { setPendingAction("complete"); setScreen("create-pin"); return; }
+            /* If has insights already, go straight to results */
+            if (s.insights) { setInsights(s.insights); setScreen("results"); return; }
+            /* Otherwise generate insights */
             setScreen("generating");
             generateInsights(sc, s.name || name).then(function(ins) {
-              if (ins) { setInsights(ins); if (email) { saveInsightsToSupabase(email, ins); saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId, pin: s.pin, insights: ins }); } }
+              if (ins) { setInsights(ins); if (email) { saveInsightsToSupabase(email, ins); } }
               setScreen("reveal");
             });
+            return;
           }
-          return;
         }
 
         /* Still in progress — resume quiz */
