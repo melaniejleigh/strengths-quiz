@@ -979,7 +979,7 @@ function Welcome(props) {
   }
 
   function handlePinSubmit() {
-    if (pinInput.length !== 4) { setPinError("PIN must be 4 digits"); return; }
+    if (pinInput.length < 4 || pinInput.length > 6) { setPinError("PIN must be 4-6 digits"); return; }
     setPinError("");
     setChecking(true);
     verifyPinAndGetResults(email, pinInput).then(function(result) {
@@ -1038,11 +1038,11 @@ function Welcome(props) {
           {checking && <p style={{ fontSize: 12, color: "#9999aa" }}>Checking...</p>}
           {dbRecord && !foundSaved && !checking && (
             <div style={{ marginBottom: 16 }}>
-              <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{dbRecord.name ? ", " + dbRecord.name : ""}! Enter your 4-digit PIN to view your results.</p>
+              <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{dbRecord.name ? ", " + dbRecord.name : ""}! Enter your PIN to view your results.</p>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                <input type="text" inputMode="numeric" maxLength={4} placeholder="4-digit PIN" value={pinInput} onChange={function(e) { setPinInput(e.target.value.replace(/\D/g, "").slice(0, 4)); setPinError(""); }} style={{ ...inputStyle, maxWidth: 160, letterSpacing: 8, fontSize: 20, textAlign: "center" }} />
+                <input type="tel" inputMode="numeric" maxLength={6} placeholder="4-6 digit PIN" value={pinInput} onChange={function(e) { setPinInput(e.target.value.replace(/\D/g, "").slice(0, 6)); setPinError(""); }} style={{ ...inputStyle, maxWidth: 180, letterSpacing: 8, fontSize: 20, textAlign: "center" }} />
                 {pinError && <p style={{ fontSize: 12, color: "#DC2626", margin: "0" }}>{pinError}</p>}
-                <button onClick={handlePinSubmit} disabled={pinInput.length !== 4} style={{ padding: "12px 36px", borderRadius: 8, border: "none", cursor: pinInput.length === 4 ? "pointer" : "default", background: pinInput.length === 4 ? "#6D28D9" : "#ccc", color: "#fff", fontSize: 15, fontWeight: 600 }}>Verify PIN</button>
+                <button onClick={handlePinSubmit} disabled={pinInput.length < 4} style={{ padding: "12px 36px", borderRadius: 8, border: "none", cursor: pinInput.length >= 4 ? "pointer" : "default", background: pinInput.length >= 4 ? "#6D28D9" : "#ccc", color: "#fff", fontSize: 15, fontWeight: 600 }}>Verify PIN</button>
                 <button onClick={function() { setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh Instead</button>
               </div>
             </div>
@@ -1055,10 +1055,10 @@ function Welcome(props) {
                 <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! You have {foundSaved.answers.length} answers saved.</p>
               )}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                {foundSaved.fromDatabase && foundSaved.completed ? (
-                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name, foundSaved.insights); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
+                {(foundSaved.completed && foundSaved.ranked) ? (
+                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
                 ) : (
-                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Resume</button>
+                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>{foundSaved.answers && foundSaved.answers.length >= 200 ? "View My Results" : "Resume"}</button>
                 )}
                 <button onClick={function() { setFoundSaved(null); setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
               </div>
