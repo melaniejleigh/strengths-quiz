@@ -2260,43 +2260,42 @@ export default function Quiz() {
         setAnswers(s.answers);
         if (s.rowId) setRowId(s.rowId);
         if (s.pin) setUserPin(s.pin);
-        if (s.completed && s.ranked) {
-          setRanked(s.ranked);
-          if (s.insights) { setInsights(s.insights); setScreen("results"); }
-          else { goToReveal(s.ranked, s.name || name, true); }
-          return;
+
+        /* Score answers if we have enough but no ranked yet */
+        var sc = s.ranked;
+        if (!sc && s.answers.length >= Q.length) {
+          sc = calcScores(s.answers);
         }
-        /* If all questions answered but not marked complete, score and submit now */
-        if (s.answers.length >= Q.length) {
-          var sc = calcScores(s.answers);
+
+        /* If we have scores (completed or just scored), handle results */
+        if (sc) {
           setRanked(sc);
-          var rawAns = s.answers.map(function(a) { return { qi: a.qi, val: a.val }; });
-          if (s.pin) {
-            /* Already has PIN — create row if needed and submit directly */
-            setUserPin(s.pin);
-            var submitAndReveal = function(rid) {
-              submitToSupabase(rid, email, name, sc, rawAns, s.pin).then(function(ok) {
-                if (!ok) { alert("Failed to save results. Your results are saved locally."); }
-              });
-              saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: rid, pin: s.pin });
-            };
-            if (!s.rowId) {
-              createQuizRow(email, name).then(function(newId) {
-                setRowId(newId);
-                submitAndReveal(newId);
-              });
-            } else {
-              submitAndReveal(s.rowId);
-            }
-            goToReveal(sc, s.name || name, true);
-          } else {
-            /* No PIN yet — prompt for one */
+
+          /* Ensure Supabase has this data */
+          if (!s.rowId && s.pin) {
+            var rawAns = s.answers.map(function(a) { return { qi: a.qi, val: a.val }; });
+            createQuizRow(email, name).then(function(newId) {
+              setRowId(newId);
+              submitToSupabase(newId, email, name, sc, rawAns, s.pin);
+              saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: newId, pin: s.pin, insights: s.insights });
+            });
+          }
+
+          /* If no PIN yet, prompt for one */
+          if (!s.pin) {
             saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId });
             setPendingAction("complete");
             setScreen("create-pin");
+            return;
           }
+
+          /* Show results */
+          if (s.insights) { setInsights(s.insights); setScreen("results"); }
+          else { goToReveal(sc, s.name || name, true); }
           return;
         }
+
+        /* Still in progress — resume quiz */
         setQueue(s.queue || coreQ);
         setQi(s.qi || 0);
         setPhase(s.phase || "core");
