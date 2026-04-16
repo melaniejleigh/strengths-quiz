@@ -358,7 +358,7 @@ function calcScores(answers) {
       }
       if (ans !== null) {
         var signed;
-        if (side === A) {
+        if (side === "A") {
           signed = ans === 1 ? 2 : ans === 2 ? 1 : ans === 3 ? 0 : ans === 4 ? -1 : -2;
         } else {
           signed = ans === 5 ? 2 : ans === 4 ? 1 : ans === 3 ? 0 : ans === 2 ? -1 : -2;
