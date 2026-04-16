@@ -2266,6 +2266,15 @@ export default function Quiz() {
           else { goToReveal(s.ranked, s.name || name, true); }
           return;
         }
+        /* If all questions answered but not marked complete, score now */
+        if (s.answers.length >= Q.length) {
+          var sc = calcScores(s.answers);
+          setRanked(sc);
+          saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId, pin: s.pin });
+          setPendingAction("complete");
+          setScreen("create-pin");
+          return;
+        }
         setQueue(s.queue || coreQ);
         setQi(s.qi || 0);
         setPhase(s.phase || "core");
