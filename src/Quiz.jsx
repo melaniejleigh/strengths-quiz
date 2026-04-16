@@ -329,7 +329,7 @@ function calcScores(answers) {
     if (chosenSec) bins[chosenSec] += mag * quality * 0.5;
 
     /* Negative signals */
-    var negKey = qid + (val <= 2 ? A : B);
+    var negKey = qid + (val <= 2 ? "A" : "B");
     var neg = NEGATIVE_SIGNALS[negKey];
     if (neg) {
       neg.forEach(function(t) { bins[t] -= mag * 0.3; });
@@ -419,67 +419,37 @@ function loadData(email) { try { var r = localStorage.getItem(getKey(email)); re
 function clearData(email) { try { localStorage.removeItem(getKey(email)); } catch(e) { /* */ } }
 
 /* ---- SUPABASE LOOKUP ---- */
-async function checkSupabaseExists(email) {
+/* ---- SUPABASE: Create row on quiz start ---- */
+async function createQuizRow(email, name) {
   if (!supabase) return null;
   try {
-    var { data, error } = await supabase
-      .from("quiz_results")
-      .select("name, created_at")
-      .eq("email", email.toLowerCase().trim())
-      .order("created_at", { ascending: false })
-      .limit(1);
+    var { data, error } = await supabase.from("quiz_results").insert({
+      email: email.toLowerCase().trim(),
+      name: name.trim(),
+    }).select("id");
     if (error || !data || data.length === 0) return null;
-    return { name: data[0].name, hasResults: true };
-  } catch (e) { return null; }
+    return data[0].id;
+  } catch (e) { console.error("Failed to create quiz row:", e); return null; }
 }
 
-async function verifyPinAndGetResults(email, pin) {
-  if (!supabase) return null;
+/* ---- SUPABASE: Save progress (answers + PIN) on Save & Exit ---- */
+async function saveProgressToSupabase(rowId, answers, pin, queue, qi, phase) {
+  if (!supabase || !rowId) return false;
   try {
-    var { data, error } = await supabase
-      .from("quiz_results")
-      .select("name, top_5, rankings, domain_scores, created_at, pin, insights")
-      .eq("email", email.toLowerCase().trim())
-      .order("created_at", { ascending: false })
-      .limit(1);
-    if (error || !data || data.length === 0) return { error: "No results found" };
-    var row = data[0];
-    if (row.pin !== pin) return { error: "Incorrect PIN" };
-    var ranked = row.rankings.map(function(r) {
-      return { id: r.id, score: r.score };
-    });
-    return { name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at, insights: row.insights || null };
-  } catch (e) { return { error: "Lookup failed" }; }
+    var rawAnswers = answers.map(function(a) { return { qi: a.qi, val: a.val }; });
+    var updateData = { raw_answers: rawAnswers };
+    if (pin) updateData.pin = pin;
+    /* Store queue state in raw_answers alongside answer data */
+    updateData.raw_answers = { answers: rawAnswers, queue: queue, qi: qi, phase: phase };
+    await supabase.from("quiz_results").update(updateData).eq("id", rowId);
+    return true;
+  } catch (e) { console.error("Failed to save progress:", e); return false; }
 }
 
-async function saveInsightsToSupabase(email, insights) {
-  if (!supabase || !email || !insights) return;
+/* ---- SUPABASE: Submit final results ---- */
+async function submitToSupabase(rowId, email, name, ranked, rawAnswers, pin) {
+  if (!supabase) return false;
   try {
-    // First get the most recent row's id, then update it
-    var { data } = await supabase
-      .from("quiz_results")
-      .select("id")
-      .eq("email", email.toLowerCase().trim())
-      .order("created_at", { ascending: false })
-      .limit(1);
-    if (data && data.length > 0) {
-      await supabase
-        .from("quiz_results")
-        .update({ insights: insights })
-        .eq("id", data[0].id);
-    }
-  } catch (e) { console.error("Failed to save insights:", e); }
-}
-
-function generatePin() {
-  return String(Math.floor(1000 + Math.random() * 9000));
-}
-
-/* ---- SUPABASE SUBMISSION ---- */
-async function submitToSupabase(email, name, ranked, rawAnswers) {
-  if (!supabase) return null;
-  try {
-    var pin = generatePin();
     var top5 = ranked.slice(0, 5).map(function(t) { return t.id; });
     var domainScores = {};
     DO.forEach(function(d) {
@@ -489,17 +459,81 @@ async function submitToSupabase(email, name, ranked, rawAnswers) {
         avg: Math.round(themes.reduce(function(s, t) { return s + t.score; }, 0) / themes.length),
       };
     });
-    await supabase.from("quiz_results").insert({
-      email: email.toLowerCase().trim(),
-      name: name.trim(),
+    var updateData = {
       top_5: top5,
       rankings: ranked.map(function(t) { return { id: t.id, score: t.score }; }),
       domain_scores: domainScores,
-      pin: pin,
       raw_answers: rawAnswers || null,
-    });
-    return pin;
-  } catch (e) { console.error("Failed to submit results:", e); return null; }
+    };
+    if (pin) updateData.pin = pin;
+    if (rowId) {
+      await supabase.from("quiz_results").update(updateData).eq("id", rowId);
+    } else {
+      updateData.email = email.toLowerCase().trim();
+      updateData.name = name.trim();
+      updateData.pin = pin;
+      await supabase.from("quiz_results").insert(updateData);
+    }
+    return true;
+  } catch (e) { console.error("Failed to submit results:", e); return false; }
+}
+
+/* ---- SUPABASE: Check for existing quiz ---- */
+async function checkSupabaseExists(email) {
+  if (!supabase) return null;
+  try {
+    var { data, error } = await supabase
+      .from("quiz_results")
+      .select("id, name, created_at, rankings, raw_answers, pin")
+      .eq("email", email.toLowerCase().trim())
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error || !data || data.length === 0) return null;
+    var row = data[0];
+    return { id: row.id, name: row.name, hasResults: !!row.rankings, hasProgress: !!row.raw_answers, hasPin: !!row.pin };
+  } catch (e) { return null; }
+}
+
+/* ---- SUPABASE: Verify PIN and get results or progress ---- */
+async function verifyPinAndGetResults(email, pin) {
+  if (!supabase) return null;
+  try {
+    var { data, error } = await supabase
+      .from("quiz_results")
+      .select("id, name, top_5, rankings, domain_scores, created_at, pin, insights, raw_answers")
+      .eq("email", email.toLowerCase().trim())
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error || !data || data.length === 0) return { error: "No results found" };
+    var row = data[0];
+    if (row.pin !== pin) return { error: "Incorrect PIN" };
+    /* If completed, return ranked results */
+    if (row.rankings) {
+      var ranked = row.rankings.map(function(r) { return { id: r.id, score: r.score }; });
+      return { id: row.id, name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at, insights: row.insights || null };
+    }
+    /* If in progress, return saved progress */
+    if (row.raw_answers && row.raw_answers.answers) {
+      return { id: row.id, name: row.name, progress: row.raw_answers, fromDatabase: true };
+    }
+    return { id: row.id, name: row.name, fromDatabase: true };
+  } catch (e) { return { error: "Lookup failed" }; }
+}
+
+/* ---- SUPABASE: Save insights ---- */
+async function saveInsightsToSupabase(email, insights) {
+  if (!supabase || !email || !insights) return;
+  try {
+    var { data } = await supabase
+      .from("quiz_results")
+      .select("id")
+      .eq("email", email.toLowerCase().trim())
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (data && data.length > 0) {
+      await supabase.from("quiz_results").update({ insights: insights }).eq("id", data[0].id);
+    }
+  } catch (e) { console.error("Failed to save insights:", e); }
 }
 
 /* ---- SHUFFLE ---- */
@@ -2171,6 +2205,10 @@ export default function Quiz() {
   const [userName, setUserName] = useState("");
   const [insights, setInsights] = useState(null);
   const [userPin, setUserPin] = useState(null);
+  const [rowId, setRowId] = useState(null);
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
+  const [pendingAction, setPendingAction] = useState(null); /* "exit" or "complete" */
 
   var coreQ = useMemo(function() {
     return shuffle(Array.from({ length: Q.length }, function(_, i) { return i; }));
@@ -2220,6 +2258,8 @@ export default function Quiz() {
       var s = loadData(email);
       if (s && s.answers && s.answers.length > 0) {
         setAnswers(s.answers);
+        if (s.rowId) setRowId(s.rowId);
+        if (s.pin) setUserPin(s.pin);
         if (s.completed && s.ranked) {
           setRanked(s.ranked);
           if (s.insights) { setInsights(s.insights); setScreen("results"); }
@@ -2233,6 +2273,13 @@ export default function Quiz() {
       } else { setQueue(coreQ); setScreen("quiz"); }
     } else {
       setAnswers([]); setQueue(coreQ); setQi(0); setPhase("core"); clearData(email); setScreen("quiz");
+      /* Create Supabase row on new quiz start */
+      createQuizRow(email, name).then(function(id) {
+        if (id) {
+          setRowId(id);
+          saveData(email, { answers: [], queue: coreQ, qi: 0, phase: "core", name: name, rowId: id });
+        }
+      });
     }
   }
 
@@ -2246,12 +2293,58 @@ export default function Quiz() {
       var nb = getNextBatch(na, sc);
       if (nb.length === 0 || na.length >= 200) {
         setRanked(sc);
-        saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName });
-        submitToSupabase(userEmail, userName, sc, na).then(function(pin) { if (pin) setUserPin(pin); });
-        goToReveal(sc, userName);
+        saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName, rowId: rowId });
+        /* If user already has a PIN (from Save & Exit), submit directly */
+        if (userPin) {
+          submitToSupabase(rowId, userEmail, userName, sc, na, userPin);
+          goToReveal(sc, userName);
+        } else {
+          /* Need to collect PIN before submitting */
+          setPendingAction("complete");
+          setScreen("create-pin");
+        }
       } else {
         setPhase("adaptive"); var nq = queue.concat(nb); setQueue(nq); setQi(queue.length);
       }
+    }
+  }
+
+  function handleSaveAndExit() {
+    if (userPin) {
+      /* Already have PIN, save progress directly */
+      saveProgressToSupabase(rowId, answers, userPin, queue, qi, phase);
+      saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: rowId, pin: userPin });
+      setScreen("welcome");
+    } else {
+      setPendingAction("exit");
+      setScreen("create-pin");
+    }
+  }
+
+  function handlePinSubmit() {
+    var p = pinInput.trim();
+    if (!/^\d{4,6}$/.test(p)) {
+      setPinError("Please enter 4-6 digits");
+      return;
+    }
+    setPinError("");
+    setUserPin(p);
+
+    if (pendingAction === "exit") {
+      saveProgressToSupabase(rowId, answers, p, queue, qi, phase);
+      saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: rowId, pin: p });
+      setPinInput("");
+      setPendingAction(null);
+      setScreen("welcome");
+    } else if (pendingAction === "complete") {
+      var sc = ranked || calcScores(answers);
+      setRanked(sc);
+      var rawAns = answers.map(function(a) { return a.val; });
+      submitToSupabase(rowId, userEmail, userName, sc, rawAns, p);
+      saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: userName, rowId: rowId, pin: p });
+      setPinInput("");
+      setPendingAction(null);
+      goToReveal(sc, userName);
     }
   }
 
@@ -2271,7 +2364,36 @@ export default function Quiz() {
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); goToReveal(r, n, true, ins); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n, true); }} />}
-      {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={function() { setScreen("welcome"); }} />}
+      {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={handleSaveAndExit} />}
+      {screen === "create-pin" && (
+        <div style={{ maxWidth: 400, margin: "0 auto", padding: "60px 20px", textAlign: "center" }}>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#1a1a2e", marginBottom: 8 }}>Create Your PIN</div>
+          <div style={{ fontSize: 14, color: "#555570", marginBottom: 24, lineHeight: 1.5 }}>
+            {pendingAction === "exit"
+              ? "Create a 4-6 digit PIN to save your progress. You'll need this PIN to resume later."
+              : "Create a 4-6 digit PIN to secure your results. You'll need this PIN to view them again."}
+          </div>
+          <input
+            type="tel"
+            inputMode="numeric"
+            maxLength={6}
+            placeholder="Enter 4-6 digits"
+            value={pinInput}
+            onChange={function(e) { setPinInput(e.target.value.replace(/\D/g, "").slice(0, 6)); setPinError(""); }}
+            onKeyDown={function(e) { if (e.key === "Enter") handlePinSubmit(); }}
+            style={{ fontSize: 28, fontWeight: 700, textAlign: "center", letterSpacing: 8, padding: "14px 20px", border: "2px solid " + (pinError ? "#DC2626" : "#e8e6f0"), borderRadius: 12, outline: "none", width: "100%", boxSizing: "border-box", color: "#1a1a2e" }}
+          />
+          {pinError && <div style={{ fontSize: 13, color: "#DC2626", marginTop: 8 }}>{pinError}</div>}
+          <button
+            onClick={handlePinSubmit}
+            style={{ marginTop: 20, width: "100%", padding: "14px 0", fontSize: 16, fontWeight: 600, color: "#fff", background: "#6D28D9", border: "none", borderRadius: 10, cursor: "pointer" }}
+          >{pendingAction === "exit" ? "Save & Exit" : "Continue"}</button>
+          <button
+            onClick={function() { setPinInput(""); setPinError(""); setPendingAction(null); setScreen("quiz"); }}
+            style={{ marginTop: 10, fontSize: 13, color: "#9999aa", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+          >Go back</button>
+        </div>
+      )}
       {screen === "generating" && <GeneratingScreen />}
       {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} />}
       {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} />}
