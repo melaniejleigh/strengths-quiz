@@ -2266,13 +2266,35 @@ export default function Quiz() {
           else { goToReveal(s.ranked, s.name || name, true); }
           return;
         }
-        /* If all questions answered but not marked complete, score now */
+        /* If all questions answered but not marked complete, score and submit now */
         if (s.answers.length >= Q.length) {
           var sc = calcScores(s.answers);
           setRanked(sc);
-          saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId, pin: s.pin });
-          setPendingAction("complete");
-          setScreen("create-pin");
+          var rawAns = s.answers.map(function(a) { return { qi: a.qi, val: a.val }; });
+          if (s.pin) {
+            /* Already has PIN — create row if needed and submit directly */
+            setUserPin(s.pin);
+            var submitAndReveal = function(rid) {
+              submitToSupabase(rid, email, name, sc, rawAns, s.pin).then(function(ok) {
+                if (!ok) { alert("Failed to save results. Your results are saved locally."); }
+              });
+              saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: rid, pin: s.pin });
+            };
+            if (!s.rowId) {
+              createQuizRow(email, name).then(function(newId) {
+                setRowId(newId);
+                submitAndReveal(newId);
+              });
+            } else {
+              submitAndReveal(s.rowId);
+            }
+            goToReveal(sc, s.name || name, true);
+          } else {
+            /* No PIN yet — prompt for one */
+            saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId });
+            setPendingAction("complete");
+            setScreen("create-pin");
+          }
           return;
         }
         setQueue(s.queue || coreQ);
