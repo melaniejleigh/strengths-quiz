@@ -1106,7 +1106,14 @@ function QuizScreen(props) {
   var answers = props.answers;
   var phase = props.phase;
 
-  if (!queue || queue.length === 0 || qi >= queue.length) return null;
+  if (!queue || queue.length === 0) return null;
+  /* If past the end of the queue, force completion */
+  if (qi >= queue.length) {
+    if (props.onForceComplete) { setTimeout(function() { props.onForceComplete(); }, 0); }
+    return <div style={{ maxWidth: 600, margin: "0 auto", padding: "60px 16px", textAlign: "center" }}>
+      <div style={{ fontSize: 18, fontWeight: 600, color: "#6D28D9" }}>Finishing up...</div>
+    </div>;
+  }
   var cqi = queue[qi];
   var q = Q[cqi];
   if (!q) return null;
@@ -2408,7 +2415,13 @@ export default function Quiz() {
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); goToReveal(r, n, true, ins); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n, true); }} />}
-      {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={handleSaveAndExit} />}
+      {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={handleSaveAndExit} onForceComplete={function() {
+        var sc = calcScores(answers);
+        setRanked(sc);
+        saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: userName, rowId: rowId });
+        if (userPin) { submitToSupabase(rowId, userEmail, userName, sc, answers, userPin); goToReveal(sc, userName); }
+        else { setPendingAction("complete"); setScreen("create-pin"); }
+      }} />}
       {screen === "create-pin" && (
         <div style={{ maxWidth: 400, margin: "0 auto", padding: "60px 20px", textAlign: "center" }}>
           <div style={{ fontSize: 24, fontWeight: 700, color: "#1a1a2e", marginBottom: 8 }}>Create Your PIN</div>
