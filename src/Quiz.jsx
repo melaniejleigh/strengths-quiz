@@ -2441,7 +2441,7 @@ export default function Quiz() {
     <ErrorBoundary>
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); goToReveal(r, n, true, ins); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); goToReveal(r, n, true); }} />}
+      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); if (ins) setInsights(ins); setScreen("results"); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); setScreen("results"); }} />}
       {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={handleSaveAndExit} onForceComplete={function() {
         var sc = calcScores(answers);
         setRanked(sc);
