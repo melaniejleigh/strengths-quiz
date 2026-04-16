@@ -1075,10 +1075,10 @@ function Welcome(props) {
                 <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{foundSaved.name ? ", " + foundSaved.name : ""}! You have {foundSaved.answers.length} answers saved.</p>
               )}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                {(foundSaved.completed && foundSaved.ranked) ? (
-                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
+                {(foundSaved.fromDatabase && foundSaved.completed && foundSaved.ranked) ? (
+                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name, foundSaved.insights); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
                 ) : (
-                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>{foundSaved.answers && foundSaved.answers.length >= 200 ? "View My Results" : "Resume"}</button>
+                  <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>{(foundSaved.completed || (foundSaved.answers && foundSaved.answers.length >= 200)) ? "View My Results" : "Resume"}</button>
                 )}
                 <button onClick={function() { setFoundSaved(null); setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
               </div>
