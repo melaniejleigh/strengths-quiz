@@ -2334,17 +2334,37 @@ export default function Quiz() {
     setUserPin(p);
 
     if (pendingAction === "exit") {
-      saveProgressToSupabase(rowId, answers, p, queue, qi, phase);
-      saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: rowId, pin: p });
+      if (!rowId) {
+        createQuizRow(userEmail, userName).then(function(newId) {
+          if (newId) { setRowId(newId); saveProgressToSupabase(newId, answers, p, queue, qi, phase); }
+          saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: newId, pin: p });
+        });
+      } else {
+        saveProgressToSupabase(rowId, answers, p, queue, qi, phase);
+        saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: rowId, pin: p });
+      }
       setPinInput("");
       setPendingAction(null);
       setScreen("welcome");
     } else if (pendingAction === "complete") {
       var sc = ranked || calcScores(answers);
       setRanked(sc);
-      var rawAns = answers.map(function(a) { return a.val; });
-      submitToSupabase(rowId, userEmail, userName, sc, rawAns, p);
-      saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: userName, rowId: rowId, pin: p });
+      /* Build raw answers as simple array: index = question order answered, value = 1-5 */
+      var rawAns = answers.map(function(a) { return { qi: a.qi, val: a.val }; });
+      /* If no rowId, create row first then submit */
+      if (!rowId) {
+        createQuizRow(userEmail, userName).then(function(newId) {
+          var rid = newId || null;
+          if (rid) setRowId(rid);
+          submitToSupabase(rid, userEmail, userName, sc, rawAns, p).then(function(ok) {
+            if (!ok) { alert("Failed to save results. Your results are saved locally."); }
+          });
+          saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: userName, rowId: rid, pin: p });
+        });
+      } else {
+        submitToSupabase(rowId, userEmail, userName, sc, rawAns, p);
+        saveData(userEmail, { answers: answers, ranked: sc, completed: true, name: userName, rowId: rowId, pin: p });
+      }
       setPinInput("");
       setPendingAction(null);
       goToReveal(sc, userName);
