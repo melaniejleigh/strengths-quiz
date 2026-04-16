@@ -474,6 +474,8 @@ async function submitToSupabase(rowId, email, name, ranked, rawAnswers, pin) {
       updateData.pin = pin;
       await supabase.from("quiz_results").insert(updateData);
     }
+    /* Fire-and-forget results email */
+    if (email && pin) { sendResultsEmail(email, name, ranked, pin); }
     return true;
   } catch (e) { console.error("Failed to submit results:", e); return false; }
 }
@@ -560,6 +562,26 @@ async function saveInsightsToSupabase(email, insights) {
       await supabase.from("quiz_results").update({ insights: insights }).eq("id", data[0].id);
     }
   } catch (e) { console.error("Failed to save insights:", e); }
+}
+
+/* ---- EMAIL: Send results email via Resend ---- */
+async function sendResultsEmail(email, name, ranked, pin) {
+  try {
+    var top5 = ranked.slice(0, 5).map(function(t) {
+      var theme = TH[t.id];
+      return {
+        id: t.id,
+        name: theme ? theme.n : t.id,
+        desc: theme ? theme.desc : "",
+        domain: theme ? theme.d : "",
+      };
+    });
+    await fetch("/api/send-results-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, name: name, top5: top5, pin: pin }),
+    });
+  } catch (e) { console.error("Failed to send results email:", e); }
 }
 
 /* ---- SHUFFLE ---- */
