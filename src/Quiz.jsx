@@ -2343,8 +2343,15 @@ export default function Quiz() {
   function handleSaveAndExit() {
     if (userPin) {
       /* Already have PIN, save progress directly */
-      saveProgressToSupabase(rowId, answers, userPin, queue, qi, phase);
-      saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: rowId, pin: userPin });
+      if (!rowId) {
+        createQuizRow(userEmail, userName).then(function(newId) {
+          if (newId) { setRowId(newId); saveProgressToSupabase(newId, answers, userPin, queue, qi, phase); }
+          saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: newId, pin: userPin });
+        });
+      } else {
+        saveProgressToSupabase(rowId, answers, userPin, queue, qi, phase);
+        saveData(userEmail, { answers: answers, queue: queue, qi: qi, phase: phase, name: userName, rowId: rowId, pin: userPin });
+      }
       setScreen("welcome");
     } else {
       setPendingAction("exit");
