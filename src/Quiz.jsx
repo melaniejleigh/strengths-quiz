@@ -2441,7 +2441,20 @@ export default function Quiz() {
     <ErrorBoundary>
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) { setRanked(r); setUserName(n); if (ins) setInsights(ins); setScreen("results"); }} onImport={function(r, n, e) { setRanked(r); setUserName(n); setUserEmail(e); if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n }); setScreen("results"); }} />}
+      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) {
+        setRanked(r);
+        setUserName(n);
+        if (ins) setInsights(ins);
+        setScreen("view-results");
+      }} onImport={function(r, n, e) {
+        setRanked(r);
+        setUserName(n);
+        setUserEmail(e);
+        if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n });
+        setScreen("view-results");
+      }} />}
+      {screen === "view-results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} />}
+      {screen === "view-results" && !ranked && <div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading results...</div>}
       {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={handleSaveAndExit} onForceComplete={function() {
         var sc = calcScores(answers);
         setRanked(sc);
@@ -2479,8 +2492,8 @@ export default function Quiz() {
         </div>
       )}
       {screen === "generating" && <GeneratingScreen />}
-      {screen === "reveal" && ranked && <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} />}
-      {screen === "results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} />}
+      {screen === "reveal" && (ranked ? <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} /> : <div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading...</div>)}
+      {screen === "results" && (ranked ? <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} /> : <div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading results...</div>)}
     </div>
     </ErrorBoundary>
   );
