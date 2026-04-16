@@ -2173,7 +2173,7 @@ export default function Quiz() {
   const [userPin, setUserPin] = useState(null);
 
   var coreQ = useMemo(function() {
-    return shuffle(Array.from({ length: 90 }, function(_, i) { return i; }));
+    return shuffle(Array.from({ length: Q.length }, function(_, i) { return i; }));
   }, []);
 
   useEffect(function() { setQueue(coreQ); }, [coreQ]);
