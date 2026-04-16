@@ -2289,22 +2289,16 @@ export default function Quiz() {
     var nqi = qi + 1;
     if (nqi < queue.length) { setQi(nqi); }
     else {
+      /* All questions answered — score and finish */
       var sc = calcScores(na);
-      var nb = getNextBatch(na, sc);
-      if (nb.length === 0 || na.length >= 200) {
-        setRanked(sc);
-        saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName, rowId: rowId });
-        /* If user already has a PIN (from Save & Exit), submit directly */
-        if (userPin) {
-          submitToSupabase(rowId, userEmail, userName, sc, na, userPin);
-          goToReveal(sc, userName);
-        } else {
-          /* Need to collect PIN before submitting */
-          setPendingAction("complete");
-          setScreen("create-pin");
-        }
+      setRanked(sc);
+      saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName, rowId: rowId });
+      if (userPin) {
+        submitToSupabase(rowId, userEmail, userName, sc, na, userPin);
+        goToReveal(sc, userName);
       } else {
-        setPhase("adaptive"); var nq = queue.concat(nb); setQueue(nq); setQi(queue.length);
+        setPendingAction("complete");
+        setScreen("create-pin");
       }
     }
   }
