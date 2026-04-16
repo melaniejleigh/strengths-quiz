@@ -512,6 +512,32 @@ async function verifyPinAndGetResults(email, pin) {
       var ranked = row.rankings.map(function(r) { return { id: r.id, score: r.score }; });
       return { id: row.id, name: row.name, ranked: ranked, fromDatabase: true, created_at: row.created_at, insights: row.insights || null };
     }
+    /* RECOVERY: answers cover all questions but no rankings — score now and self-heal */
+    var answerList = null;
+    if (row.raw_answers) {
+      if (Array.isArray(row.raw_answers)) answerList = row.raw_answers;
+      else if (row.raw_answers.answers) answerList = row.raw_answers.answers;
+    }
+    if (answerList && answerList.length > 0) {
+      /* Dedupe by qi, keep first occurrence, drop invalid entries */
+      var seen = {};
+      var clean = [];
+      for (var i = 0; i < answerList.length; i++) {
+        var a = answerList[i];
+        if (a && typeof a.qi === "number" && a.qi >= 0 && a.qi < Q.length && !seen[a.qi] && typeof a.val === "number") {
+          seen[a.qi] = true;
+          clean.push({ qi: a.qi, val: a.val });
+        }
+      }
+      if (clean.length >= Q.length) {
+        try {
+          var recovered = calcScores(clean);
+          /* Self-heal: write rankings back to Supabase so next load is instant */
+          await submitToSupabase(row.id, email, row.name, recovered, clean, pin);
+          return { id: row.id, name: row.name, ranked: recovered, fromDatabase: true, created_at: row.created_at, insights: null, recovered: true };
+        } catch (e) { console.error("Recovery scoring failed:", e); }
+      }
+    }
     /* If in progress, return saved progress */
     if (row.raw_answers && row.raw_answers.answers) {
       return { id: row.id, name: row.name, progress: row.raw_answers, fromDatabase: true };
