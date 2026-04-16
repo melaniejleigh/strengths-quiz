@@ -2261,10 +2261,17 @@ export default function Quiz() {
         if (s.rowId) setRowId(s.rowId);
         if (s.pin) setUserPin(s.pin);
 
+        /* Filter out any answers with invalid question indices (from old adaptive phase) */
+        var validAnswers = s.answers.filter(function(a) { return a.qi >= 0 && a.qi < Q.length; });
+        if (validAnswers.length !== s.answers.length) {
+          s.answers = validAnswers;
+          setAnswers(validAnswers);
+        }
+
         /* Score answers if we have enough but no ranked yet */
         var sc = s.ranked;
-        if (!sc && s.answers.length >= Q.length) {
-          sc = calcScores(s.answers);
+        if (!sc && validAnswers.length >= Q.length) {
+          try { sc = calcScores(validAnswers); } catch(e) { console.error("Scoring failed:", e); sc = null; }
         }
 
         /* If we have scores (completed or just scored), handle results */
@@ -2291,7 +2298,13 @@ export default function Quiz() {
 
           /* Show results */
           if (s.insights) { setInsights(s.insights); setScreen("results"); }
-          else { goToReveal(sc, s.name || name, true); }
+          else {
+            setScreen("generating");
+            generateInsights(sc, s.name || name).then(function(ins) {
+              if (ins) { setInsights(ins); if (email) { saveInsightsToSupabase(email, ins); saveData(email, { answers: s.answers, ranked: sc, completed: true, name: s.name || name, rowId: s.rowId, pin: s.pin, insights: ins }); } }
+              setScreen("reveal");
+            });
+          }
           return;
         }
 
