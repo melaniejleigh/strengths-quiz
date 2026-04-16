@@ -960,22 +960,31 @@ function Welcome(props) {
     setChecking(true);
     setPinError("");
     setDbRecord(null);
-    var s = loadData(email);
-    if (s && s.answers && s.answers.length > 0) {
-      setFoundSaved(s);
-      if (s.name) setName(s.name);
-      setChecking(false);
-    } else {
-      // Nothing in localStorage — check Supabase for completed results
-      checkSupabaseExists(email).then(function(result) {
-        if (result && result.hasResults) {
-          setDbRecord(result);
-          if (result.name) setName(result.name);
-        } else { setDbRecord(null); }
+    setFoundSaved(null);
+    // Always check Supabase first — if anything exists there, require PIN
+    checkSupabaseExists(email).then(function(result) {
+      if (result && (result.hasResults || result.hasProgress || result.hasPin)) {
+        setDbRecord(result);
+        if (result.name) setName(result.name);
         setFoundSaved(null);
-        setChecking(false);
-      }).catch(function() { setFoundSaved(null); setDbRecord(null); setChecking(false); });
-    }
+      } else {
+        // Nothing in Supabase — check localStorage as fallback (same device only)
+        var s = loadData(email);
+        if (s && s.answers && s.answers.length > 0 && s.pin) {
+          // Has local data WITH a PIN — require PIN via Supabase path
+          setDbRecord({ name: s.name, hasResults: !!s.ranked, hasProgress: true, hasPin: true });
+          if (s.name) setName(s.name);
+        } else if (s && s.answers && s.answers.length > 0 && !s.pin) {
+          // Has local data but NO PIN (brand new session on this device) — allow resume
+          setFoundSaved(s);
+          if (s.name) setName(s.name);
+        } else {
+          setDbRecord(null);
+          setFoundSaved(null);
+        }
+      }
+      setChecking(false);
+    }).catch(function() { setFoundSaved(null); setDbRecord(null); setChecking(false); });
   }
 
   function handlePinSubmit() {
@@ -984,10 +993,21 @@ function Welcome(props) {
     setChecking(true);
     verifyPinAndGetResults(email, pinInput).then(function(result) {
       if (result && result.error) {
-        setPinError(result.error);
-        setChecking(false);
+        // Supabase PIN didn't match — also try localStorage
+        var s = loadData(email);
+        if (s && s.pin === pinInput) {
+          setFoundSaved(s);
+          setChecking(false);
+        } else {
+          setPinError(result.error);
+          setChecking(false);
+        }
       } else if (result && result.ranked) {
         setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true, insights: result.insights || null });
+        setChecking(false);
+      } else if (result && result.progress) {
+        // In-progress quiz from Supabase
+        setFoundSaved({ answers: result.progress.answers || [], queue: result.progress.queue, qi: result.progress.qi, phase: result.progress.phase, name: result.name, fromDatabase: true, rowId: result.id });
         setChecking(false);
       } else {
         setPinError("Something went wrong");
@@ -1038,7 +1058,7 @@ function Welcome(props) {
           {checking && <p style={{ fontSize: 12, color: "#9999aa" }}>Checking...</p>}
           {dbRecord && !foundSaved && !checking && (
             <div style={{ marginBottom: 16 }}>
-              <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{dbRecord.name ? ", " + dbRecord.name : ""}! Enter your PIN to view your results.</p>
+              <p style={{ fontSize: 13, color: "#059669", fontWeight: 600, margin: "0 0 10px" }}>Welcome back{dbRecord.name ? ", " + dbRecord.name : ""}! Enter your PIN to continue.</p>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
                 <input type="tel" inputMode="numeric" maxLength={6} placeholder="4-6 digit PIN" value={pinInput} onChange={function(e) { setPinInput(e.target.value.replace(/\D/g, "").slice(0, 6)); setPinError(""); }} style={{ ...inputStyle, maxWidth: 180, letterSpacing: 8, fontSize: 20, textAlign: "center" }} />
                 {pinError && <p style={{ fontSize: 12, color: "#DC2626", margin: "0" }}>{pinError}</p>}
