@@ -1051,7 +1051,7 @@ function Welcome(props) {
           setChecking(false);
         }
       } else if (result && result.ranked) {
-        setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true, insights: result.insights || null });
+        setFoundSaved({ answers: [], ranked: result.ranked, completed: true, name: result.name, fromDatabase: true, insights: result.insights || null, created_at: result.created_at || null });
         setChecking(false);
       } else if (result && result.progress) {
         // In-progress quiz from Supabase
@@ -1124,7 +1124,7 @@ function Welcome(props) {
               )}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
                 {(foundSaved.fromDatabase && foundSaved.completed && foundSaved.ranked) ? (
-                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name, foundSaved.insights); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
+                  <button onClick={function() { props.onTestResults(foundSaved.ranked, foundSaved.name || name, foundSaved.insights, foundSaved.created_at); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>View My Results</button>
                 ) : (
                   <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>{(foundSaved.completed || (foundSaved.answers && foundSaved.answers.length >= 200)) ? "View My Results" : "Resume"}</button>
                 )}
@@ -1286,7 +1286,7 @@ function ShareCard(props) {
 }
 
 /* ---- PRINT-TO-PDF ---- */
-function printReport(type, ranked, name, insights) {
+function printReport(type, ranked, name, insights, takenAt) {
   var top5 = ranked.slice(0, 5);
   var top10 = ranked.slice(0, 10);
   var domainColors = {executing:"#7C3AED",influencing:"#DC2626",relationship_building:"#2563EB",strategic_thinking:"#059669"};
@@ -1374,6 +1374,9 @@ function printReport(type, ranked, name, insights) {
     // Summary / pill
     ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:10pt;margin:0 3px 6px}"
   ].join("\n");
+
+  // Prefer the actual quiz taken date; fall back to today if not available
+  var reportDateStr = (takenAt ? new Date(takenAt) : new Date()).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
   var html = "";
 
@@ -1603,7 +1606,7 @@ function printReport(type, ranked, name, insights) {
     html += "<div class='cover-title'>Full 34<br/>Strengths Report</div>";
     html += "<div class='cover-sub'>A complete view of your strengths profile</div>";
     html += "<div style='margin-top:36px;font-size:14pt;font-weight:600;color:rgba(255,255,255,0.85)'>"+(name||"")+"</div>";
-    html += "<div style='margin-top:4px;font-size:9pt;color:rgba(255,255,255,0.35)'>"+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</div>";
+    html += "<div style='margin-top:4px;font-size:9pt;color:rgba(255,255,255,0.35)'>"+reportDateStr+"</div>";
     html += "</div></div>";
 
     // --- 2. INTRO + RANKING on the same flow --- (no page-break class: cover handles the transition)
@@ -1917,8 +1920,7 @@ function printReport(type, ranked, name, insights) {
 
     // Give the browser a frame to paint before capturing
     setTimeout(function() {
-      var dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-      var footerText = "Strengths Discovery  \u00b7  " + (name || "") + "  \u00b7  " + dateStr;
+      var footerText = "Strengths Discovery  \u00b7  " + (name || "") + "  \u00b7  " + reportDateStr;
 
       html2pdf().set({
         margin: 0,
@@ -2108,10 +2110,10 @@ function ResultsScreen(props) {
         <p style={{ fontSize: 20, fontWeight: 700, color: "#fff", margin: "0 0 4px" }}>Download Your Strengths Reports</p>
         <p style={{ fontSize: 13, color: "#d4c4ff", margin: "0 0 20px", lineHeight: 1.5 }}>AI-powered insights tailored to your unique profile, beautifully formatted and ready to share.</p>
         <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={function() { printReport("top5", ranked, props.name, props.insights); }} style={{ padding: "14px 28px", borderRadius: 10, border: "2px solid #fff", cursor: "pointer", background: "#fff", color: "#6D28D9", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+          <button onClick={function() { printReport("top5", ranked, props.name, props.insights, props.takenAt); }} style={{ padding: "14px 28px", borderRadius: 10, border: "2px solid #fff", cursor: "pointer", background: "#fff", color: "#6D28D9", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ fontSize: 18 }}>{"\u2B07"}</span> Top 5 Report
           </button>
-          <button onClick={function() { printReport("full34", ranked, props.name, props.insights); }} style={{ padding: "14px 28px", borderRadius: 10, border: "2px solid rgba(255,255,255,0.4)", cursor: "pointer", background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+          <button onClick={function() { printReport("full34", ranked, props.name, props.insights, props.takenAt); }} style={{ padding: "14px 28px", borderRadius: 10, border: "2px solid rgba(255,255,255,0.4)", cursor: "pointer", background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: 15, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ fontSize: 18 }}>{"\u2B07"}</span> Full 34 Report
           </button>
         </div>
@@ -2293,6 +2295,7 @@ export default function Quiz() {
   const [userName, setUserName] = useState("");
   const [insights, setInsights] = useState(null);
   const [userPin, setUserPin] = useState(null);
+  const [takenAt, setTakenAt] = useState(null);
   const [rowId, setRowId] = useState(null);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
@@ -2410,6 +2413,7 @@ export default function Quiz() {
       /* All questions answered — score and finish */
       var sc = calcScores(na);
       setRanked(sc);
+      setTakenAt(new Date().toISOString());
       saveData(userEmail, { answers: na, ranked: sc, completed: true, name: userName, rowId: rowId });
       if (userPin) {
         submitToSupabase(rowId, userEmail, userName, sc, na, userPin);
@@ -2502,10 +2506,11 @@ export default function Quiz() {
     <ErrorBoundary>
     <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', system-ui, sans-serif", color: "#1a1a2e", background: "#fff", colorScheme: "light" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins) {
+      {screen === "welcome" && <Welcome onStart={handleStart} onTestResults={function(r, n, ins, createdAt) {
         setRanked(r);
         setUserName(n);
         if (ins) setInsights(ins);
+        if (createdAt) setTakenAt(createdAt);
         setScreen("view-results");
       }} onImport={function(r, n, e) {
         setRanked(r);
@@ -2514,7 +2519,7 @@ export default function Quiz() {
         if (e) saveData(e, { answers: [], ranked: r, completed: true, name: n });
         setScreen("view-results");
       }} />}
-      {screen === "view-results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} />}
+      {screen === "view-results" && ranked && <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} takenAt={takenAt} />}
       {screen === "view-results" && !ranked && <div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading results...</div>}
       {screen === "quiz" && <QuizScreen queue={queue} qi={qi} answers={answers} onPick={handlePick} phase={phase} onExit={handleSaveAndExit} onForceComplete={function() {
         var sc = calcScores(answers);
@@ -2554,7 +2559,7 @@ export default function Quiz() {
       )}
       {screen === "generating" && <GeneratingScreen />}
       {screen === "reveal" && (ranked ? <RevealScreen ranked={ranked} name={userName} totalQ={answers.length} insights={insights} onFinish={finishReveal} /> : <div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading...</div>)}
-      {screen === "results" && (ranked ? <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} /> : <div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading results...</div>)}
+      {screen === "results" && (ranked ? <ResultsScreen ranked={ranked} onRetake={handleRetake} onReveal={function() { setScreen("reveal"); }} name={userName} insights={insights} pin={userPin} takenAt={takenAt} /> :<div style={{ padding: 60, textAlign: "center", fontSize: 16, color: "#555" }}>Loading results...</div>)}
     </div>
     </ErrorBoundary>
   );
