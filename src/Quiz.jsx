@@ -1002,6 +1002,8 @@ function Welcome(props) {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
   const [dbRecord, setDbRecord] = useState(null);
+  const [confirmFresh, setConfirmFresh] = useState(false);
+  const [pendingFreshArgs, setPendingFreshArgs] = useState(null);
 
   function checkEmail() {
     if (!email.trim().includes("@")) return;
@@ -1111,7 +1113,7 @@ function Welcome(props) {
                 <input type="tel" inputMode="numeric" maxLength={6} placeholder="4-6 digit PIN" value={pinInput} onChange={function(e) { setPinInput(e.target.value.replace(/\D/g, "").slice(0, 6)); setPinError(""); }} style={{ ...inputStyle, maxWidth: 180, letterSpacing: 8, fontSize: 20, textAlign: "center" }} />
                 {pinError && <p style={{ fontSize: 12, color: "#DC2626", margin: "0" }}>{pinError}</p>}
                 <button onClick={handlePinSubmit} disabled={pinInput.length < 4} style={{ padding: "12px 36px", borderRadius: 8, border: "none", cursor: pinInput.length >= 4 ? "pointer" : "default", background: pinInput.length >= 4 ? "#6D28D9" : "#ccc", color: "#fff", fontSize: 15, fontWeight: 600 }}>Verify PIN</button>
-                <button onClick={function() { setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh Instead</button>
+                <button onClick={function() { setPendingFreshArgs([email, name]); setConfirmFresh(true); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh Instead</button>
               </div>
             </div>
           )}
@@ -1128,12 +1130,21 @@ function Welcome(props) {
                 ) : (
                   <button onClick={function() { props.onStart(true, email, foundSaved.name || name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>{(foundSaved.completed || (foundSaved.answers && foundSaved.answers.length >= 200)) ? "View My Results" : "Resume"}</button>
                 )}
-                <button onClick={function() { setFoundSaved(null); setDbRecord(null); props.onStart(false, email, name); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
+                <button onClick={function() { setPendingFreshArgs([email, name]); setConfirmFresh(true); }} style={{ padding: "10px 30px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "transparent", color: "#555570", fontSize: 14 }}>Start Fresh</button>
               </div>
             </div>
           )}
           {!foundSaved && !checking && canBegin && (
             <button onClick={function() { props.onStart(false, email, name); }} style={{ padding: "14px 44px", borderRadius: 8, border: "none", cursor: "pointer", background: "#6D28D9", color: "#fff", fontSize: 16, fontWeight: 600 }}>Begin</button>
+          )}
+          {confirmFresh && (
+            <div style={{ marginTop: 12, padding: "16px 20px", borderRadius: 10, background: "#fff4e5", border: "1px solid #fde68a", maxWidth: 360, margin: "12px auto 0" }}>
+              <p style={{ fontSize: 14, color: "#92400e", margin: "0 0 12px", lineHeight: 1.5, fontWeight: 600 }}>This will erase your saved results. Are you sure?</p>
+              <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+                <button onClick={function() { setConfirmFresh(false); setFoundSaved(null); setDbRecord(null); props.onStart(false, pendingFreshArgs[0], pendingFreshArgs[1]); }} style={{ padding: "9px 22px", borderRadius: 8, border: "none", cursor: "pointer", background: "#DC2626", color: "#fff", fontSize: 14, fontWeight: 600 }}>Yes, start over</button>
+                <button onClick={function() { setConfirmFresh(false); setPendingFreshArgs(null); }} style={{ padding: "9px 22px", borderRadius: 8, border: "1px solid #e8e6f0", cursor: "pointer", background: "#fff", color: "#555570", fontSize: 14 }}>Cancel</button>
+              </div>
+            </div>
           )}
           <div style={{ maxWidth: 320, margin: "12px auto 0", padding: "10px 14px", background: "#e0f2fe", borderRadius: 8, border: "1px solid #bae6fd" }}>
             <p style={{ fontSize: 11, color: "#0369a1", lineHeight: 1.5, margin: 0 }}>By proceeding, your full 34 strengths ranking, name, and email will be visible to the quiz creator for training purposes. Your individual answers will remain anonymous.</p>
