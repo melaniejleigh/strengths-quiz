@@ -1328,51 +1328,51 @@ function printReport(type, ranked, name, insights, takenAt) {
     ".theme-name{font-size:22pt;font-weight:800;line-height:1.15}",
     ".theme-domain{font-size:7pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px}",
     ".theme-bar{height:2px;border:none;border-radius:2px;margin:8px 0}",
-    ".theme-thrive{font-size:9.5pt;color:#333;line-height:1.55;font-style:italic;margin-bottom:10px}",
+    ".theme-thrive{font-size:11pt;color:#333;line-height:1.55;font-style:italic;margin-bottom:10px}",
     ".theme-section{margin-top:12px}",
-    ".theme-section h3{font-size:9.5pt;font-weight:700;color:#1a1a2e;margin-bottom:4px}",
-    ".theme-section p{font-size:10.5pt;color:#555;line-height:1.55;margin-bottom:5px}",
+    ".theme-section h3{font-size:11pt;font-weight:700;color:#1a1a2e;margin-bottom:4px}",
+    ".theme-section p{font-size:11pt;color:#555;line-height:1.55;margin-bottom:5px}",
     // Blind spots
-    ".bs-box{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #999;margin:5px 0;font-size:10.5pt;color:#555;line-height:1.5}",
+    ".bs-box{padding:12px 16px;border-radius:8px;background:#fafafa;border-left:3px solid #999;margin:5px 0;font-size:11pt;color:#555;line-height:1.5}",
     // Action items
     ".ai-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0eff5}",
     ".ai-num{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7pt;font-weight:800;color:#fff;flex-shrink:0;margin-top:2px}",
-    ".ai-text{font-size:10.5pt;color:#444;line-height:1.55}",
+    ".ai-text{font-size:11pt;color:#444;line-height:1.55}",
     // Blend cards
     ".blend-card{margin-bottom:8px;border-radius:8px;overflow:hidden;border:1px solid #e8e6f0}",
     ".blend-hdr{padding:7px 12px;display:flex;align-items:center;gap:6px}",
     ".blend-title{font-weight:700;font-size:11pt;color:#fff}",
     ".blend-plus{font-size:11pt;font-weight:300;color:rgba(255,255,255,0.5)}",
-    ".blend-body{padding:8px 12px;font-size:10.5pt;line-height:1.55;color:#444}",
+    ".blend-body{padding:8px 12px;font-size:11pt;line-height:1.55;color:#444}",
     ".blend-tag{font-weight:700;color:#1a1a2e;margin-bottom:2px}",
-    // Full 34 ranking overview
+    // Full 34 ranking overview (legacy classes kept for safety)
     ".rank-row{display:flex;align-items:center;gap:8px;padding:3px 2px;border-bottom:1px solid #f5f4fa}",
-    ".rank-num{width:22px;font-weight:700;font-size:10pt;text-align:right;color:#ccc}",
+    ".rank-num{width:22px;font-weight:700;font-size:11pt;text-align:right;color:#ccc}",
     ".rank-bar{height:4px;border-radius:3px;min-width:3px}",
-    ".rank-name{font-weight:600;font-size:10pt;flex:1}",
+    ".rank-name{font-weight:600;font-size:11pt;flex:1}",
     ".rank-domain{font-size:7pt;font-weight:600;letter-spacing:1px;text-transform:uppercase}",
     ".band-label{font-size:12pt;font-weight:800;margin:14px 0 2px}",
-    ".band-desc{font-size:10pt;color:#999;margin-bottom:6px}",
+    ".band-desc{font-size:11pt;color:#999;margin-bottom:6px}",
     // Full 34 theme entries - compact flowing layout
     ".f34-theme{page-break-inside:avoid;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eeecf5}",
     ".f34-hdr{display:flex;align-items:center;gap:10px;margin-bottom:4px}",
     ".f34-rank{font-size:16pt;font-weight:900;width:28px;text-align:right}",
     ".f34-name{font-size:12pt;font-weight:800}",
-    ".f34-domain{font-size:6.5pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}",
-    ".f34-copy{font-size:10.5pt;color:#444;line-height:1.55;margin-bottom:4px}",
-    ".f34-label{font-size:6.5pt;font-weight:700;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 3px;padding-top:5px;border-top:1px solid #f0eff5}",
+    ".f34-domain{font-size:7pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}",
+    ".f34-copy{font-size:11pt;color:#444;line-height:1.55;margin-bottom:4px}",
+    ".f34-label{font-size:7pt;font-weight:700;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 3px;padding-top:5px;border-top:1px solid #f0eff5}",
     // Section dividers (inline, not full-page)
     ".sec-divider{page-break-before:always;padding:24px 0 12px;margin-bottom:8px;border-bottom:2px solid #e8e6f0}",
     ".sec-divider-title{font-size:14pt;font-weight:800;color:#1a1a2e;margin-bottom:3px}",
     ".sec-divider-sub{font-size:9pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}",
-    ".sec-divider-desc{font-size:10.5pt;color:#666;line-height:1.55}",
+    ".sec-divider-desc{font-size:11pt;color:#666;line-height:1.55}",
     // Domain balance
     ".domain-block{padding:10px 14px;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;gap:12px}",
     ".domain-bar{height:6px;border-radius:3px;flex:1}",
     ".domain-name{font-size:11pt;font-weight:700;width:130px}",
     ".domain-count{font-size:11pt;font-weight:700;width:30px;text-align:right}",
     // Summary / pill
-    ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:10pt;margin:0 3px 6px}"
+    ".pill{display:inline-block;padding:5px 14px;border-radius:18px;font-weight:700;font-size:11pt;margin:0 3px 6px}"
   ].join("\n");
 
   // Prefer the actual quiz taken date; fall back to today if not available
@@ -1415,7 +1415,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       html += "<div style='flex:1'>";
       html += "<div style='font-size:16pt;font-weight:800;color:#1a1a2e'>"+th.n+"</div>";
       html += "<div style='font-size:10pt;font-weight:700;color:"+col+";letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px'>"+dn(t.id)+"</div>";
-      html += "<div style='font-size:9.5pt;color:#666;line-height:1.5'>"+th.thrive+"</div>";
+      html += "<div style='font-size:11pt;color:#666;line-height:1.5'>"+th.thrive+"</div>";
       html += "</div>";
       if (rd.pct) {
         var rarity = rd.pct<=8?"Rare":rd.pct<=15?"Uncommon":"Common";
@@ -1430,7 +1430,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       html += "<div class='page page-break'>";
       html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>Profile Synthesis</span></div>";
       html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>How Your Top 5 Work Together</h2>";
-      html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>Your strengths do not operate independently. Here is how they combine into a distinct working style.</p>";
+      html += "<p style='font-size:11pt;color:#999;margin-bottom:24px'>Your strengths do not operate independently. Here is how they combine into a distinct working style.</p>";
       if (insights.summary) {
         html += "<div class='quote-box'>";
         html += "<div style='font-size:9pt;font-weight:700;color:#6D28D9;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px'>Your Operating Style</div>";
@@ -1531,7 +1531,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       html += "<div class='page page-break'>";
       html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>Strength Combinations</span></div>";
       html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>How Your Strengths Combine</h2>";
-      html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>Your top 5 do not operate in isolation. Here is how they interact to create something distinct.</p>";
+      html += "<p style='font-size:11pt;color:#999;margin-bottom:24px'>Your top 5 do not operate in isolation. Here is how they interact to create something distinct.</p>";
       insights.blends.forEach(function(b) {
         var nameA = TH[b.a] ? TH[b.a].n : b.a;
         var nameB = TH[b.b] ? TH[b.b].n : b.b;
@@ -1549,7 +1549,7 @@ function printReport(type, ranked, name, insights, takenAt) {
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>Domain Balance</span></div>";
     html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>Your Domain Balance</h2>";
-    html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>How your top 5 distribute across the four strength domains.</p>";
+    html += "<p style='font-size:11pt;color:#999;margin-bottom:24px'>How your top 5 distribute across the four strength domains.</p>";
     var domCounts = {};
     DO.forEach(function(d) { domCounts[d] = 0; });
     top5.forEach(function(t) { domCounts[TH[t.id].d]++; });
@@ -1568,7 +1568,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       html += "<div class='domain-count' style='color:"+col+"'>"+count+"</div>";
       html += "</div>";
       if (count > 0) {
-        html += "<p style='font-size:10.5pt;color:#888;margin:-4px 0 12px 156px;line-height:1.5'>"+domDescs[d]+"</p>";
+        html += "<p style='font-size:11pt;color:#888;margin:-4px 0 12px 156px;line-height:1.5'>"+domDescs[d]+"</p>";
       }
     });
     html += "</div>";
@@ -1577,7 +1577,7 @@ function printReport(type, ranked, name, insights, takenAt) {
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>Reflection</span></div>";
     html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:6px'>Using This Report</h2>";
-    html += "<p style='font-size:10pt;color:#999;margin-bottom:24px'>Questions to bring to a coaching conversation, a manager check-in, or your own reflection.</p>";
+    html += "<p style='font-size:11pt;color:#999;margin-bottom:24px'>Questions to bring to a coaching conversation, a manager check-in, or your own reflection.</p>";
     var reflections = [
       "Which of these five strengths do you rely on most often? Is it the one serving you best, or just the one that is most habitual?",
       "Which strength tends to get overused when you are under pressure or stress?",
@@ -1594,7 +1594,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       html += "<span class='pill' style='color:"+dc(t.id)+";background:"+dbg(t.id)+";border:1px solid "+dc(t.id)+"22'>"+TH[t.id].n+"</span>";
     });
     html += "</div>";
-    html += "<p style='font-size:10pt;color:#bbb'>Strengths Discovery &middot; "+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</p>";
+    html += "<p style='font-size:11pt;color:#bbb'>Strengths Discovery &middot; "+reportDateStr+"</p>";
     html += "</div></div>";
 
   // ===== FULL 34 REPORT =====
@@ -1626,10 +1626,10 @@ function printReport(type, ranked, name, insights, takenAt) {
     html += "<div style='display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px'>";
     html += "<h2 style='font-size:16pt;font-weight:800;margin:0'>Your Full Ranking</h2>";
     html += "<div style='display:flex;gap:12px;align-items:center'>";
-    html += "<span style='font-size:6.5pt;color:#7C3AED;font-weight:700;letter-spacing:1px'>&#9679; EXECUTING</span>";
-    html += "<span style='font-size:6.5pt;color:#DC2626;font-weight:700;letter-spacing:1px'>&#9679; INFLUENCING</span>";
-    html += "<span style='font-size:6.5pt;color:#2563EB;font-weight:700;letter-spacing:1px'>&#9679; RELATIONSHIP</span>";
-    html += "<span style='font-size:6.5pt;color:#059669;font-weight:700;letter-spacing:1px'>&#9679; STRATEGIC</span>";
+    html += "<span style='font-size:8pt;color:#7C3AED;font-weight:700;letter-spacing:1px'>&#9679; EXECUTING</span>";
+    html += "<span style='font-size:8pt;color:#DC2626;font-weight:700;letter-spacing:1px'>&#9679; INFLUENCING</span>";
+    html += "<span style='font-size:8pt;color:#2563EB;font-weight:700;letter-spacing:1px'>&#9679; RELATIONSHIP</span>";
+    html += "<span style='font-size:8pt;color:#059669;font-weight:700;letter-spacing:1px'>&#9679; STRATEGIC</span>";
     html += "</div></div>";
 
     var maxScore = ranked[0] ? ranked[0].score : 1;
@@ -1638,10 +1638,10 @@ function printReport(type, ranked, name, insights, takenAt) {
     function tierLabel(label, color, desc) {
       return "<div style='margin:16px 0 7px'>"
         + "<div style='display:flex;align-items:center;gap:8px;margin-bottom:3px'>"
-        + "<span style='font-size:6.5pt;font-weight:800;color:"+color+";letter-spacing:2px;text-transform:uppercase;white-space:nowrap'>"+label+"</span>"
+        + "<span style='font-size:8pt;font-weight:800;color:"+color+";letter-spacing:2px;text-transform:uppercase;white-space:nowrap'>"+label+"</span>"
         + "<div style='flex:1;height:1px;background:"+color+";opacity:0.25'></div>"
         + "</div>"
-        + "<p style='font-size:8.5pt;color:#999;margin:0;line-height:1.4'>"+desc+"</p>"
+        + "<p style='font-size:11pt;color:#999;margin:0;line-height:1.4'>"+desc+"</p>"
         + "</div>";
     }
 
@@ -1650,9 +1650,9 @@ function printReport(type, ranked, name, insights, takenAt) {
       var th2 = TH[t.id]; var col2 = dc(t.id); var isT5 = i<5;
       var bg = isT5 ? "background:"+dbg(t.id)+";border-radius:5px;" : "";
       return "<div style='display:flex;align-items:center;gap:6px;padding:3px 5px;"+bg+"'>"
-        + "<span style='width:20px;font-size:9pt;font-weight:"+(isT5?"800":"600")+";text-align:right;color:"+(isT5?col2:"#bbb")+";flex-shrink:0'>"+(i+1)+"</span>"
-        + "<span style='width:7px;height:7px;border-radius:50%;background:"+col2+";opacity:"+(isT5?"1":"0.65")+";flex-shrink:0'></span>"
-        + "<span style='font-size:9.5pt;font-weight:"+(isT5?"800":"500")+";color:"+(isT5?"#1a1a2e":"#333")+"'>"+th2.n+"</span>"
+        + "<span style='width:22px;font-size:11pt;font-weight:"+(isT5?"800":"600")+";text-align:right;color:"+(isT5?col2:"#bbb")+";flex-shrink:0'>"+(i+1)+"</span>"
+        + "<span style='width:8px;height:8px;border-radius:50%;background:"+col2+";opacity:"+(isT5?"1":"0.65")+";flex-shrink:0'></span>"
+        + "<span style='font-size:11pt;font-weight:"+(isT5?"800":"500")+";color:"+(isT5?"#1a1a2e":"#333")+"'>"+th2.n+"</span>"
         + "</div>";
     }
 
@@ -1684,7 +1684,7 @@ function printReport(type, ranked, name, insights, takenAt) {
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Big Picture</span></div>";
     html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:4px'>What Stands Out in Your Profile</h2>";
-    html += "<p style='font-size:10.5pt;color:#999;margin-bottom:14px'>A synthesis of your full 34 ranking.</p>";
+    html += "<p style='font-size:11pt;color:#999;margin-bottom:14px'>A synthesis of your full 34 ranking.</p>";
 
     // AI interpretation
     if (insights && insights.full34Interpretation) {
@@ -1710,9 +1710,9 @@ function printReport(type, ranked, name, insights, takenAt) {
       var inTop = domainTop10[did];
       var barPct = Math.round((total/34)*100);
       html += "<div style='display:flex;align-items:center;gap:10px;margin-bottom:5px'>";
-      html += "<div style='width:120px;font-size:10.5pt;font-weight:600;color:#333'>"+dname+"</div>";
+      html += "<div style='width:120px;font-size:11pt;font-weight:600;color:#333'>"+dname+"</div>";
       html += "<div style='flex:1;height:6px;background:#f0eff5;border-radius:3px;overflow:hidden'><div style='height:100%;width:"+barPct+"%;background:"+dcol+";border-radius:3px'></div></div>";
-      html += "<div style='width:80px;text-align:right;font-size:10pt;color:#888'>"+total+" total";
+      html += "<div style='width:80px;text-align:right;font-size:11pt;color:#888'>"+total+" total";
       if(inTop>0) html += " <span style='color:"+dcol+";font-weight:600'>("+inTop+" in top 10)</span>";
       html += "</div></div>";
     });
