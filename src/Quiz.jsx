@@ -1299,14 +1299,14 @@ function printReport(type, ranked, name, insights) {
   var css = [
     "*{box-sizing:border-box;margin:0;padding:0}",
     "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:11pt;line-height:1.5;width:8.5in}",
-    ".page{padding:36px 48px;position:relative}",
+    ".page{padding:54px 64px 64px;position:relative}",
     ".page-break{page-break-before:always;break-before:page}",
     // Header
     ".hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1.5px solid #e2e0ea;margin-bottom:18px;font-size:7.5pt}",
     ".hdr-brand{font-weight:800;color:#6D28D9;letter-spacing:2.5px;text-transform:uppercase}",
     ".hdr-meta{color:#aaa;font-weight:500}",
     // Cover
-    ".cover{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;height:11in;width:8.5in;padding:0}",
+    ".cover{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;height:11in;width:8.5in;padding:0;page-break-after:always;break-after:page}",
     ".cover-inner{padding:0 56px 64px}",
     ".cover-label{font-size:8pt;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;font-weight:600}",
     ".cover-title{font-size:36pt;font-weight:800;line-height:1.05;margin-bottom:12px}",
@@ -1391,8 +1391,8 @@ function printReport(type, ranked, name, insights) {
     });
     html += "</div></div></div>";
 
-    // --- 2. INTRO PAGE ---
-    html += "<div class='page page-break'>";
+    // --- 2. INTRO PAGE --- (no page-break class: cover's page-break-after handles the transition)
+    html += "<div class='page'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+"</span></div>";
     html += "<h2 style='font-size:22pt;font-weight:800;margin-bottom:16px'>How to Use This Report</h2>";
     html += "<p class='sec-body' style='margin-bottom:16px'>This report focuses on your five most defining strengths. These are not personality labels or fixed categories. They are patterns of thinking, feeling, and behaving that show up most naturally and consistently in how you work, lead, and contribute.</p>";
@@ -1606,8 +1606,8 @@ function printReport(type, ranked, name, insights) {
     html += "<div style='margin-top:4px;font-size:9pt;color:rgba(255,255,255,0.35)'>"+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</div>";
     html += "</div></div>";
 
-    // --- 2. INTRO + RANKING on the same flow ---
-    html += "<div class='page page-break'>";
+    // --- 2. INTRO + RANKING on the same flow --- (no page-break class: cover handles the transition)
+    html += "<div class='page'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+"</span></div>";
     html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:10px'>How to Read This Report</h2>";
     html += "<p class='sec-body' style='margin-bottom:8px'>This report shows all 34 strengths themes in rank order, from most dominant to least dominant. The themes at the top are the clearest patterns in how you naturally think, work, and contribute. As you move down the ranking, the themes become less instinctive and less central, but they do not become flaws.</p>";
@@ -1917,6 +1917,9 @@ function printReport(type, ranked, name, insights) {
 
     // Give the browser a frame to paint before capturing
     setTimeout(function() {
+      var dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+      var footerText = "Strengths Discovery  \u00b7  " + (name || "") + "  \u00b7  " + dateStr;
+
       html2pdf().set({
         margin: 0,
         filename: fileName,
@@ -1924,7 +1927,17 @@ function printReport(type, ranked, name, insights) {
         html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false, scrollX: 0, scrollY: 0, windowWidth: 816 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
         pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
-      }).from(content).save().then(function() {
+      }).from(content).toPdf().get("pdf").then(function(pdf) {
+        var totalPages = pdf.internal.getNumberOfPages();
+        var pageW = pdf.internal.pageSize.getWidth();
+        var pageH = pdf.internal.pageSize.getHeight();
+        for (var i = 2; i <= totalPages; i++) { // skip page 1 (full-bleed cover)
+          pdf.setPage(i);
+          pdf.setFontSize(7);
+          pdf.setTextColor(180, 180, 180);
+          pdf.text(footerText, pageW / 2, pageH - 0.28, { align: "center" });
+        }
+      }).save().then(function() {
         document.body.removeChild(container);
         dlBtn.disabled = false;
         dlBtn.textContent = "\u2713 Downloaded!";
