@@ -1712,10 +1712,10 @@ function printReport(type, ranked, name, insights) {
       if (ri<17) return "You can draw on this when you need to "+(at||nt)+". It tends to help most when "+cc+", so you can "+cr+".";
       // 18-26: describe the tendency they're less likely to have
       var ld = th.lowDefault||""; var lm = th.lowMiss||""; var lr = th.lowRisk||"";
-      if (ri<26) return "You are less likely to "+ld+". Because of that, "+lm+", which can "+lr+".";
+      if (ri<26) return "You are less likely to "+ld+". Because of that, "+lm+", which can mean "+lr+".";
       // 27-34: frame around where their energy goes instead
       var dt = th.defaultTendency||""; var tp = th.themePriority||""; var ld2 = th.lowDefault||""; var lm2 = th.lowMiss||""; var lr2 = th.lowRisk||"";
-      return "Because you naturally prioritize "+dt+" over "+tp+", you are less likely to "+ld2+". That means "+lm2+", which can "+lr2+".";
+      return "Because you naturally prioritize "+dt+" over "+tp+", you are less likely to "+ld2+". That means "+lm2+", which can mean "+lr2+".";
     }
 
     // Helper: one labeled section per tier
@@ -1734,7 +1734,7 @@ function printReport(type, ranked, name, insights) {
         var ua = th.underuseAdvantage||""; var um = th.underuseMiss||""; var uc = th.underuseCost||"";
         var ac = th.awarenessCue||"";
         var s = "<div class='f34-label'>UNDERUSED ADVANTAGE</div>";
-        s += "<p class='f34-copy'>Because this is not a constant default, you may not always notice when leaning into "+ua+" would help. When you do not reach for it, "+um+", which can "+uc+". Use this more intentionally when "+ac+".</p>";
+        s += "<p class='f34-copy'>Because this is not a constant default, you may not always notice when leaning into "+ua+" would help. When you do not reach for it, "+um+", which can mean "+uc+". Use this more intentionally when "+ac+".</p>";
         return s;
       }
       if (ri<26) {
