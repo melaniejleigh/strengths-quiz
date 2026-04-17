@@ -1373,11 +1373,11 @@ function printReport(type, ranked, name, insights, takenAt) {
     ".f34-domain{font-size:7pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}",
     ".f34-copy{font-size:11pt;color:#444;line-height:1.55;margin-bottom:4px}",
     ".f34-label{font-size:7pt;font-weight:700;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 3px;padding-top:5px;border-top:1px solid #f0eff5}",
-    // Section dividers (inline, not full-page)
-    ".sec-divider{page-break-before:always;padding:24px 0 12px;margin-bottom:8px;border-bottom:2px solid #e8e6f0}",
-    ".sec-divider-title{font-size:14pt;font-weight:800;color:#1a1a2e;margin-bottom:3px}",
-    ".sec-divider-sub{font-size:9pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}",
-    ".sec-divider-desc{font-size:11pt;color:#666;line-height:1.55}",
+    // Section dividers — tinted block, no forced page break (flow naturally)
+    ".sec-divider{padding:16px 20px;margin:20px 0 10px;border-radius:6px;page-break-inside:avoid;page-break-after:avoid}",
+    ".sec-divider-title{font-size:16pt;font-weight:800;color:#1a1a2e;margin-bottom:2px}",
+    ".sec-divider-sub{font-size:8pt;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}",
+    ".sec-divider-desc{font-size:11pt;color:#555;line-height:1.5}",
     // Domain balance
     ".domain-block{padding:10px 14px;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;gap:12px}",
     ".domain-bar{height:6px;border-radius:3px;flex:1}",
@@ -1646,25 +1646,26 @@ function printReport(type, ranked, name, insights, takenAt) {
 
     var maxScore = ranked[0] ? ranked[0].score : 1;
 
-    // Helper: render a tier label + one-line description
-    function tierLabel(label, color, desc) {
-      return "<div style='margin:16px 0 7px'>"
-        + "<div style='display:flex;align-items:center;gap:8px;margin-bottom:3px'>"
-        + "<span style='font-size:8pt;font-weight:800;color:"+color+";letter-spacing:2px;text-transform:uppercase;white-space:nowrap'>"+label+"</span>"
-        + "<div style='flex:1;height:1px;background:"+color+";opacity:0.25'></div>"
-        + "</div>"
-        + "<p style='font-size:11pt;color:#999;margin:0;line-height:1.4'>"+desc+"</p>"
+    // Helper: render a tinted tier block with short one-liner
+    function tierLabel(label, range, color, desc) {
+      var hex18 = color+"18"; // ~10% opacity tint
+      return "<div style='margin:14px 0 6px;background:"+hex18+";border-left:3px solid "+color+";border-radius:0 4px 4px 0;padding:7px 12px'>"
+        + "<span style='font-size:7.5pt;font-weight:800;color:"+color+";letter-spacing:2px;text-transform:uppercase'>"+label+"</span>"
+        + "<span style='font-size:7.5pt;font-weight:600;color:"+color+";opacity:0.6;margin-left:8px'>"+range+"</span>"
+        + "<p style='font-size:11pt;color:#555;margin:3px 0 0;line-height:1.35'>"+desc+"</p>"
         + "</div>";
     }
 
-    // Helper: render a single rank row (no bars)
+    // Helper: render a single rank row — subtle left accent for Top 5, clean otherwise
     function rankRow(i, t) {
       var th2 = TH[t.id]; var col2 = dc(t.id); var isT5 = i<5;
-      var bg = isT5 ? "background:"+dbg(t.id)+";border-radius:5px;" : "";
-      return "<div style='display:flex;align-items:center;gap:6px;padding:3px 5px;"+bg+"'>"
-        + "<span style='width:22px;font-size:11pt;font-weight:"+(isT5?"800":"600")+";text-align:right;color:"+(isT5?col2:"#bbb")+";flex-shrink:0'>"+(i+1)+"</span>"
-        + "<span style='width:8px;height:8px;border-radius:50%;background:"+col2+";opacity:"+(isT5?"1":"0.65")+";flex-shrink:0'></span>"
-        + "<span style='font-size:11pt;font-weight:"+(isT5?"800":"500")+";color:"+(isT5?"#1a1a2e":"#333")+"'>"+th2.n+"</span>"
+      var style = isT5
+        ? "display:flex;align-items:center;gap:7px;padding:3px 5px 3px 8px;border-left:2px solid "+col2+";"
+        : "display:flex;align-items:center;gap:7px;padding:3px 5px 3px 10px;";
+      return "<div style='"+style+"'>"
+        + "<span style='width:20px;font-size:11pt;font-weight:"+(isT5?"800":"500")+";text-align:right;color:"+(isT5?col2:"#bbb")+";flex-shrink:0'>"+(i+1)+"</span>"
+        + "<span style='width:8px;height:8px;border-radius:50%;background:"+col2+";opacity:"+(isT5?"1":"0.55")+";flex-shrink:0'></span>"
+        + "<span style='font-size:11pt;font-weight:"+(isT5?"700":"400")+";color:"+(isT5?"#1a1a2e":"#444")+"'>"+th2.n+"</span>"
         + "</div>";
     }
 
@@ -1673,19 +1674,19 @@ function printReport(type, ranked, name, insights, takenAt) {
 
     // LEFT COLUMN
     html += "<div style='flex:1'>";
-    html += tierLabel("Dominant — 1 to 5","#6D28D9","Your most defining strengths — the clearest patterns in how you naturally think, work, and contribute.");
+    html += tierLabel("Dominant","1–5","#6D28D9","Your clearest, most defining patterns.");
     for(var i=0;i<Math.min(5,ranked.length);i++) html += rankRow(i,ranked[i]);
-    html += tierLabel("Supporting — 6 to 10","#2563EB","Strong supporting themes. Not as defining as your top five, but they show up often and add real range.");
+    html += tierLabel("Supporting","6–10","#2563EB","Strong themes that add real range.");
     for(var i=5;i<Math.min(10,ranked.length);i++) html += rankRow(i,ranked[i]);
-    html += tierLabel("Available — 11 to 17","#0891B2","Present and available, but not primary lead patterns. You can draw on these — they just aren\u2019t your default.");
+    html += tierLabel("Available","11–17","#0891B2","Present and available, not a primary default.");
     for(var i=10;i<Math.min(17,ranked.length);i++) html += rankRow(i,ranked[i]);
     html += "</div>";
 
     // RIGHT COLUMN
     html += "<div style='flex:1'>";
-    html += tierLabel("Situational — 18 to 26","#059669","Less instinctive themes. Not weaknesses \u2014 just not where you naturally lead. Others who lead here will complement you well.");
+    html += tierLabel("Situational","18–26","#059669","Less instinctive \u2014 you may use these when needed.");
     for(var i=17;i<Math.min(26,ranked.length);i++) html += rankRow(i,ranked[i]);
-    html += tierLabel("Least Dominant — 27 to 34","#9CA3AF","Your lowest-energy themes. Not gaps to fix \u2014 simply less central to how you operate. Understand them, don\u2019t project onto them.");
+    html += tierLabel("Least Dominant","27–34","#9CA3AF","Lowest-energy themes. Not flaws to fix.");
     for(var i=26;i<Math.min(34,ranked.length);i++) html += rankRow(i,ranked[i]);
     html += "</div>";
 
@@ -1816,14 +1817,16 @@ function printReport(type, ranked, name, insights, takenAt) {
       {name:"18\u201326",sub:"Situational",s:17,e:26,color:"#059669",
        intro:"These are less instinctive strengths. They are not weaknesses, just themes you are less likely to lead with naturally. You may still use them situationally or appreciate them more when others bring them into the room."},
       {name:"27\u201334",sub:"Least Dominant",s:26,e:34,color:"#9CA3AF",
-       intro:"These are your least dominant themes. They are not deficits. They are not a development agenda. They are simply where your natural energy is lowest \u2014 the other side of the coin from the themes where you are strongest.<br><br>This section exists for one reason: to show you the complete shape of who you are, not to tell you what to fix. Most people see a low-ranked theme and immediately think about how to improve it. Resist that instinct. Instead, use this section to understand where you are likely to feel drained, where collaboration fills the gap, and why certain things might not come naturally to you \u2014 without making that mean something is wrong."}
+       intro:"These are your least dominant themes \u2014 not deficits, not a development agenda. They are simply where your natural energy is lowest. Use this section to understand where you feel drained, where collaboration fills the gap, and why certain things may not come naturally. Resist the instinct to treat these as problems to fix."}
     ];
 
     // Wrap all theme sections in a padded container matching .page left/right margins
     html += "<div style='padding:0 64px'>";
-    sections.forEach(function(sec) {
-      // Inline section divider — starts a new page but doesn't waste a full page
-      html += "<div class='sec-divider'>";
+    sections.forEach(function(sec, si) {
+      // First section forces a page break (comes after Big Picture page).
+      // Subsequent sections flow naturally — no ceremonial page turns.
+      var breakStyle = si === 0 ? "page-break-before:always;" : "";
+      html += "<div class='sec-divider' style='background:"+sec.color+"12;"+breakStyle+"'>";
       html += "<div class='sec-divider-sub' style='color:"+sec.color+"'>"+sec.sub+"</div>";
       html += "<div class='sec-divider-title'>"+sec.name+"</div>";
       html += "<div class='sec-divider-desc'>"+sec.intro+"</div>";
