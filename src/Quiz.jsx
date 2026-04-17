@@ -1818,6 +1818,8 @@ function printReport(type, ranked, name, insights, takenAt) {
        intro:"These are your least dominant themes. They are not deficits. They are not a development agenda. They are simply where your natural energy is lowest \u2014 the other side of the coin from the themes where you are strongest.<br><br>This section exists for one reason: to show you the complete shape of who you are, not to tell you what to fix. Most people see a low-ranked theme and immediately think about how to improve it. Resist that instinct. Instead, use this section to understand where you are likely to feel drained, where collaboration fills the gap, and why certain things might not come naturally to you \u2014 without making that mean something is wrong."}
     ];
 
+    // Wrap all theme sections in a padded container matching .page left/right margins
+    html += "<div style='padding:0 64px'>";
     sections.forEach(function(sec) {
       // Inline section divider — starts a new page but doesn't waste a full page
       html += "<div class='sec-divider'>";
@@ -1857,6 +1859,7 @@ function printReport(type, ranked, name, insights, takenAt) {
         html += "</div>"; // end f34-theme
       }
     });
+    html += "</div>"; // end padded theme sections wrapper
 
     // --- CLOSING ---
     html += "<div style='page-break-before:always;padding:36px 48px'>";
@@ -1902,13 +1905,18 @@ function printReport(type, ranked, name, insights, takenAt) {
 
   // Scrollable preview area with scaled iframe
   var previewWrap = document.createElement("div");
-  previewWrap.style.cssText = "flex:1;width:100%;max-width:860px;overflow-y:auto;overflow-x:hidden;margin:8px 0 12px;border-radius:8px;background:#e8e6f0;-webkit-overflow-scrolling:touch";
+  previewWrap.style.cssText = "flex:1;width:100%;max-width:860px;overflow-y:auto;overflow-x:hidden;margin:8px 0 12px;border-radius:8px;background:#e8e6f0;-webkit-overflow-scrolling:touch;min-height:0";
+
+  // frameWrapper clips the scaled iframe to its visual size so scroll ends at last page
+  var frameWrapper = document.createElement("div");
+  frameWrapper.style.cssText = "overflow:hidden;margin:0 auto;";
 
   var frame = document.createElement("iframe");
   // The iframe renders at full 816px (8.5in) width, then we scale it to fit the preview container
   frame.style.cssText = "width:816px;border:none;background:#fff;display:block;transform-origin:top left";
 
-  previewWrap.appendChild(frame);
+  frameWrapper.appendChild(frame);
+  previewWrap.appendChild(frameWrapper);
   overlay.appendChild(toolbar);
   overlay.appendChild(previewWrap);
   document.body.appendChild(overlay);
@@ -1921,16 +1929,17 @@ function printReport(type, ranked, name, insights, takenAt) {
   function scalePreview() {
     var containerW = previewWrap.clientWidth;
     var scale = Math.min(containerW / 816, 1);
-    frame.style.transform = "scale(" + scale + ")";
-    // Set the iframe height based on content, then adjust wrapper to show scaled version
     var contentH = fdoc.documentElement.scrollHeight || fdoc.body.scrollHeight || 5000;
+    var visualH = Math.ceil(contentH * scale);
+    var visualW = Math.ceil(816 * scale);
+
     frame.style.height = contentH + "px";
-    previewWrap.style.height = "auto"; // let flex handle it
-    // The visual height after scaling
-    frame.parentElement.style.height = Math.ceil(contentH * scale) + "px";
-    frame.parentElement.style.overflow = "visible";
-    // Re-wrap: we need a container that clips
-    previewWrap.style.overflow = "auto";
+    frame.style.transform = "scale(" + scale + ")";
+
+    // Clip frameWrapper to the scaled visual dimensions so previewWrap
+    // only scrolls as far as the actual last page — no overshoot
+    frameWrapper.style.width = visualW + "px";
+    frameWrapper.style.height = visualH + "px";
   }
 
   // Wait for iframe content to render, then scale
