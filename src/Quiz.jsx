@@ -1308,8 +1308,9 @@ function printReport(type, ranked, name, insights, takenAt) {
 
   // Fixed 8.5x11 letter page (612x792pt) - width set for html2pdf at 8.5in
   var css = [
+    "@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap')",
     "*{box-sizing:border-box;margin:0;padding:0}",
-    "body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1a1a2e;font-size:11pt;line-height:1.5;width:8.5in}",
+    "body{font-family:'DM Sans',Arial,sans-serif;color:#1a1a2e;font-size:11pt;line-height:1.5;width:8.5in;word-spacing:normal;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}",
     ".page{padding:54px 64px 64px;position:relative}",
     ".page-break{page-break-before:always;break-before:page}",
     // Header
@@ -1430,7 +1431,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       html += "</div>";
       if (rd.pct) {
         var rarity = rd.pct<=8?"Rare":rd.pct<=15?"Uncommon":"Common";
-        html += "<div style='text-align:right;flex-shrink:0'><div style='font-size:11pt;font-weight:700;color:"+col+"'>"+rd.pct+"%</div><div style='font-size:9pt;color:#aaa'>have in top 5</div></div>";
+        html += "<div style='text-align:right;flex-shrink:0'><div style='font-size:11pt;font-weight:700;color:"+col+"'>"+rd.pct+"%</div><div style='font-size:9pt;color:#aaa'>of people</div></div>";
       }
       html += "</div>";
     });
@@ -1979,7 +1980,7 @@ function printReport(type, ranked, name, insights, takenAt) {
         image: { type: "jpeg", quality: 0.95 },
         html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false, scrollX: 0, scrollY: 0, windowWidth: 816 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-        pagebreak: { mode: ["css", "legacy"], before: ".page-break" }
+        pagebreak: { mode: ["css"], before: ".page-break", avoid: ".f34-theme" }
       }).from(content).toPdf().get("pdf").then(function(pdf) {
         var totalPages = pdf.internal.getNumberOfPages();
         var pageW = pdf.internal.pageSize.getWidth();
