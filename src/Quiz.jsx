@@ -1634,24 +1634,25 @@ function printReport(type, ranked, name, insights, takenAt) {
 
     var maxScore = ranked[0] ? ranked[0].score : 1;
 
-    // Helper: render a tier label divider
-    function tierLabel(label, color) {
-      return "<div style='display:flex;align-items:center;gap:8px;margin:14px 0 6px'>"
+    // Helper: render a tier label + one-line description
+    function tierLabel(label, color, desc) {
+      return "<div style='margin:16px 0 7px'>"
+        + "<div style='display:flex;align-items:center;gap:8px;margin-bottom:3px'>"
         + "<span style='font-size:6.5pt;font-weight:800;color:"+color+";letter-spacing:2px;text-transform:uppercase;white-space:nowrap'>"+label+"</span>"
         + "<div style='flex:1;height:1px;background:"+color+";opacity:0.25'></div>"
+        + "</div>"
+        + "<p style='font-size:8.5pt;color:#999;margin:0;line-height:1.4'>"+desc+"</p>"
         + "</div>";
     }
 
-    // Helper: render a single rank row
+    // Helper: render a single rank row (no bars)
     function rankRow(i, t) {
       var th2 = TH[t.id]; var col2 = dc(t.id); var isT5 = i<5;
-      var barW = Math.max(4, Math.round((t.score/maxScore)*72));
       var bg = isT5 ? "background:"+dbg(t.id)+";border-radius:5px;" : "";
       return "<div style='display:flex;align-items:center;gap:6px;padding:3px 5px;"+bg+"'>"
         + "<span style='width:20px;font-size:9pt;font-weight:"+(isT5?"800":"600")+";text-align:right;color:"+(isT5?col2:"#bbb")+";flex-shrink:0'>"+(i+1)+"</span>"
         + "<span style='width:7px;height:7px;border-radius:50%;background:"+col2+";opacity:"+(isT5?"1":"0.65")+";flex-shrink:0'></span>"
-        + "<span style='flex:1;font-size:9.5pt;font-weight:"+(isT5?"800":"500")+";color:"+(isT5?"#1a1a2e":"#333")+"'>"+th2.n+"</span>"
-        + "<div style='width:"+barW+"px;height:3px;background:"+col2+";opacity:"+(isT5?"0.9":"0.45")+";border-radius:2px;flex-shrink:0'></div>"
+        + "<span style='font-size:9.5pt;font-weight:"+(isT5?"800":"500")+";color:"+(isT5?"#1a1a2e":"#333")+"'>"+th2.n+"</span>"
         + "</div>";
     }
 
@@ -1660,19 +1661,19 @@ function printReport(type, ranked, name, insights, takenAt) {
 
     // LEFT COLUMN
     html += "<div style='flex:1'>";
-    html += tierLabel("Dominant — 1 to 5","#6D28D9");
+    html += tierLabel("Dominant — 1 to 5","#6D28D9","Your most defining strengths — the clearest patterns in how you naturally think, work, and contribute.");
     for(var i=0;i<Math.min(5,ranked.length);i++) html += rankRow(i,ranked[i]);
-    html += tierLabel("Supporting — 6 to 10","#2563EB");
+    html += tierLabel("Supporting — 6 to 10","#2563EB","Strong supporting themes. Not as defining as your top five, but they show up often and add real range.");
     for(var i=5;i<Math.min(10,ranked.length);i++) html += rankRow(i,ranked[i]);
-    html += tierLabel("Available — 11 to 17","#0891B2");
+    html += tierLabel("Available — 11 to 17","#0891B2","Present and available, but not primary lead patterns. You can draw on these — they just aren\u2019t your default.");
     for(var i=10;i<Math.min(17,ranked.length);i++) html += rankRow(i,ranked[i]);
     html += "</div>";
 
     // RIGHT COLUMN
     html += "<div style='flex:1'>";
-    html += tierLabel("Situational — 18 to 26","#059669");
+    html += tierLabel("Situational — 18 to 26","#059669","Less instinctive themes. Not weaknesses \u2014 just not where you naturally lead. Others who lead here will complement you well.");
     for(var i=17;i<Math.min(26,ranked.length);i++) html += rankRow(i,ranked[i]);
-    html += tierLabel("Least Dominant — 27 to 34","#9CA3AF");
+    html += tierLabel("Least Dominant — 27 to 34","#9CA3AF","Your lowest-energy themes. Not gaps to fix \u2014 simply less central to how you operate. Understand them, don\u2019t project onto them.");
     for(var i=26;i<Math.min(34,ranked.length);i++) html += rankRow(i,ranked[i]);
     html += "</div>";
 
