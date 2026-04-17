@@ -1618,36 +1618,66 @@ function printReport(type, ranked, name, insights, takenAt) {
     html += "<p class='sec-body' style='margin-bottom:8px'>Use this report as a map, not a mandate. It is here to help you understand the full shape of your strengths, not to turn every lower-ranked theme into a problem to solve.</p>";
     html += "</div>";
 
-    // --- 3. FULL RANKING OVERVIEW ---
+    // --- 3. FULL RANKING OVERVIEW --- (two-column, one-page design)
     html += "<div class='page page-break'>";
     html += "<div class='hdr'><span class='hdr-brand'>Strengths Discovery</span><span class='hdr-meta'>"+(name||"")+" &middot; Full Ranking</span></div>";
-    html += "<h2 style='font-size:16pt;font-weight:800;margin-bottom:12px'>Your Full Ranking</h2>";
+
+    // Title row + domain legend
+    html += "<div style='display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px'>";
+    html += "<h2 style='font-size:16pt;font-weight:800;margin:0'>Your Full Ranking</h2>";
+    html += "<div style='display:flex;gap:12px;align-items:center'>";
+    html += "<span style='font-size:6.5pt;color:#7C3AED;font-weight:700;letter-spacing:1px'>&#9679; EXECUTING</span>";
+    html += "<span style='font-size:6.5pt;color:#DC2626;font-weight:700;letter-spacing:1px'>&#9679; INFLUENCING</span>";
+    html += "<span style='font-size:6.5pt;color:#2563EB;font-weight:700;letter-spacing:1px'>&#9679; RELATIONSHIP</span>";
+    html += "<span style='font-size:6.5pt;color:#059669;font-weight:700;letter-spacing:1px'>&#9679; STRATEGIC</span>";
+    html += "</div></div>";
 
     var maxScore = ranked[0] ? ranked[0].score : 1;
-    var bands = [
-      {name:"The Top 5",sub:"Dominant",desc:"Your most defining strengths.",s:0,e:5,color:"#6D28D9"},
-      {name:"6\u201310",sub:"Supporting",desc:"Strong supporting themes that add meaningful range.",s:5,e:10,color:"#2563EB"},
-      {name:"11\u201317",sub:"Available",desc:"Present and available, but not primary lead patterns.",s:10,e:17,color:"#0891B2"},
-      {name:"18\u201326",sub:"Situational",desc:"Less instinctive. Not weaknesses, just less likely to lead with.",s:17,e:26,color:"#059669"},
-      {name:"27\u201334",sub:"Least Dominant",desc:"Less central to how you naturally operate.",s:26,e:34,color:"#9CA3AF"}
-    ];
-    bands.forEach(function(band){
-      html += "<div style='margin-top:16px;margin-bottom:4px;display:flex;align-items:baseline;gap:10px'>";
-      html += "<span style='font-size:11pt;font-weight:800;color:"+band.color+"'>"+band.name+"</span>";
-      html += "<span style='font-size:10pt;font-weight:600;color:"+band.color+";letter-spacing:1.5px;text-transform:uppercase;opacity:0.7'>"+band.sub+"</span>";
-      html += "</div>";
-      html += "<div style='font-size:10pt;color:#999;margin-bottom:6px'>"+band.desc+"</div>";
-      for(var i=band.s;i<Math.min(band.e,ranked.length);i++){
-        var t=ranked[i]; var th=TH[t.id]; var col=dc(t.id); var isT5=i<5;
-        var barW = Math.max(3, Math.round((t.score/maxScore)*160));
-        html += "<div class='rank-row' style='"+(isT5?"background:#f8f7fc;border-radius:6px;padding:5px 8px;":"")+"'>";
-        html += "<div class='rank-num' style='color:"+(isT5?col:"#ccc")+";font-weight:"+(isT5?"800":"600")+"'>"+(i+1)+"</div>";
-        html += "<div class='rank-bar' style='width:"+barW+"px;background:"+col+";opacity:"+(isT5?"1":"0.6")+"'></div>";
-        html += "<div class='rank-name' style='font-weight:"+(isT5?"800":"600")+"'>"+th.n+"</div>";
-        html += "<div class='rank-domain' style='color:"+col+"'>"+dn(t.id)+"</div></div>";
-      }
-    });
+
+    // Helper: render a tier label divider
+    function tierLabel(label, color) {
+      return "<div style='display:flex;align-items:center;gap:8px;margin:14px 0 6px'>"
+        + "<span style='font-size:6.5pt;font-weight:800;color:"+color+";letter-spacing:2px;text-transform:uppercase;white-space:nowrap'>"+label+"</span>"
+        + "<div style='flex:1;height:1px;background:"+color+";opacity:0.25'></div>"
+        + "</div>";
+    }
+
+    // Helper: render a single rank row
+    function rankRow(i, t) {
+      var th2 = TH[t.id]; var col2 = dc(t.id); var isT5 = i<5;
+      var barW = Math.max(4, Math.round((t.score/maxScore)*72));
+      var bg = isT5 ? "background:"+dbg(t.id)+";border-radius:5px;" : "";
+      return "<div style='display:flex;align-items:center;gap:6px;padding:3px 5px;"+bg+"'>"
+        + "<span style='width:20px;font-size:9pt;font-weight:"+(isT5?"800":"600")+";text-align:right;color:"+(isT5?col2:"#bbb")+";flex-shrink:0'>"+(i+1)+"</span>"
+        + "<span style='width:7px;height:7px;border-radius:50%;background:"+col2+";opacity:"+(isT5?"1":"0.65")+";flex-shrink:0'></span>"
+        + "<span style='flex:1;font-size:9.5pt;font-weight:"+(isT5?"800":"500")+";color:"+(isT5?"#1a1a2e":"#333")+"'>"+th2.n+"</span>"
+        + "<div style='width:"+barW+"px;height:3px;background:"+col2+";opacity:"+(isT5?"0.9":"0.45")+";border-radius:2px;flex-shrink:0'></div>"
+        + "</div>";
+    }
+
+    // Two columns: left = 1-17, right = 18-34
+    html += "<div style='display:flex;gap:28px;align-items:flex-start'>";
+
+    // LEFT COLUMN
+    html += "<div style='flex:1'>";
+    html += tierLabel("Dominant — 1 to 5","#6D28D9");
+    for(var i=0;i<Math.min(5,ranked.length);i++) html += rankRow(i,ranked[i]);
+    html += tierLabel("Supporting — 6 to 10","#2563EB");
+    for(var i=5;i<Math.min(10,ranked.length);i++) html += rankRow(i,ranked[i]);
+    html += tierLabel("Available — 11 to 17","#0891B2");
+    for(var i=10;i<Math.min(17,ranked.length);i++) html += rankRow(i,ranked[i]);
     html += "</div>";
+
+    // RIGHT COLUMN
+    html += "<div style='flex:1'>";
+    html += tierLabel("Situational — 18 to 26","#059669");
+    for(var i=17;i<Math.min(26,ranked.length);i++) html += rankRow(i,ranked[i]);
+    html += tierLabel("Least Dominant — 27 to 34","#9CA3AF");
+    for(var i=26;i<Math.min(34,ranked.length);i++) html += rankRow(i,ranked[i]);
+    html += "</div>";
+
+    html += "</div>"; // end two-column
+    html += "</div>"; // end page
 
     // --- 4. BIG PICTURE: What Stands Out ---
     html += "<div class='page page-break'>";
