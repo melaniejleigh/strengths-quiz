@@ -1306,7 +1306,7 @@ function printReport(type, ranked, name, insights, takenAt) {
     ".hdr-brand{font-weight:800;color:#6D28D9;letter-spacing:2.5px;text-transform:uppercase}",
     ".hdr-meta{color:#aaa;font-weight:500}",
     // Cover
-    ".cover{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;height:11in;width:8.5in;padding:0;page-break-after:always;break-after:page}",
+    ".cover{background:linear-gradient(160deg,#0a0a1a 0%,#1a0a2e 40%,#2d1054 70%,#0a0a1a 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;height:11in;width:8.5in;padding:0}",
     ".cover-inner{padding:0 56px 64px}",
     ".cover-label{font-size:8pt;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;font-weight:600}",
     ".cover-title{font-size:36pt;font-weight:800;line-height:1.05;margin-bottom:12px}",
@@ -1716,9 +1716,9 @@ function printReport(type, ranked, name, insights, takenAt) {
       // 18-26: describe the tendency they're less likely to have
       var ld = th.lowDefault||""; var lm = th.lowMiss||""; var lr = th.lowRisk||"";
       if (ri<26) return "You are less likely to "+ld+". Because of that, "+lm+", which can mean "+lr+".";
-      // 27-34: frame around where their energy goes instead
-      var dt = th.defaultTendency||""; var tp = th.themePriority||""; var ld2 = th.lowDefault||""; var lm2 = th.lowMiss||""; var lr2 = th.lowRisk||"";
-      return "Because you naturally prioritize "+dt+" over "+tp+", you are less likely to "+ld2+". That means "+lm2+", which can mean "+lr2+".";
+      // 27-34: describe where energy DOES go (positive direction) — gap handled by specialSection
+      var dt = th.defaultTendency||"";
+      return "Your energy tends to go toward "+dt+". That is where your instincts naturally concentrate, and where you are most likely to do your best work.";
     }
 
     // Helper: one labeled section per tier
@@ -1773,7 +1773,7 @@ function printReport(type, ranked, name, insights, takenAt) {
       {name:"18\u201326",sub:"Situational",s:17,e:26,color:"#059669",
        intro:"These are less instinctive strengths. They are not weaknesses, just themes you are less likely to lead with naturally. You may still use them situationally or appreciate them more when others bring them into the room."},
       {name:"27\u201334",sub:"Least Dominant",s:26,e:34,color:"#9CA3AF",
-       intro:"These are your least dominant themes. They are not flaws to fix and they are not development projects. They are simply less central to how you naturally operate. Understanding them helps you see the full shape of your profile, not fill in gaps."}
+       intro:"These are your least dominant themes. They are not deficits. They are not a development agenda. They are simply where your natural energy is lowest \u2014 the other side of the coin from the themes where you are strongest.<br><br>This section exists for one reason: to show you the complete shape of who you are, not to tell you what to fix. Most people see a low-ranked theme and immediately think about how to improve it. Resist that instinct. Instead, use this section to understand where you are likely to feel drained, where collaboration fills the gap, and why certain things might not come naturally to you \u2014 without making that mean something is wrong."}
     ];
 
     sections.forEach(function(sec) {
@@ -1824,7 +1824,7 @@ function printReport(type, ranked, name, insights, takenAt) {
     html += "<p class='sec-body' style='margin-bottom:10px;text-align:center'>Your top themes are where you are most likely to find the greatest return from deeper reflection, stronger application, and more intentional development. The rest of your profile still matters, but not every theme needs equal attention.</p>";
     html += "<p class='sec-body' style='margin-bottom:10px;text-align:center'>Use this report to understand where you naturally lead, where you have supporting range, and where you may be more likely to rely on context, structure, or partnership. Use your Top 5 report for the deeper coaching and application work.</p>";
     html += "<div style='text-align:center;margin-top:20px'>";
-    html += "<p style='font-size:9pt;color:#bbb'>Strengths Discovery &middot; "+(new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}))+"</p>";
+    html += "<p style='font-size:9pt;color:#bbb'>Strengths Discovery &middot; "+reportDateStr+"</p>";
     html += "</div></div></div>";
   }
 
